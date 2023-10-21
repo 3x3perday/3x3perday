@@ -1,20 +1,41 @@
 'use client'
-import React, { Attributes, forwardRef, InputHTMLAttributes } from 'react';
+import React, { Attributes, forwardRef, InputHTMLAttributes, useRef } from 'react';
 import { css as style } from '@emotion/react';
 interface Props extends InputHTMLAttributes<HTMLTextAreaElement>, Attributes {
-    sortNum: string;
+    width?: number;
 }
 
 const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
     {
-        sortNum,
-        css = style`background: red; display: flex; flex-direction: row;`,
+        width = 350,
+        css = style`
+            -ms-overflow-style: none; /* IE and Edge */
+            scrollbar-width: none; /* Firefox */
+            ::-webkit-scrollbar {
+                display: none; /* Chrome, Safari, Opera*/
+            }
+            
+            text-transform: uppercase;
+            font-size: 100px;
+            display: flex;
+            flex-direction: row;
+            background-color: transparent;
+            width: ${width}px;
+            border: 2px solid #A5A5A5;
+            resize: none;
+            outline: none;
+            border: 0;  
+        `,
         ...props
-    }, ref) => (
-    <div css={css}>
-        {sortNum}
-        <textarea ref={ref} {...props} />
-    </div>
-))
+    }, ref) => {
+    return (
+        <textarea
+            ref={ref}
+            rows={1}
+            css={css}
+            {...props}
+        />
+    )
+})
 
 export default TodoTextArea
