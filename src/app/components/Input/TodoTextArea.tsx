@@ -3,17 +3,21 @@ import React, { Attributes, forwardRef, InputHTMLAttributes, useRef } from 'reac
 import { css as style } from '@emotion/react';
 interface Props extends InputHTMLAttributes<HTMLTextAreaElement>, Attributes {
     width?: number;
+    isResizeHeight?: boolean;
 }
 
 const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
     {
         width = 350,
+        isResizeHeight = true,
         css = style`
-            -ms-overflow-style: none; /* IE and Edge */
-            scrollbar-width: none; /* Firefox */
-            ::-webkit-scrollbar {
-                display: none; /* Chrome, Safari, Opera*/
-            }
+            ${isResizeHeight && `
+                -ms-overflow-style: none; /* IE and Edge */
+                scrollbar-width: none; /* Firefox */
+                ::-webkit-scrollbar {
+                    display: none; /* Chrome, Safari, Opera*/
+                }
+            `}
             
             text-transform: uppercase;
             font-size: 100px;
