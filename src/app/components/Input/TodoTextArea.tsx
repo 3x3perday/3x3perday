@@ -21,7 +21,6 @@ const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
             flex-direction: row;
             background-color: transparent;
             width: ${width}px;
-            border: 2px solid #A5A5A5;
             resize: none;
             outline: none;
             border: 0;  
