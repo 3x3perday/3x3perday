@@ -3,6 +3,9 @@
 # idea
 *.idea
 
+# xml
+*.xml
+
 # dependencies
 /node_modules
 /.pnp
