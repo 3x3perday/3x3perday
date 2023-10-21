@@ -6,13 +6,16 @@ import Navbar from "@/components/navbar";
 import MainTodo from "@/components/mainTodo";
 
 export default function Home() {
-	const color = 'white';
 
 	return (
 		<main css={css`
       padding: 48px 32px;
 		`}>
-			<Navbar/>
+			<div css={css`
+        padding-bottom: 26px;
+			`}>
+				<Navbar/>
+			</div>
 			<MainTodo/>
 		</main>
 	);

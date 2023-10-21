@@ -4,6 +4,7 @@ import {css} from "@emotion/react";
 
 type propsType = {};
 
+
 export default function Navbar(props: propsType) {
 	const [nowDate, setNowDate] = useState(new Date());
 
@@ -34,7 +35,7 @@ export default function Navbar(props: propsType) {
 
 			<Image css={css`
         flex: 0 0 auto;
-			`} src="arrow.svg" width={25} height={50} alt="arrow"/>
+			`} src="/arrow.svg" width={25} height={50} alt="arrow"/>
 
 			<div css={css`
         border-bottom-color: #AAAAAA;
