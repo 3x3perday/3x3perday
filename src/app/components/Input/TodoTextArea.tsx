@@ -1,6 +1,7 @@
 'use client'
-import React, { Attributes, forwardRef, InputHTMLAttributes, useRef } from 'react';
+import React, { Attributes, ChangeEvent, forwardRef, InputHTMLAttributes, useRef } from 'react';
 import { css as style } from '@emotion/react';
+import { resizeInputHeight } from '@/app/utils/dom';
 interface Props extends InputHTMLAttributes<HTMLTextAreaElement>, Attributes {
     width?: number;
     isResizeHeight?: boolean;
@@ -29,12 +30,20 @@ const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
             outline: none;
             border: 0;  
         `,
+        onChange,
         ...props
     }, ref) => {
+    const onChangeTodo = (e:ChangeEvent<HTMLTextAreaElement>) => {
+        if(isResizeHeight) {
+            resizeInputHeight(e);
+        }
+        onChange && onChange(e);
+    }
     return (
         <textarea
             ref={ref}
             rows={1}
+            onChange={onChangeTodo}
             css={css}
             {...props}
         />
