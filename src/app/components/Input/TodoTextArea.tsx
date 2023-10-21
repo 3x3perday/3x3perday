@@ -1,11 +1,11 @@
 'use client'
 import React, { Attributes, forwardRef, InputHTMLAttributes } from 'react';
 import { css as style } from '@emotion/react';
-interface Props extends InputHTMLAttributes<HTMLInputElement>, Attributes {
+interface Props extends InputHTMLAttributes<HTMLTextAreaElement>, Attributes {
     sortNum: string;
 }
 
-const TodoInput = forwardRef<HTMLInputElement, Props>((
+const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
     {
         sortNum,
         css = style`background: red; display: flex; flex-direction: row;`,
@@ -13,8 +13,8 @@ const TodoInput = forwardRef<HTMLInputElement, Props>((
     }, ref) => (
     <div css={css}>
         {sortNum}
-        <input ref={ref} {...props} />
+        <textarea ref={ref} {...props} />
     </div>
 ))
 
-export default TodoInput
+export default TodoTextArea
