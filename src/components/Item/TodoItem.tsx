@@ -7,12 +7,13 @@ import { Todo3x3Model } from '@/types/todo';
 
 export interface TodoProps extends Todo3x3Model {
     visibleToggleBtn?: TodoTextInputProps['visibleToggleBtn'];
-    onChangeMainTodo: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => void;
-    onChangeSubTodo: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => void;
+    onChangeMainTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => void;
+    onChangeSubTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => void;
     subTodoMaxLength?: number;
     onClickAddSubTodo?: (id: number) => void;
     onClickToggle?: (mainTodoId: number, visibleSubTodoState: boolean) => void;
     visibleSubTodo?: boolean;
+    editable?: boolean;
 }
 
 /**
@@ -41,15 +42,17 @@ export const TodoItem = (
         onClickAddSubTodo,
         onClickToggle,
         visibleSubTodo = false,
+        editable = false,
     }: TodoProps) => {
     return (
         <div>
             <TodoTextInput
-                prefixText={`${id + 1}.`}
+                prefixText={`${id}.`}
                 value={mainTodo.content}
-                onChange={e => onChangeMainTodo(e, id)}
+                onChange={e => onChangeMainTodo && onChangeMainTodo(e, id)}
                 visibleToggleBtn={visibleToggleBtn}
                 onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}
+                editable={editable}
             />
             {
                 visibleSubTodo && subTodos.map((subTodo, subTodoId) => (
@@ -61,12 +64,13 @@ export const TodoItem = (
                             prefixText={`${subTodoId + 1})`}
                             value={subTodo.content}
                             onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
+                            editable={editable}
                         />
                     </div>
                 ))
             }
             {
-                visibleSubTodo && (
+                editable && visibleSubTodo && (
                     <button
                         onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
                         css={addButtonCSS(subTodos.length, subTodoMaxLength)}
@@ -78,7 +82,7 @@ export const TodoItem = (
     )
 }
 
-const addButtonCSS = (todoLength: number, maxLength: number) => css`
+const addButtonCSS = (todoLength: number, maxLength?: number) => css`
   display: ${todoLength === maxLength ? 'none' : 'block'};
   width: 30px;
   height: 30px;

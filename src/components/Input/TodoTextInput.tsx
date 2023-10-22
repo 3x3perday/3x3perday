@@ -51,6 +51,7 @@ export const TodoTextInput = (
     );
 }
 const prefixFontStyle = css`
+  width: 90px;
   font-size: 6.25rem;;
   font-weight: 900;
   color: white;
@@ -58,7 +59,6 @@ const prefixFontStyle = css`
 const todoContainerCSS = css`
   position: relative;
   display: flex;
-  background: #676767;
 `;
 const prefixWrapperCSS = css`
   display: flex;
