@@ -5,11 +5,12 @@ import { css } from "@emotion/react";
 import { TodoTextArea } from '@/components/Input/TodoTextArea';
 
 export interface TodoTextInputProps {
-    value: string;
-    onChange: InputHTMLAttributes<HTMLTextAreaElement>['onChange'];
+    value?: string;
+    onChange?: InputHTMLAttributes<HTMLTextAreaElement>['onChange'];
     onClickToggle?: DOMAttributes<HTMLButtonElement>['onChange'];
     prefixText?: string;
     visibleToggleBtn?: boolean;
+    editable?: boolean;
 }
 
 /**
@@ -28,6 +29,7 @@ export const TodoTextInput = (
         onChange,
         prefixText = "1.",
         visibleToggleBtn = false,
+        editable = true
     }: TodoTextInputProps) => {
     return (
         <div css={todoContainerCSS}>
@@ -39,6 +41,7 @@ export const TodoTextInput = (
             </div>
             <div>
                 <TodoTextArea
+                    readOnly={!editable}
                     value={value}
                     onChange={onChange}
                     css={todoTextAreaCSS}
@@ -53,6 +56,7 @@ const prefixFontStyle = css`
   color: white;
 `;
 const todoContainerCSS = css`
+  position: relative;
   display: flex;
   background: #676767;
 `;
