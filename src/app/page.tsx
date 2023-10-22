@@ -11,6 +11,8 @@ export default function Home() {
 		<main css={css`
       padding: 48px 32px;
 		`}>
+			안녕하세요.
+			안녕하세요2
 			<div css={css`
         padding-bottom: 26px;
 			`}>
