@@ -16,6 +16,8 @@ export interface TodoProps extends Todo3x3Model {
     onChangeSubTodo: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => void;
     subTodoMaxLength?: number;
     onClickAddSubTodo?: (id: number) => void;
+    onClickToggle?: (mainTodoId: number, visibleSubTodoState: boolean) => void;
+    visibleSubTodo?: boolean;
 }
 
 export const Todo = (
@@ -28,8 +30,9 @@ export const Todo = (
         onChangeMainTodo,
         onChangeSubTodo,
         onClickAddSubTodo,
+        onClickToggle,
+        visibleSubTodo = false,
     }: TodoProps) => {
-    const [isVisibleSubTodo, setIsVisibleSubTodo] = useState(false);
     return (
         <div>
             <TodoTextInput
@@ -37,32 +40,32 @@ export const Todo = (
                 value={mainTodo}
                 onChange={e => onChangeMainTodo(e, id)}
                 visibleToggleBtn={visibleToggleBtn}
-                onClickToggle={() => setIsVisibleSubTodo(state => !state)}
+                onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}
             />
-                {
-                    isVisibleSubTodo && subTodos.map((subTodo, subTodoId) => (
-                        <div
-                            key={subTodoId}
-                            css={css`margin-left: 20px`}
-                        >
-                            <TodoTextInput
-                                prefixText={`${subTodoId + 1})`}
-                                value={subTodo[subTodoId]}
-                                onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
-                                onClickToggle={e => console.log(e)}
-                            />
-                        </div>
-                    ))
-                }
-                {
-                    isVisibleSubTodo && (
-                        <button
-                            onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
-                            css={addButtonCSS(subTodos.length, subTodoMaxLength)}
-                        >+
-                        </button>
-                    )
-                }
+            {
+                visibleSubTodo && subTodos.map((subTodo, subTodoId) => (
+                    <div
+                        key={subTodoId}
+                        css={css`margin-left: 20px`}
+                    >
+                        <TodoTextInput
+                            prefixText={`${subTodoId + 1})`}
+                            value={subTodo[subTodoId]}
+                            onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
+                            onClickToggle={e => console.log(e)}
+                        />
+                    </div>
+                ))
+            }
+            {
+                visibleSubTodo && (
+                    <button
+                        onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
+                        css={addButtonCSS(subTodos.length, subTodoMaxLength)}
+                    >+
+                    </button>
+                )
+            }
         </div>
     )
 }

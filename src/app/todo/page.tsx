@@ -5,40 +5,55 @@ import React, { useState } from "react";
 import Navbar from "@/components/navbar";
 import { Todo, Todo3x3Model } from '@/components/Item/Todo';
 
+interface TodoView extends Todo3x3Model {
+    visibleSubTodo: boolean;
+}
+
 export default function Home() {
-	const [todos, setTodos] = useState<Todo3x3Model[]>([
+	const [todos, setTodos] = useState<TodoView[]>([
 		{
 			id: 0,
 			mainTodo: "",
-			subTodos: [""]
+			subTodos: [""],
+			visibleSubTodo: false,
 		},
 		{
 			id: 1,
 			mainTodo: "",
-			subTodos: [""]
+			subTodos: [""],
+			visibleSubTodo: false,
 		},
 		{
 			id: 2,
 			mainTodo: "",
-			subTodos: [""]
+			subTodos: [""],
+			visibleSubTodo: false,
 		}
 	]);
 
 	const onChangeMainTodo = (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => {
-		const receiveTodos:Todo3x3Model[] = [...todos];
+		const receiveTodos:TodoView[] = [...todos];
 		receiveTodos[mainTodoId].mainTodo = e.target.value
 		setTodos(receiveTodos);
 	}
 
 	const onChangeSubTodo = (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => {
-		const receiveTodos:Todo3x3Model[] = [...todos];
+		const receiveTodos:TodoView[] = [...todos];
 		receiveTodos[mainTodoId].subTodos.map((todo, i) => i === subTodoId ? e.target.value : todo)
 		setTodos(receiveTodos);
 	}
 	const addSubTodo = (todoId: number) => {
-		const receiveTodos:Todo3x3Model[] = [...todos];
+		const receiveTodos:TodoView[] = [...todos];
         receiveTodos[todoId].subTodos.push("");
         setTodos(receiveTodos);
+	}
+	const onClickToggle = (mainTodoId: number, state: boolean) => {
+		setTodos(prevState => prevState.map(itemm => {
+            if (itemm.id === mainTodoId) {
+                itemm.visibleSubTodo = state;
+            }
+            return itemm;
+		}))
 	}
 
 	return (
@@ -53,7 +68,9 @@ export default function Home() {
 								id={todo.id}
 								mainTodo={todo.mainTodo}
 								subTodos={todo.subTodos}
+								visibleSubTodo={todo.visibleSubTodo && isVisibleToggleBtn}
 								visibleToggleBtn={isVisibleToggleBtn}
+								onClickToggle={onClickToggle}
 								onChangeMainTodo={onChangeMainTodo}
 								onChangeSubTodo={onChangeSubTodo}
 								onClickAddSubTodo={addSubTodo}
