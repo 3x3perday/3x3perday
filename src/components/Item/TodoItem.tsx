@@ -7,8 +7,8 @@ import { Todo3x3Model } from '@/types/todo';
 
 export interface TodoProps extends Todo3x3Model {
     visibleToggleBtn?: TodoTextInputProps['visibleToggleBtn'];
-    onChangeMainTodo: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => void;
-    onChangeSubTodo: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => void;
+    onChangeMainTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => void;
+    onChangeSubTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => void;
     subTodoMaxLength?: number;
     onClickAddSubTodo?: (id: number) => void;
     onClickToggle?: (mainTodoId: number, visibleSubTodoState: boolean) => void;
@@ -47,9 +47,9 @@ export const TodoItem = (
     return (
         <div>
             <TodoTextInput
-                prefixText={`${id + 1}.`}
+                prefixText={`${id}.`}
                 value={mainTodo.content}
-                onChange={e => onChangeMainTodo(e, id)}
+                onChange={e => onChangeMainTodo && onChangeMainTodo(e, id)}
                 visibleToggleBtn={visibleToggleBtn}
                 onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}
                 editable={editable}
