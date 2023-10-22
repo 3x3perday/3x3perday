@@ -1,4 +1,3 @@
-"use client";
 import Image from "next/image";
 import { ModalProps, MODAL_SIZE, modalType } from "./util";
 import { css } from "@emotion/react";
