@@ -3,13 +3,13 @@ import React, { Attributes, ChangeEvent, forwardRef, InputHTMLAttributes } from 
 import { css as style } from '@emotion/react';
 import { resizeInputHeight } from '@/utils/dom';
 interface Props extends InputHTMLAttributes<HTMLTextAreaElement>, Attributes {
-    width?: number;
+    width?: string;
     isResizeHeight?: boolean;
 }
 
 const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
     {
-        width = 350,
+        width = '100%',
         isResizeHeight = true,
         css = style`
             ${isResizeHeight && `
@@ -25,7 +25,7 @@ const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
             display: flex;
             flex-direction: row;
             background-color: transparent;
-            width: ${width}px;
+            width: ${width};
             resize: none;
             outline: none;
             border: 0;  
