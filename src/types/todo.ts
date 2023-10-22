@@ -12,6 +12,26 @@ export interface Todo3x3Model {
 export interface TodoPageModel {
   date: string;
   todos: Todo3x3Model[];
+  constructor(date: Date) {
+    this.date = date;
+    this.todos = [
+      {
+        id: 0,
+        mainTodo: new Todo(),
+        subTodos: [new Todo()],
+      },
+      {
+        id: 1,
+        mainTodo: new Todo(),
+        subTodos: [new Todo()],
+      },
+      {
+        id: 2,
+        mainTodo: new Todo(),
+        subTodos: [new Todo()],
+      },
+    ];
+  }
 }
 
 // ========================================

@@ -9,7 +9,6 @@ interface Props {
   date: string;
   setDate: React.Dispatch<React.SetStateAction<string>>;
 }
-
 // Navbar 는 날짜 관련 컴포넌트
 export default function Navbar({ date, setDate }: Props) {
   const [isToday, setIsToday] = useState(true);
