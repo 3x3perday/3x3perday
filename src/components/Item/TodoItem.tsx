@@ -70,7 +70,7 @@ export const TodoItem = (
                 ))
             }
             {
-                visibleSubTodo && (
+                editable && visibleSubTodo && (
                     <button
                         onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
                         css={addButtonCSS(subTodos.length, subTodoMaxLength)}
