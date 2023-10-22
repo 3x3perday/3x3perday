@@ -1,6 +1,6 @@
 import React, { ButtonHTMLAttributes } from 'react';
 import { Icon, ICON_MAP } from '@/components/Icon/Icon';
-import { css } from '@emotion/react';
+import { Button } from '@/components/Button/Button';
 
 interface FingerButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
     fingerCount?: 1 | 2 | 3;
@@ -55,17 +55,12 @@ const InActiveFingerMap: FingerIconType = {
 const FingerButton = ({ fingerCount = 1, isActive, ...props }: FingerButtonProps) => {
     const options = isActive ? ActiveFingerMap[fingerCount] : InActiveFingerMap[fingerCount];
     return (
-        <button css={buttonStyleCSS} {...props}>
+        <Button {...props}>
             <Icon
                 {...options}
             />
-        </button>
+        </Button>
     )
 }
-const buttonStyleCSS = css`
-  outline: none;
-  border: 0;
-  background-color: transparent;
-`;
 
 export default FingerButton;
