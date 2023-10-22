@@ -2,9 +2,11 @@
 
 # idea
 *.idea
+.idea
 
 # xml
 *.xml
+.xml
 
 # dependencies
 /node_modules
