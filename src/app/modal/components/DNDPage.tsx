@@ -5,7 +5,7 @@ import {
   DropResult,
   Droppable,
 } from "@hello-pangea/dnd";
-import { useDnD } from "@/utils/dnd/dnd";
+import { useDnD } from "@/utils/dnd";
 import Box from "./Box";
 
 const DNDPage = () => {
