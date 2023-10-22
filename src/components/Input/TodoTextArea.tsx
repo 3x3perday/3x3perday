@@ -1,7 +1,7 @@
 'use client'
 import React, { Attributes, ChangeEvent, forwardRef, InputHTMLAttributes } from 'react';
 import { css as style } from '@emotion/react';
-import { resizeInputHeight } from '@/app/utils/dom';
+import { resizeInputHeight } from '@/utils/dom';
 interface Props extends InputHTMLAttributes<HTMLTextAreaElement>, Attributes {
     width?: number;
     isResizeHeight?: boolean;
