@@ -74,7 +74,13 @@ export default function Home() {
 								</div>
 							))
 						}
-						<button onClick={() => addSubTodo(todo.id)}>adTodo</button>
+						<button
+							onClick={() => addSubTodo(todo.id)}
+							css={css`
+								display: ${todo.subTodos.length === 3 ? 'none' : 'block'};
+								margin-left: 20px;
+							`}
+						>adTodo</button>
 					</div>
 				))
 			}
