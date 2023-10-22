@@ -14,13 +14,13 @@ export default function Home() {
 			<MainTodo
 				value={todo}
 				onChange={e => setTodo(e.target.value)}
-				onClick={e => console.log(e)}
+				onClickToggle={e => console.log(e)}
 			/>
 			<MainTodo
 				prefixText={"2."}
 				value={todo2}
 				onChange={e => setTodo2(e.target.value)}
-				onClick={e => console.log(e)}
+				onClickToggle={e => console.log(e)}
 				visibleToggleBtn
 			/>
 		</main>
