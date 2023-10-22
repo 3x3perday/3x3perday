@@ -21,7 +21,7 @@ const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
             `}
             
             text-transform: uppercase;
-            font-size: 100px;
+            font-size: 6.25rem;
             display: flex;
             flex-direction: row;
             background-color: transparent;
