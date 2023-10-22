@@ -2,7 +2,7 @@
 
 import { TodoTextInput, TodoTextInputProps } from '@/components/Input';
 import { css } from '@emotion/react';
-import React from 'react';
+import React, { useState } from 'react';
 
 export interface Todo3x3Model {
     id: number;
@@ -29,6 +29,7 @@ export const Todo = (
         onChangeSubTodo,
         onClickAddSubTodo,
     }: TodoProps) => {
+    const [isVisibleSubTodo, setIsVisibleSubTodo] = useState(false);
     return (
         <div>
             <TodoTextInput
@@ -36,10 +37,10 @@ export const Todo = (
                 value={mainTodo}
                 onChange={e => onChangeMainTodo(e, id)}
                 visibleToggleBtn={visibleToggleBtn}
-                onClickToggle={e => console.log(e)}
+                onClickToggle={() => setIsVisibleSubTodo(state => !state)}
             />
             {
-                subTodos.map((subTodo, subTodoId) => (
+                isVisibleSubTodo && subTodos.map((subTodo, subTodoId) => (
                     <div
                         key={subTodoId}
                         css={css`margin-left: 20px`}

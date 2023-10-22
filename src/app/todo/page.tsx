@@ -65,12 +65,6 @@ export default function Home() {
 		</main>
 	);
 }
-const addButtonCSS = (todo: Todo3x3Model) => css`
-	display: ${todo.subTodos.length === 3 ? 'none' : 'block'};
-	width: 30px;
-	height: 30px;
-	margin-left: 20px;
-`;
 const inner = css`
   padding: 48px 32px;
 `;
