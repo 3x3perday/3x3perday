@@ -20,6 +20,20 @@ export interface TodoProps extends Todo3x3Model {
     visibleSubTodo?: boolean;
 }
 
+/**
+ * Todo Component 입니다.
+ * @param id
+ * @param mainTodo
+ * @param subTodos
+ * @param subTodoMaxLength 서브 투두 최대 개수 default:3
+ * @param visibleToggleBtn 투두 토글 버튼 노출 여부 default:false
+ * @param onChangeMainTodo 메인 투두 변경 함수
+ * @param onChangeSubTodo 서브 투두 변경 함수
+ * @param onClickAddSubTodo 서브 투두 추가 함수
+ * @param onClickToggle 투두 토글 함수
+ * @param visibleSubTodo 서브 투두 노출 여부 default:false
+ */
+
 export const Todo = (
     {
         id,
