@@ -1,8 +1,8 @@
 export const MODAL_SIZE = {
   sm: 200,
-  md: 400,
-  lg: 500,
-};
+  md: 300,
+  lg: 400,
+} as const;
 
 export interface ModalProps {
   isOpen: boolean;

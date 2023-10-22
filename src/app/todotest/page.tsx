@@ -1,4 +1,5 @@
 "use client";
+import TodoDeleteModal from "@/components/modal/todo/delete";
 import Navbar from "@/components/navbar/navbar";
 import { TodoPageModel, mockTodoData, mocktodos } from "@/types/todo";
 import { Date } from "@/utils/date";
@@ -10,7 +11,7 @@ const TodoTest = () => {
   const [todoPage, setTodoPage] = useState<TodoPageModel>(mocktodos); // 오늘의 데이터
 
   const [date, setDate] = useState(Date.getToday()); // 날짜
-
+  const [popDelete, setPopDelete] = useState(false); // 삭제 팝업
   useEffect(() => {
     // 찾는 날짜가 전체 데이터에 있는지 확인
     const _todos = entireTodos.find((entireTodo) => entireTodo.date === date);
@@ -35,6 +36,13 @@ const TodoTest = () => {
       {todoPage.todos.map((todo) => {
         return <div key={todo.id}>{todo.mainTodo.content}</div>;
       })}
+      {popDelete && (
+        <TodoDeleteModal
+          submit={() => {}}
+          isOpen={popDelete}
+          setIsOpen={setPopDelete}
+        />
+      )}
     </main>
   );
 };
