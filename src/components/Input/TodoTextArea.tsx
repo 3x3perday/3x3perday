@@ -24,7 +24,7 @@ const textStyle = `
     outline: none;
     border: 0;
 `;
-const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
+export const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
     {
         width = '100%',
         isResizeHeight = true,
@@ -52,5 +52,3 @@ const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
         />
     )
 })
-
-export default TodoTextArea
