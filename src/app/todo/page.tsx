@@ -41,7 +41,7 @@ export default function Home() {
 		receiveTodos[todoId].subTodos.map((todo, i) => i === subTodoId ? e.target.value : todo)
 		setTodos(receiveTodos);
 	}
-	const addSubTodo = (todoId: number) => {
+	const addSubTodo = (todoId: number) => () => {
 		const receiveTodos:Todo3x3Model[] = [...todos];
         receiveTodos[todoId].subTodos.push("");
         setTodos(receiveTodos);
@@ -51,42 +51,47 @@ export default function Home() {
 		<main css={inner}>
 			<Navbar />
 			{
-				todos.map((todo) => (
-					<div key={todo.id}>
-						<TodoTextInput
-							prefixText={`${todo.id + 1}.`}
-							value={todo.mainTodo}
-							onChange={onChangeMainTodo(todo.id)}
-							onClickToggle={e => console.log(e)}
-						/>
-						{
-							todo.subTodos.map((subTodo, i) => (
-								<div
-									key={i}
-									css={css`margin-left: 20px`}
-								>
-									<TodoTextInput
-										prefixText={`${i + 1})`}
-										value={subTodo[i]}
-										onChange={onChangeSubTodo(todo.id, i)}
-										onClickToggle={e => console.log(e)}
-									/>
-								</div>
-							))
-						}
-						<button
-							onClick={() => addSubTodo(todo.id)}
-							css={css`
-								display: ${todo.subTodos.length === 3 ? 'none' : 'block'};
-								margin-left: 20px;
-							`}
-						>adTodo</button>
-					</div>
-				))
+				todos.map((todo) => {
+					return (
+						<div key={todo.id}>
+							<TodoTextInput
+								prefixText={`${todo.id + 1}.`}
+								value={todo.mainTodo}
+								onChange={onChangeMainTodo(todo.id)}
+								onClickToggle={e => console.log(e)}
+							/>
+							{
+								todo.subTodos.map((subTodo, i) => (
+									<div
+										key={i}
+										css={css`margin-left: 20px`}
+									>
+										<TodoTextInput
+											prefixText={`${i + 1})`}
+											value={subTodo[i]}
+											onChange={onChangeSubTodo(todo.id, i)}
+											onClickToggle={e => console.log(e)}
+										/>
+									</div>
+								))
+							}
+							<button
+								onClick={addSubTodo(todo.id)}
+								css={addButtonCSS(todo)}
+							>+</button>
+						</div>
+					);
+				})
 			}
 		</main>
 	);
 }
+const addButtonCSS = (todo: Todo3x3Model) => css`
+	display: ${todo.subTodos.length === 3 ? 'none' : 'block'};
+	width: 30px;
+	height: 30px;
+	margin-left: 20px;
+`;
 const inner = css`
   padding: 48px 32px;
 `;
