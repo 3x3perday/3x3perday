@@ -91,4 +91,24 @@ export const mockTodoData = [
       },
     ],
   },
+  {
+    date: "2023-10-22",
+    todos: [
+      {
+        id: 1,
+        mainTodo: new Todo("todo13"),
+        subTodos: [new Todo("todo1"), new Todo("todo12"), new Todo("todo15")],
+      },
+      {
+        id: 2,
+        mainTodo: new Todo("todo14"),
+        subTodos: [new Todo(), new Todo()],
+      },
+      {
+        id: 3,
+        mainTodo: new Todo("todo16"),
+        subTodos: [new Todo()],
+      },
+    ],
+  },
 ] as TodoPageModel[];

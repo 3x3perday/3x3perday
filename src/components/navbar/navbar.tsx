@@ -3,28 +3,32 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { css } from "@emotion/react";
 import dayjs from "dayjs";
+import { Date } from "@/utils/date";
 
 interface Props {
   date: string;
   setDate: React.Dispatch<React.SetStateAction<string>>;
-  // todos: TodoPageModel[];
 }
 
+// Navbar 는 날짜 관련 컴포넌트
 export default function Navbar({ date, setDate }: Props) {
   const [isToday, setIsToday] = useState(true);
 
   useEffect(() => {
-    const today = dayjs().format("YYYY-MM-DD");
-    if (date === today) return setIsToday(true);
+    const today = Date.getToday();
+    if (date === today) {
+      return setIsToday(true);
+    }
     setIsToday(false);
   }, [date]);
 
   const goYesterday = () => {
-    const yesterday = dayjs(date).subtract(1, "day").format("YYYY-MM-DD");
+    const yesterday = Date.getYesterday(date);
     setDate(yesterday);
   };
+
   const goToday = () => {
-    const today = dayjs().format("YYYY-MM-DD");
+    const today = Date.getToday();
     setDate(today);
   };
 
