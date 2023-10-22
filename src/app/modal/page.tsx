@@ -2,10 +2,7 @@
 
 import { css } from "@emotion/react";
 import Box from "./Box";
-
 import ModalModal from "./modalmodal";
-
-// React 관련 요소
 import React, { useState } from "react";
 // 드래그 요소
 import {
@@ -47,12 +44,8 @@ const ModalPage = () => {
                     index={index}
                   >
                     {(provided) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
-                      >
-                        <Box item={item} />
+                      <div ref={provided.innerRef} {...provided.draggableProps}>
+                        <Box provided={provided} item={item} />
                       </div>
                     )}
                   </Draggable>
@@ -73,15 +66,6 @@ const data = [
   { id: 2, name: "길동홍", age: 24 },
   { id: 3, name: "동홍길", age: 25 },
 ];
-const CSS = css`
-  .box {
-    width: 100px;
-    height: 100px;
-    margin: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-`;
+const CSS = css``;
 
 export default ModalPage;
