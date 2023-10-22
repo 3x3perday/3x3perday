@@ -3,6 +3,7 @@
 import React, { InputHTMLAttributes } from 'react';
 import { css } from "@emotion/react";
 import { TodoTextArea } from '@/components/Input/TodoTextArea';
+import NumberButton from '@/components/Button/NumberButton';
 
 export interface SubTodoProps {
     value?: string;
@@ -32,13 +33,16 @@ export const SubTodo = (
     return (
         <div css={todoContainerCSS}>
             <div>
-                <p css={prefixFontStyle}>
-                    {prefixTodoNumber}
-                </p>
+                <NumberButton
+                    onClick={onClickCheck}
+                    count={prefixTodoNumber}
+                    isActive={checked ?? false }
+                />
             </div>
             <div>
                 <TodoTextArea
                     readOnly={!editable}
+                    height={'100px'}
                     value={value}
                     onChange={onChange}
                     css={todoTextAreaCSS}
@@ -59,4 +63,9 @@ const todoContainerCSS = css`
   display: flex;
   gap: 16px;
 `;
-const todoTextAreaCSS = css`color: #FFF;`;
+const todoTextAreaCSS = css`
+  color: #FFF;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+`;
