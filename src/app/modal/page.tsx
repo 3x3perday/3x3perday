@@ -6,7 +6,7 @@ import Box from "./Box";
 import ModalModal from "./modalmodal";
 
 // React 관련 요소
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 // 드래그 요소
 import {
   DragDropContext,
@@ -14,36 +14,23 @@ import {
   DropResult,
   Droppable,
 } from "@hello-pangea/dnd";
+import { useDnD } from "@/utils/dnd/dnd";
 
 const ModalPage = () => {
   const [items, setItems] = useState(data);
+  useDnD();
 
   // --- Draggable이 Droppable로 드래그 되었을 때 실행되는 이벤트
   const onDragEnd = ({ source, destination }: DropResult) => {
-    console.log(">>> source", source);
-    console.log(">>> destination", destination);
     if (!destination) return;
     const _items = JSON.parse(JSON.stringify(items)) as typeof items;
-    
+
     const [targetItem] = _items.splice(source.index, 1);
-    
+
     _items.splice(destination.index, 0, targetItem);
-    
+
     setItems(_items);
   };
-
-  // --- requestAnimationFrame 초기화
-  const [enabled, setEnabled] = useState(false);
-  useEffect(() => {
-    const animation = requestAnimationFrame(() => setEnabled(true));
-    return () => {
-      cancelAnimationFrame(animation);
-      setEnabled(false);
-    };
-  }, []);
-  if (!enabled) return null;
-
-  // --------------------------------------------
 
   return (
     <div>
