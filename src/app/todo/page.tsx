@@ -3,13 +3,7 @@
 import {css} from "@emotion/react";
 import React, { ChangeEvent, useState } from "react";
 import Navbar from "@/components/navbar";
-import { TodoTextInput } from '@/components/Input';
-
-interface Todo3x3Model {
-	id: number;
-	mainTodo: string;
-	subTodos: string[];
-}
+import { Todo, Todo3x3Model } from '@/components/Item/Todo';
 
 export default function Home() {
 	const [todos, setTodos] = useState<Todo3x3Model[]>([
@@ -41,7 +35,7 @@ export default function Home() {
 		receiveTodos[todoId].subTodos.map((todo, i) => i === subTodoId ? e.target.value : todo)
 		setTodos(receiveTodos);
 	}
-	const addSubTodo = (todoId: number) => () => {
+	const addSubTodo = (todoId: number) => {
 		const receiveTodos:Todo3x3Model[] = [...todos];
         receiveTodos[todoId].subTodos.push("");
         setTodos(receiveTodos);
@@ -52,33 +46,18 @@ export default function Home() {
 			<Navbar />
 			{
 				todos.map((todo) => {
+					const isVisibleToggleBtn = todo.mainTodo.length > 0;
 					return (
 						<div key={todo.id}>
-							<TodoTextInput
-								prefixText={`${todo.id + 1}.`}
-								value={todo.mainTodo}
-								onChange={onChangeMainTodo(todo.id)}
-								onClickToggle={e => console.log(e)}
-							/>
-							{
-								todo.subTodos.map((subTodo, i) => (
-									<div
-										key={i}
-										css={css`margin-left: 20px`}
-									>
-										<TodoTextInput
-											prefixText={`${i + 1})`}
-											value={subTodo[i]}
-											onChange={onChangeSubTodo(todo.id, i)}
-											onClickToggle={e => console.log(e)}
-										/>
-									</div>
-								))
-							}
-							<button
-								onClick={addSubTodo(todo.id)}
-								css={addButtonCSS(todo)}
-							>+</button>
+							<Todo
+								id={todo.id}
+								mainTodo={todo.mainTodo}
+								subTodos={todo.subTodos}
+								visibleToggleBtn={isVisibleToggleBtn}
+								onChangeMainTodo={(e, mainTodoId) => onChangeMainTodo(mainTodoId)(e)}
+								onChangeSubTodo={(e, mainTodoId, subTodoId) => onChangeSubTodo(mainTodoId, subTodoId)(e)}
+								onClickAddSubTodo={addSubTodo}
+							></Todo>
 						</div>
 					);
 				})
