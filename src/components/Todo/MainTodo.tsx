@@ -14,6 +14,7 @@ export interface MainTodoProps {
     prefixTodoNumber?: 1 | 2 | 3;
     visibleToggleBtn?: boolean;
     activeToggleBtn?: boolean;
+    activeFingerBtn?: boolean;
     editable?: boolean;
     checked?: boolean;
     onClickCheck?: () => void;
@@ -36,6 +37,7 @@ export const MainTodo = (
         prefixTodoNumber = 1,
         visibleToggleBtn = false,
         activeToggleBtn = false,
+        activeFingerBtn = false,
         editable = true,
         checked = false,
         onClickCheck
@@ -49,7 +51,7 @@ export const MainTodo = (
                             <FingerButton
                                 onClick={onClickCheck}
                                 fingerCount={prefixTodoNumber}
-                                isActive={visibleToggleBtn ?? false}
+                                isActive={activeFingerBtn ?? false}
                             />
                         ) : (
                             <Button
