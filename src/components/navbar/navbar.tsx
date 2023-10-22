@@ -3,55 +3,50 @@ import Image from "next/image";
 import { css } from "@emotion/react";
 import { dateToStr } from "@/utils/date";
 
-type propsType = {};
+interface Props {
+  date: Date;
+}
 
-export default function Navbar(props: propsType) {
-  const [nowDate, setNowDate] = useState(new Date());
-
-  useEffect(() => {}, []);
-
+export default function Navbar(props: Props) {
   return (
-    <div
-      css={css`
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        position: relative;
-      `}
-    >
-      <Image
-        css={css`
-          flex: 0 0 auto;
-        `}
-        src="/arrow.svg"
-        width={25}
-        height={50}
-        alt="arrow"
-      />
-
-      <div
-        css={css`
-          border-bottom-color: #aaaaaa;
-          border-bottom: solid 3px;
-          font-size: 22px;
-          font-weight: 800;
-          color: #a5a5a5;
-          letter-spacing: 0.2px;
-          width: 199px;
-          height: 33px;
-          text-align: center;
-          position: absolute;
-          left: 50%;
-          translate: -50%;
-        `}
-      >
-        {dateToStr(nowDate)}
+    <div css={styles}>
+      <div>
+        <Image
+          src="/arrow.svg"
+          width={20}
+          height={25}
+          alt="arrow"
+          className="arrow"
+        />
       </div>
-      <div
-        css={css`
-          flex: 1;
-        `}
-      />
+      <div className="date">{dateToStr(props.date)}</div>
     </div>
   );
 }
+
+const styles = css`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  height: 60px;
+  background-color: #3a3a39;
+  .arrow {
+    cursor: pointer;
+    position: absolute;
+    left: 20px;
+    top: 20px;
+  }
+  .date {
+    border-bottom-color: #aaaaaa;
+    border-bottom: solid 3px;
+    font-size: 22px;
+    font-weight: 800;
+    color: #fff;
+    width: 170px;
+    height: 33px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+`;
