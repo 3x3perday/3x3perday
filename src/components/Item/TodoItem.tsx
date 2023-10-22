@@ -3,12 +3,7 @@
 import { TodoTextInput, TodoTextInputProps } from '@/components/Input';
 import { css } from '@emotion/react';
 import React from 'react';
-
-export interface Todo3x3Model {
-    id: number;
-    mainTodo: string;
-    subTodos: string[];
-}
+import { Todo3x3Model } from '@/types/todo';
 
 export interface TodoProps extends Todo3x3Model {
     visibleToggleBtn?: TodoTextInputProps['visibleToggleBtn'];
@@ -34,7 +29,7 @@ export interface TodoProps extends Todo3x3Model {
  * @param visibleSubTodo 서브 투두 노출 여부 default:false
  */
 
-export const Todo = (
+export const TodoItem = (
     {
         id,
         mainTodo,
@@ -51,7 +46,7 @@ export const Todo = (
         <div>
             <TodoTextInput
                 prefixText={`${id + 1}.`}
-                value={mainTodo}
+                value={mainTodo.content}
                 onChange={e => onChangeMainTodo(e, id)}
                 visibleToggleBtn={visibleToggleBtn}
                 onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}
@@ -64,9 +59,8 @@ export const Todo = (
                     >
                         <TodoTextInput
                             prefixText={`${subTodoId + 1})`}
-                            value={subTodo[subTodoId]}
+                            value={subTodo.content}
                             onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
-                            onClickToggle={e => console.log(e)}
                         />
                     </div>
                 ))
