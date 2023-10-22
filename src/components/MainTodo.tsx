@@ -1,17 +1,21 @@
 'use client';
 
-import React, { DOMAttributes } from 'react';
+import React, { DOMAttributes, InputHTMLAttributes } from 'react';
 import { css } from "@emotion/react";
 import TodoTextArea from '@/components/Input/TodoTextArea';
 
 interface Props {
+    value: string;
+    onChange: InputHTMLAttributes<HTMLTextAreaElement>['onChange'];
     onClick?: DOMAttributes<HTMLButtonElement>['onChange'];
     prefixText?: string;
 }
 
 export default function MainTodo(
     {
+        value,
         onClick,
+        onChange,
         prefixText = "1."
     }: Props) {
     return (
@@ -24,6 +28,8 @@ export default function MainTodo(
             </div>
             <div>
                 <TodoTextArea
+                    value={value}
+                    onChange={onChange}
                     css={css`color: #FFF;`}
                 />
             </div>
