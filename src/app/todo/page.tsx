@@ -10,17 +10,17 @@ export default function Home() {
 		{
 			id: 0,
 			mainTodo: "",
-			subTodos: []
+			subTodos: [""]
 		},
 		{
 			id: 1,
 			mainTodo: "",
-			subTodos: []
+			subTodos: [""]
 		},
 		{
 			id: 2,
 			mainTodo: "",
-			subTodos: []
+			subTodos: [""]
 		}
 	]);
 

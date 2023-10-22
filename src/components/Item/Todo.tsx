@@ -39,26 +39,30 @@ export const Todo = (
                 visibleToggleBtn={visibleToggleBtn}
                 onClickToggle={() => setIsVisibleSubTodo(state => !state)}
             />
-            {
-                isVisibleSubTodo && subTodos.map((subTodo, subTodoId) => (
-                    <div
-                        key={subTodoId}
-                        css={css`margin-left: 20px`}
-                    >
-                        <TodoTextInput
-                            prefixText={`${subTodoId + 1})`}
-                            value={subTodo[subTodoId]}
-                            onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
-                            onClickToggle={e => console.log(e)}
-                        />
-                    </div>
-                ))
-            }
-            <button
-                onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
-                css={addButtonCSS(subTodos.length, subTodoMaxLength)}
-            >+
-            </button>
+                {
+                    isVisibleSubTodo && subTodos.map((subTodo, subTodoId) => (
+                        <div
+                            key={subTodoId}
+                            css={css`margin-left: 20px`}
+                        >
+                            <TodoTextInput
+                                prefixText={`${subTodoId + 1})`}
+                                value={subTodo[subTodoId]}
+                                onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
+                                onClickToggle={e => console.log(e)}
+                            />
+                        </div>
+                    ))
+                }
+                {
+                    isVisibleSubTodo && (
+                        <button
+                            onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
+                            css={addButtonCSS(subTodos.length, subTodoMaxLength)}
+                        >+
+                        </button>
+                    )
+                }
         </div>
     )
 }
