@@ -7,8 +7,7 @@ import { Icon } from '@/components/Icon/Icon';
 import FingerButton from '@/components/Button/FingerButton';
 import { Button } from '@/components/Button/Button';
 
-export interface TodoTextInputProps {
-    isMainTodo?: boolean;
+export interface MainTodoProps {
     value?: string;
     onChange?: InputHTMLAttributes<HTMLTextAreaElement>['onChange'];
     onClickToggle?: DOMAttributes<HTMLButtonElement>['onChange'];
@@ -20,7 +19,7 @@ export interface TodoTextInputProps {
 }
 
 /**
- * TodoTextInput Component 입니다.
+ * MainTodo Component 입니다.
  * @param value Todo 입력 값
  * @param onChange Todo 변경 이벤트
  * @param onClickToggle 토글 버튼 클릭 이벤트
@@ -28,9 +27,8 @@ export interface TodoTextInputProps {
  * @param visibleToggleBtn 토글 버튼을 보이거나 숨깁니다.
  */
 
-export const TodoTextInput = (
+export const MainTodo = (
     {
-        isMainTodo = true,
         value,
         onClickToggle,
         onChange,
@@ -39,40 +37,32 @@ export const TodoTextInput = (
         editable = true,
         checked = false,
         onClickCheck
-    }: TodoTextInputProps) => {
+    }: MainTodoProps) => {
     return (
         <div css={todoContainerCSS}>
             <div>
-                {
-                    isMainTodo ? (
-                        <div css={mainTodoIconWrapper}>
-                            {
-                                !checked ? (
-                                    <FingerButton
-                                        onClick={onClickCheck}
-                                        fingerCount={prefixTodoNumber}
-                                        isActive={visibleToggleBtn ?? false}
-                                    />
-                                ) : (
-                                    <Button
-                                        onClick={onClickCheck}
-                                        css={css`position: absolute; left: -52px;`}
-                                    >
-                                        <Icon
-                                            name={'thumbs-up'}
-                                            width={'152px'}
-                                            height={'144px'}
-                                        />
-                                    </Button>
-                                )
-                            }
-                        </div>
-                    ) : (
-                        <p css={prefixFontStyle}>
-                            {prefixTodoNumber}
-                        </p>
-                    )
-                }
+                <div css={mainTodoIconWrapper}>
+                    {
+                        !checked ? (
+                            <FingerButton
+                                onClick={onClickCheck}
+                                fingerCount={prefixTodoNumber}
+                                isActive={visibleToggleBtn ?? false}
+                            />
+                        ) : (
+                            <Button
+                                onClick={onClickCheck}
+                                css={css`position: absolute; left: -52px;`}
+                            >
+                                <Icon
+                                    name={'thumbs-up'}
+                                    width={'152px'}
+                                    height={'144px'}
+                                />
+                            </Button>
+                        )
+                    }
+                </div>
             </div>
             <div>
                 <TodoTextArea
@@ -86,19 +76,13 @@ export const TodoTextInput = (
         </div>
     );
 }
-const prefixFontStyle = css`
-  width: 90px;
-  font-family: Pretendard, sans-serif;
-  font-size: 6.25rem;;
-  font-weight: 900;
-  color: white;
-`;
 const todoContainerCSS = css`
   position: relative;
   display: flex;
   gap: 16px;
 `;
 const mainTodoIconWrapper = css`
+  position: relative;
   width: 93px;
   display: flex;
   align-items: center;
