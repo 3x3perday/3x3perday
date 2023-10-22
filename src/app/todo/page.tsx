@@ -83,6 +83,7 @@ export default function Home() {
 								onChangeMainTodo={onChangeMainTodo}
 								onChangeSubTodo={onChangeSubTodo}
 								onClickAddSubTodo={addSubTodo}
+								editable={false}
 							></TodoItem>
 						</div>
 					);
