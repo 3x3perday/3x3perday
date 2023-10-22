@@ -2,7 +2,7 @@
 
 import { TodoTextInput, TodoTextInputProps } from '@/components/Input';
 import { css } from '@emotion/react';
-import React, { useState } from 'react';
+import React from 'react';
 
 export interface Todo3x3Model {
     id: number;
