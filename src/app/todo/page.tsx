@@ -1,7 +1,7 @@
 'use client';
 
 import {css} from "@emotion/react";
-import React, { ChangeEvent, useState } from "react";
+import React, { useState } from "react";
 import Navbar from "@/components/navbar";
 import { Todo, Todo3x3Model } from '@/components/Item/Todo';
 
@@ -24,15 +24,15 @@ export default function Home() {
 		}
 	]);
 
-
-	const onChangeMainTodo = (todoId:number) => (e: ChangeEvent<HTMLTextAreaElement>) => {
+	const onChangeMainTodo = (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => {
 		const receiveTodos:Todo3x3Model[] = [...todos];
-		receiveTodos[todoId].mainTodo = e.target.value
+		receiveTodos[mainTodoId].mainTodo = e.target.value
 		setTodos(receiveTodos);
 	}
-	const onChangeSubTodo = (todoId:number, subTodoId: number) => (e: ChangeEvent<HTMLTextAreaElement>) => {
+
+	const onChangeSubTodo = (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => {
 		const receiveTodos:Todo3x3Model[] = [...todos];
-		receiveTodos[todoId].subTodos.map((todo, i) => i === subTodoId ? e.target.value : todo)
+		receiveTodos[mainTodoId].subTodos.map((todo, i) => i === subTodoId ? e.target.value : todo)
 		setTodos(receiveTodos);
 	}
 	const addSubTodo = (todoId: number) => {
@@ -54,8 +54,8 @@ export default function Home() {
 								mainTodo={todo.mainTodo}
 								subTodos={todo.subTodos}
 								visibleToggleBtn={isVisibleToggleBtn}
-								onChangeMainTodo={(e, mainTodoId) => onChangeMainTodo(mainTodoId)(e)}
-								onChangeSubTodo={(e, mainTodoId, subTodoId) => onChangeSubTodo(mainTodoId, subTodoId)(e)}
+								onChangeMainTodo={onChangeMainTodo}
+								onChangeSubTodo={onChangeSubTodo}
 								onClickAddSubTodo={addSubTodo}
 							></Todo>
 						</div>
