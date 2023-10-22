@@ -1,97 +1,112 @@
 'use client';
 
-import {css} from "@emotion/react";
-import React, { useState } from "react";
-import Navbar from "@/components/navbar";
+import React, { useEffect, useState } from "react";
+import { mockTodoData, mocktodos, Todo3x3Model, TodoPageModel } from '@/types/todo';
+import { Date } from '@/utils/date';
+import { todo } from '@/utils/todo';
+import Navbar from '@/components/navbar/navbar';
+import { css } from '@emotion/react';
 import { TodoItem } from '@/components/Item/TodoItem';
-import { Todo, Todo3x3Model } from '@/types/todo';
+import { TodoTextInput } from '@/components/Input';
+import { Icon } from '@/components/Icon/Icon';
+import { TODO_COLOR } from '@/constants/Theme';
 
 interface TodoView extends Todo3x3Model {
-    visibleSubTodo: boolean;
+	visibleSubTodo: boolean;
+}
+
+const convertTodoView = (todos: Todo3x3Model[]):TodoView[] => {
+	return todos.map(todo => ({
+		...todo,
+		visibleSubTodo: false
+	}))
 }
 
 export default function Home() {
-	const [todos, setTodos] = useState<TodoView[]>([
-		{
-			id: 0,
-			mainTodo: new Todo(),
-			subTodos: [new Todo()],
-			visibleSubTodo: false,
-		},
-		{
-			id: 1,
-			mainTodo: new Todo(),
-			subTodos: [new Todo()],
-			visibleSubTodo: false,
-		},
-		{
-			id: 2,
-			mainTodo: new Todo(),
-			subTodos: [new Todo()],
-			visibleSubTodo: false,
-		}
-	]);
+	const [entireTodos, setEntireTodos] = useState<TodoPageModel[]>(mockTodoData); // 전체 데이터
+	const [todoPage, setTodoPage] = useState<TodoPageModel>(mocktodos); // 오늘의 데이터
 
-	const onChangeMainTodo = (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => {
-		const receiveTodos:TodoView[] = [...todos];
-		receiveTodos[mainTodoId].mainTodo.content = e.target.value
-		setTodos(receiveTodos);
+	const [date, setDate] = useState(Date.getToday()); // 날짜
+	const [todos, setTodos] = useState<TodoView[]>(convertTodoView(mocktodos.todos));
+
+	const onClickTodo = (todoId: number) => () => {
+		console.log(todoId)
 	}
 
-	const onChangeSubTodo = (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => {
-		const receiveTodos:TodoView[] = [...todos];
-		receiveTodos[mainTodoId].subTodos = receiveTodos[mainTodoId].subTodos.map((todo, i) => {
-			if(i === subTodoId) {
-				return {
-					...todo,
-					content: e.target.value,
-				}
-			}
-			return todo;
-		})
-		setTodos(receiveTodos);
-	}
-	const addSubTodo = (todoId: number) => {
-		const receiveTodos:TodoView[] = [...todos];
-        receiveTodos[todoId].subTodos = receiveTodos[todoId].subTodos.concat([new Todo()]);
-        setTodos(receiveTodos);
-	}
 	const onClickToggle = (mainTodoId: number, state: boolean) => {
 		setTodos(prevState => prevState.map(itemm => {
-            if (itemm.id === mainTodoId) {
-                itemm.visibleSubTodo = state;
-            }
-            return itemm;
+			if (itemm.id === mainTodoId) {
+				itemm.visibleSubTodo = state;
+			}
+			return itemm;
 		}))
 	}
 
+	useEffect(() => {
+		// 찾는 날짜가 전체 데이터에 있는지 확인
+		const _todos = entireTodos.find((entireTodo) => entireTodo.date === date);
+		if (_todos) return setTodoPage(_todos);
+
+		// 찾는 날짜가 전체 데이터에 없으면 새로운 데이터를 만들어서 전체 데이터에 추가
+		const newEntireTodos = todo.getTodosWithNew(entireTodos, date);
+		setEntireTodos(newEntireTodos);
+
+		// 전체 데이터에서 찾은 날짜의 데이터를 todoPage 에 넣어준다.
+		const _newTodos = newEntireTodos.find(
+			(entireTodo) => entireTodo.date === date
+		);
+
+		if (_newTodos) setTodoPage(_newTodos);
+	}, [date, entireTodos]);
+
 	return (
-		<main css={inner}>
-			<Navbar />
-			{
-				todos.map((todo) => {
-					const isVisibleToggleBtn = todo.mainTodo.content.length > 0;
-					return (
-						<div key={todo.id}>
-							<TodoItem
-								id={todo.id}
-								mainTodo={todo.mainTodo}
-								subTodos={todo.subTodos}
-								visibleSubTodo={todo.visibleSubTodo && isVisibleToggleBtn}
-								visibleToggleBtn={isVisibleToggleBtn}
-								onClickToggle={onClickToggle}
-								onChangeMainTodo={onChangeMainTodo}
-								onChangeSubTodo={onChangeSubTodo}
-								onClickAddSubTodo={addSubTodo}
-								editable={false}
-							></TodoItem>
-						</div>
-					);
-				})
-			}
+		<main css={css`background-color: #292929;`}>
+			<Navbar date={date} setDate={setDate} />
+			<div css={inner}>
+				{todos.map((todo, index) => (
+					<div
+						key={todo.id}
+						css={css`
+                      background-color: ${TODO_COLOR[index]};
+                      margin-bottom: 32px;
+                      width: 344px;
+                      min-height: 169px;
+                    `}>
+						{
+							todo.mainTodo.content !== "" ? (
+								<TodoItem
+									id={todo.id}
+									mainTodo={todo.mainTodo}
+									subTodos={todo.subTodos}
+									visibleSubTodo={todo.visibleSubTodo}
+									visibleToggleBtn={todo.subTodos.length > 0}
+									onClickToggle={onClickToggle}
+								/>
+							) : (
+								<Icon
+									name={'plus'}
+									width={"344px"}
+									height={"169px"}
+									onClick={onClickTodo(todo.id)}
+								>
+									<TodoTextInput
+										prefixText={`${todo.id}`}
+										value={todo.mainTodo.content}
+										editable={false}
+									/>
+								</Icon>
+							)
+						}
+					</div>
+
+				))}
+			</div>
 		</main>
 	);
 }
 const inner = css`
-  padding: 48px 32px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 10px 20px;
 `;
