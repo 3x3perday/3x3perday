@@ -9,6 +9,7 @@ interface Props {
     onChange: InputHTMLAttributes<HTMLTextAreaElement>['onChange'];
     onClick?: DOMAttributes<HTMLButtonElement>['onChange'];
     prefixText?: string;
+    visibleToggleBtn?: boolean;
 }
 
 export default function MainTodo(
@@ -16,7 +17,8 @@ export default function MainTodo(
         value,
         onClick,
         onChange,
-        prefixText = "1."
+        prefixText = "1.",
+        visibleToggleBtn = false,
     }: Props) {
     return (
         <div css={todoContainerCSS}>
@@ -24,7 +26,7 @@ export default function MainTodo(
                 <p css={prefixFontStyle}>
                     {prefixText}
                 </p>
-                <button onClick={onClick} css={toggleButtonCSS} />
+                {visibleToggleBtn && <button onClick={onClick} css={toggleButtonCSS} />}
             </div>
             <div>
                 <TodoTextArea
@@ -51,5 +53,8 @@ const prefixWrapperCSS = css`
   justify-content: space-between;
   align-items: flex-end;
 `;
-const toggleButtonCSS = css`width: 20px; height: 20px;`;
+const toggleButtonCSS = css`
+  width: 20px;
+  height: 20px;
+`;
 const todoTextAreaCSS = css`color: #FFF;`;
