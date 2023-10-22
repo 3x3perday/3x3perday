@@ -2,7 +2,7 @@
 
 import React, { DOMAttributes, InputHTMLAttributes } from 'react';
 import { css } from "@emotion/react";
-import TodoTextArea from '@/components/Input/TodoTextArea';
+import { TodoTextArea } from '@/components/Input/TodoTextArea';
 
 interface Props {
     value: string;
@@ -13,7 +13,7 @@ interface Props {
 }
 
 /**
- * MainTodo Component 입니다.
+ * TodoTextInput Component 입니다.
  * @param value Todo 입력 값
  * @param onChange Todo 변경 이벤트
  * @param onClickToggle 토글 버튼 클릭 이벤트
@@ -21,7 +21,7 @@ interface Props {
  * @param visibleToggleBtn 토글 버튼을 보이거나 숨깁니다.
  */
 
-export default function MainTodo(
+export const TodoTextInput = (
     {
         value,
         onClickToggle,

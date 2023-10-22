@@ -3,7 +3,7 @@
 import {css} from "@emotion/react";
 import React, { useState } from "react";
 import Navbar from "@/components/navbar";
-import MainTodo from "@/components/MainTodo";
+import { TodoTextInput } from '@/components/Input';
 
 export default function Home() {
 	const [todo, setTodo] = useState("");
@@ -11,12 +11,12 @@ export default function Home() {
 	return (
 		<main css={inner}>
 			<Navbar />
-			<MainTodo
+			<TodoTextInput
 				value={todo}
 				onChange={e => setTodo(e.target.value)}
 				onClickToggle={e => console.log(e)}
 			/>
-			<MainTodo
+			<TodoTextInput
 				prefixText={"2."}
 				value={todo2}
 				onChange={e => setTodo2(e.target.value)}
