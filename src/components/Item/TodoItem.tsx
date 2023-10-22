@@ -1,18 +1,20 @@
 'use client';
 
-import { TodoTextInput, TodoTextInputProps } from '@/components/Input';
+import { MainTodo, MainTodoProps } from '@/components/Input';
 import { css } from '@emotion/react';
 import React from 'react';
 import { Todo3x3Model } from '@/types/todo';
+import { SubTodo } from '@/components/Todo/SubTodo';
 
 export interface TodoProps extends Todo3x3Model {
-    visibleToggleBtn?: TodoTextInputProps['visibleToggleBtn'];
+    visibleToggleBtn?: MainTodoProps['visibleToggleBtn'];
     onChangeMainTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => void;
     onChangeSubTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => void;
     subTodoMaxLength?: number;
     onClickAddSubTodo?: (id: number) => void;
     onClickToggle?: (mainTodoId: number, visibleSubTodoState: boolean) => void;
     visibleSubTodo?: boolean;
+    activeFingerBtn?: boolean;
     editable?: boolean;
 }
 
@@ -36,48 +38,53 @@ export const TodoItem = (
         mainTodo,
         subTodos,
         subTodoMaxLength = 3,
+        activeFingerBtn = false,
         visibleToggleBtn = false,
+
         onChangeMainTodo,
         onChangeSubTodo,
         onClickAddSubTodo,
         onClickToggle,
+
         visibleSubTodo = false,
         editable = false,
     }: TodoProps) => {
     return (
         <div>
-            <TodoTextInput
-                prefixText={`${id}.`}
-                value={mainTodo.content}
-                onChange={e => onChangeMainTodo && onChangeMainTodo(e, id)}
-                visibleToggleBtn={visibleToggleBtn}
-                onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}
-                editable={editable}
-            />
-            {
-                visibleSubTodo && subTodos.map((subTodo, subTodoId) => (
-                    <div
-                        key={subTodoId}
-                        css={css`margin-left: 20px`}
-                    >
-                        <TodoTextInput
-                            prefixText={`${subTodoId + 1})`}
-                            value={subTodo.content}
-                            onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
-                            editable={editable}
-                        />
-                    </div>
-                ))
-            }
-            {
-                editable && visibleSubTodo && (
-                    <button
-                        onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
-                        css={addButtonCSS(subTodos.length, subTodoMaxLength)}
-                    >+
-                    </button>
-                )
-            }
+            {/*<MainTodo*/}
+            {/*    prefixText={`${id}.`}*/}
+            {/*    value={mainTodo.content}*/}
+            {/*    onChange={e => onChangeMainTodo && onChangeMainTodo(e, id)}*/}
+            {/*    visibleToggleBtn={visibleToggleBtn}*/}
+            {/*    activeToggleBtn={visibleSubTodo}*/}
+            {/*    activeFingerBtn={activeFingerBtn}*/}
+            {/*    onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}*/}
+            {/*    editable={editable}*/}
+            {/*/>*/}
+            {/*{*/}
+            {/*    visibleSubTodo && subTodos.map((subTodo, subTodoId) => (*/}
+            {/*        <div*/}
+            {/*            key={subTodoId}*/}
+            {/*            css={css`margin-left: 20px`}*/}
+            {/*        >*/}
+            {/*            <SubTodo*/}
+            {/*                prefixText={subTodoId}*/}
+            {/*                value={subTodo.content}*/}
+            {/*                onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}*/}
+            {/*                editable={editable}*/}
+            {/*            />*/}
+            {/*        </div>*/}
+            {/*    ))*/}
+            {/*}*/}
+            {/*{*/}
+            {/*    editable && visibleSubTodo && (*/}
+            {/*        <button*/}
+            {/*            onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}*/}
+            {/*            css={addButtonCSS(subTodos.length, subTodoMaxLength)}*/}
+            {/*        >+*/}
+            {/*        </button>*/}
+            {/*    )*/}
+            {/*}*/}
         </div>
     )
 }
