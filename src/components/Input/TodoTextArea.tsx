@@ -25,6 +25,7 @@ const textStyle = `
     text-transform: uppercase;
     resize: none;
     outline: none;
+    background-color: transparent;
 `;
 export const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
     {
