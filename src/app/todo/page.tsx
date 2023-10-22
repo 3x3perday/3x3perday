@@ -1,22 +1,31 @@
 'use client';
 
 import {css} from "@emotion/react";
-import React from "react";
+import React, { useState } from "react";
 import Navbar from "@/components/navbar";
-import MainTodo from "@/components/mainTodo";
+import MainTodo from "@/components/MainTodo";
 
 export default function Home() {
-
+	const [todo, setTodo] = useState("");
+	const [todo2, setTodo2] = useState("");
 	return (
-		<main css={css`
-      padding: 48px 32px;
-		`}>
-			<div css={css`
-        padding-bottom: 26px;
-			`}>
-				<Navbar/>
-			</div>
-			<MainTodo/>
+		<main css={inner}>
+			<Navbar />
+			<MainTodo
+				value={todo}
+				onChange={e => setTodo(e.target.value)}
+				onClick={e => console.log(e)}
+			/>
+			<MainTodo
+				prefixText={"2."}
+				value={todo2}
+				onChange={e => setTodo2(e.target.value)}
+				onClick={e => console.log(e)}
+				visibleToggleBtn
+			/>
 		</main>
 	);
 }
+const inner = css`
+      padding: 48px 32px;
+    `;
