@@ -1,27 +1,56 @@
+"use client";
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { css } from "@emotion/react";
-import { dateToStr } from "@/utils/date";
-import { TodoModel } from "@/types/todo";
+import dayjs from "dayjs";
 
 interface Props {
-  date: Date;
-  todos: TodoModel[];
+  date: string;
+  setDate: React.Dispatch<React.SetStateAction<string>>;
+  // todos: TodoPageModel[];
 }
 
-export default function Navbar(props: Props) {
+export default function Navbar({ date, setDate }: Props) {
+  const [isToday, setIsToday] = useState(true);
+
+  useEffect(() => {
+    const today = dayjs().format("YYYY-MM-DD");
+    if (date === today) return setIsToday(true);
+    setIsToday(false);
+  }, [date]);
+
+  const goYesterday = () => {
+    const yesterday = dayjs(date).subtract(1, "day").format("YYYY-MM-DD");
+    setDate(yesterday);
+  };
+  const goToday = () => {
+    const today = dayjs().format("YYYY-MM-DD");
+    setDate(today);
+  };
+
   return (
     <div css={styles}>
-      <div>
+      {isToday && (
         <Image
-          src="/arrow.svg"
+          onClick={goYesterday}
+          src="/icon/arrow_left.png"
           width={20}
           height={25}
           alt="arrow"
-          className="arrow"
+          className="arrow_left"
         />
-      </div>
-      <div className="date">{dateToStr(props.date)}</div>
+      )}
+      <div className="date">{date}</div>
+      {!isToday && (
+        <Image
+          onClick={goToday}
+          src="/icon/arrow_right.png"
+          width={20}
+          height={25}
+          alt="arrow"
+          className="arrow_right"
+        />
+      )}
     </div>
   );
 }
@@ -33,10 +62,16 @@ const styles = css`
   position: relative;
   height: 60px;
   background-color: #3a3a39;
-  .arrow {
+  .arrow_left {
     cursor: pointer;
     position: absolute;
     left: 20px;
+    top: 20px;
+  }
+  .arrow_right {
+    cursor: pointer;
+    position: absolute;
+    right: 20px;
     top: 20px;
   }
   .date {

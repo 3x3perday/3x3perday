@@ -1,8 +1,8 @@
 import { TodoPage, TodoPageModel } from "@/types/todo";
 import dayjs from "dayjs";
 
-const todo = {
-  addTodayTodo: (todos: TodoPageModel[]) => {
+export const todo = {
+  getTodosWithNew: (todos: TodoPageModel[]) => {
     const today = dayjs().format("YYYY-MM-DD");
 
     const todayTodo = todos.find((todo) => todo.date === today);

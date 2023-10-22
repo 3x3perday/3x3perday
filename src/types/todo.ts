@@ -10,12 +10,9 @@ export interface Todo3x3Model {
 }
 
 export interface TodoPageModel {
-  date: Date;
+  date: string;
   todos: Todo3x3Model[];
 }
-
-
-
 
 // ========================================
 export class Todo implements TodoModel {
@@ -27,11 +24,10 @@ export class Todo implements TodoModel {
   }
 }
 
-
 export class TodoPage implements TodoPageModel {
-  date: Date;
+  date: string;
   todos: Todo3x3Model[];
-  constructor(date: Date) {
+  constructor(date: string) {
     this.date = date;
     this.todos = [
       {
@@ -53,65 +49,46 @@ export class TodoPage implements TodoPageModel {
   }
 }
 
+export const mocktodos = {
+  date: "2021-01-01",
+  todos: [
+    {
+      id: 1,
+      mainTodo: new Todo("todo1"),
+      subTodos: [new Todo(), new Todo(), new Todo()],
+    },
+    {
+      id: 2,
+      mainTodo: new Todo("todo2"),
+      subTodos: [new Todo(), new Todo(), new Todo()],
+    },
+    {
+      id: 3,
+      mainTodo: new Todo("todo3"),
+      subTodos: [new Todo(), new Todo(), new Todo()],
+    },
+  ],
+};
+
 export const mockTodoData = [
   {
     date: "2021-01-01",
     todos: [
       {
         id: 1,
-        mainTodo: "todo1",
-        subTodos: ["subtodo1", "subtodo2", "subtodo3"],
+        mainTodo: new Todo("todo1"),
+        subTodos: [new Todo(), new Todo(), new Todo()],
       },
       {
         id: 2,
-        mainTodo: "todo2",
-        subTodos: ["subtodo1", "subtodo2", "subtodo3"],
+        mainTodo: new Todo(),
+        subTodos: [new Todo(), new Todo()],
       },
       {
         id: 3,
-        mainTodo: "todo3",
-        subTodos: ["subtodo1", "subtodo2", "subtodo3"],
+        mainTodo: new Todo(),
+        subTodos: [new Todo()],
       },
     ],
   },
-  {
-    date: "2023-10-21",
-    todos: [
-      {
-        id: 1,
-        mainTodo: "todo10",
-        subTodos: ["subtodo10", "subtodo20", "subtodo30"],
-      },
-      {
-        id: 2,
-        mainTodo: "todo2",
-        subTodos: ["subtodo1", "subtodo2"],
-      },
-      {
-        id: 3,
-        mainTodo: "todo3",
-        subTodos: ["subtodo1"],
-      },
-    ],
-  },
-  {
-    date: "2023-10-22",
-    todos: [
-      {
-        id: 1,
-        mainTodo: "todo10",
-        subTodos: ["subtodo10", "subtodo20", "subtodo30"],
-      },
-      {
-        id: 2,
-        mainTodo: "todo2",
-        subTodos: ["subtodo1", "subtodo2"],
-      },
-      {
-        id: 3,
-        mainTodo: "todo3",
-        subTodos: ["subtodo1"],
-      },
-    ],
-  },
-];
+] as TodoPageModel[];
