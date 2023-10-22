@@ -13,6 +13,7 @@ export interface MainTodoProps {
     onClickToggle?: DOMAttributes<HTMLButtonElement>['onChange'];
     prefixTodoNumber?: 1 | 2 | 3;
     visibleToggleBtn?: boolean;
+    activeToggleBtn?: boolean;
     editable?: boolean;
     checked?: boolean;
     onClickCheck?: () => void;
@@ -34,6 +35,7 @@ export const MainTodo = (
         onChange,
         prefixTodoNumber = 1,
         visibleToggleBtn = false,
+        activeToggleBtn = false,
         editable = true,
         checked = false,
         onClickCheck
@@ -71,7 +73,11 @@ export const MainTodo = (
                     onChange={onChange}
                     css={todoTextAreaCSS}
                 />
-                {visibleToggleBtn && <button onClick={onClickToggle} css={toggleButtonCSS} />}
+                {visibleToggleBtn && (
+                    <Button onClick={onClickToggle} css={toggleButtonCSS}>
+                        <Icon name={activeToggleBtn ? 'arrow-down' : 'arrow-up'} width={'19px'} height={'13px'} />
+                    </Button>
+                )}
             </div>
         </div>
     );

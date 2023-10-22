@@ -1,2 +1,2 @@
 export * from "./TodoTextArea"
-export * from "./TodoTextInput"
+export * from "../Todo/MainTodo"
