@@ -30,7 +30,7 @@ export default function MainTodo(
                 <TodoTextArea
                     value={value}
                     onChange={onChange}
-                    css={css`color: #FFF;`}
+                    css={todoTextAreaCSS}
                 />
             </div>
         </div>
@@ -52,3 +52,4 @@ const prefixWrapperCSS = css`
   align-items: flex-end;
 `;
 const toggleButtonCSS = css`width: 20px; height: 20px;`;
+const todoTextAreaCSS = css`color: #FFF;`;
