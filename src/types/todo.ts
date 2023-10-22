@@ -10,26 +10,7 @@ export interface Todo3x3Model {
 }
 
 export interface TodoPageModel {
-  date: Date;
-  todos: Todo3x3Model[];
-}
-
-
-
-
-// ========================================
-export class Todo implements TodoModel {
-  done: boolean;
-  content: string;
-  constructor(content?: string) {
-    this.done = false;
-    this.content = content || "";
-  }
-}
-
-
-export class TodoPage implements TodoPageModel {
-  date: Date;
+  date: string;
   todos: Todo3x3Model[];
   constructor(date: Date) {
     this.date = date;
@@ -53,44 +34,80 @@ export class TodoPage implements TodoPageModel {
   }
 }
 
+// ========================================
+export class Todo implements TodoModel {
+  done: boolean;
+  content: string;
+  constructor(content?: string) {
+    this.done = false;
+    this.content = content || "";
+  }
+}
+
+export class TodoPage implements TodoPageModel {
+  date: string;
+  todos: Todo3x3Model[];
+  constructor(date: string) {
+    this.date = date;
+    this.todos = [
+      {
+        id: 0,
+        mainTodo: new Todo(),
+        subTodos: [new Todo()],
+      },
+      {
+        id: 1,
+        mainTodo: new Todo(),
+        subTodos: [new Todo()],
+      },
+      {
+        id: 2,
+        mainTodo: new Todo(),
+        subTodos: [new Todo()],
+      },
+    ];
+  }
+}
+
+export const mocktodos = {
+  date: "2021-01-01",
+  todos: [
+    {
+      id: 1,
+      mainTodo: new Todo("todo1"),
+      subTodos: [new Todo(), new Todo(), new Todo()],
+    },
+    {
+      id: 2,
+      mainTodo: new Todo("todo2"),
+      subTodos: [new Todo(), new Todo(), new Todo()],
+    },
+    {
+      id: 3,
+      mainTodo: new Todo("todo3"),
+      subTodos: [new Todo(), new Todo(), new Todo()],
+    },
+  ],
+};
+
 export const mockTodoData = [
   {
     date: "2021-01-01",
     todos: [
       {
         id: 1,
-        mainTodo: "todo1",
-        subTodos: ["subtodo1", "subtodo2", "subtodo3"],
+        mainTodo: new Todo("todo1"),
+        subTodos: [new Todo(), new Todo(), new Todo()],
       },
       {
         id: 2,
-        mainTodo: "todo2",
-        subTodos: ["subtodo1", "subtodo2", "subtodo3"],
+        mainTodo: new Todo(),
+        subTodos: [new Todo(), new Todo()],
       },
       {
         id: 3,
-        mainTodo: "todo3",
-        subTodos: ["subtodo1", "subtodo2", "subtodo3"],
-      },
-    ],
-  },
-  {
-    date: "2023-10-21",
-    todos: [
-      {
-        id: 1,
-        mainTodo: "todo10",
-        subTodos: ["subtodo10", "subtodo20", "subtodo30"],
-      },
-      {
-        id: 2,
-        mainTodo: "todo2",
-        subTodos: ["subtodo1", "subtodo2"],
-      },
-      {
-        id: 3,
-        mainTodo: "todo3",
-        subTodos: ["subtodo1"],
+        mainTodo: new Todo(),
+        subTodos: [new Todo()],
       },
     ],
   },
@@ -99,19 +116,19 @@ export const mockTodoData = [
     todos: [
       {
         id: 1,
-        mainTodo: "todo10",
-        subTodos: ["subtodo10", "subtodo20", "subtodo30"],
+        mainTodo: new Todo("todo13"),
+        subTodos: [new Todo("todo1"), new Todo("todo12"), new Todo("todo15")],
       },
       {
         id: 2,
-        mainTodo: "todo2",
-        subTodos: ["subtodo1", "subtodo2"],
+        mainTodo: new Todo("todo14"),
+        subTodos: [new Todo(), new Todo()],
       },
       {
         id: 3,
-        mainTodo: "todo3",
-        subTodos: ["subtodo1"],
+        mainTodo: new Todo("todo16"),
+        subTodos: [new Todo()],
       },
     ],
   },
-];
+] as TodoPageModel[];

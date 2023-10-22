@@ -1,12 +1,10 @@
-export const dateToStr = (date: Date) => {
-  const week = ["일", "월", "화", "수", "목", "금", "토"];
+import dayjs from "dayjs";
 
-  const localTime = date.toLocaleTimeString();
-
-  const year = date.getFullYear();
-  const month = date.getMonth() + 1;
-  const day = date.getDate();
-  const dayName = week[date.getDay()];
-
-  return year + "- " + month + "- " + day;
+export const Date = {
+  getToday: () => {
+    return dayjs().format("YYYY-MM-DD");
+  },
+  getYesterday: (today: string) => {
+    return dayjs(today).subtract(1, "day").format("YYYY-MM-DD");
+  },
 };
