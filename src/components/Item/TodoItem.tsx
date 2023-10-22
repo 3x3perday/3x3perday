@@ -73,7 +73,7 @@ export const TodoItem = (
                 visibleSubTodo && (
                     <button
                         onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
-                        css={addButtonCSS(subTodos.length, 3)}
+                        css={addButtonCSS(subTodos.length, subTodoMaxLength)}
                     >+
                     </button>
                 )
@@ -82,7 +82,7 @@ export const TodoItem = (
     )
 }
 
-const addButtonCSS = (todoLength: number, maxLength: number) => css`
+const addButtonCSS = (todoLength: number, maxLength?: number) => css`
   display: ${todoLength === maxLength ? 'none' : 'block'};
   width: 30px;
   height: 30px;
