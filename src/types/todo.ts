@@ -55,16 +55,16 @@ export const mocktodos = {
     {
       id: 1,
       mainTodo: new Todo("todo1"),
-      subTodos: [new Todo(), new Todo(), new Todo()],
+      subTodos: [new Todo('sub01')],
     },
     {
       id: 2,
       mainTodo: new Todo("todo2"),
-      subTodos: [new Todo(), new Todo(), new Todo()],
+      subTodos: [],
     },
     {
       id: 3,
-      mainTodo: new Todo("todo3"),
+      mainTodo: new Todo(),
       subTodos: [new Todo(), new Todo(), new Todo()],
     },
   ],
