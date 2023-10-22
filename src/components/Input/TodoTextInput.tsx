@@ -28,7 +28,7 @@ export const TodoTextInput = (
         onChange,
         prefixText = "1.",
         visibleToggleBtn = false,
-    }: Props) {
+    }: Props) => {
     return (
         <div css={todoContainerCSS}>
             <div css={prefixWrapperCSS}>

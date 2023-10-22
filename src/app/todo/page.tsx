@@ -27,5 +27,5 @@ export default function Home() {
 	);
 }
 const inner = css`
-      padding: 48px 32px;
-    `;
+  padding: 48px 32px;
+`;
