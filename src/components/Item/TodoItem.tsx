@@ -13,6 +13,7 @@ export interface TodoProps extends Todo3x3Model {
     onClickAddSubTodo?: (id: number) => void;
     onClickToggle?: (mainTodoId: number, visibleSubTodoState: boolean) => void;
     visibleSubTodo?: boolean;
+    editable?: boolean;
 }
 
 /**
@@ -41,6 +42,7 @@ export const TodoItem = (
         onClickAddSubTodo,
         onClickToggle,
         visibleSubTodo = false,
+        editable = false,
     }: TodoProps) => {
     return (
         <div>
@@ -50,6 +52,7 @@ export const TodoItem = (
                 onChange={e => onChangeMainTodo(e, id)}
                 visibleToggleBtn={visibleToggleBtn}
                 onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}
+                editable={editable}
             />
             {
                 visibleSubTodo && subTodos.map((subTodo, subTodoId) => (
@@ -61,6 +64,7 @@ export const TodoItem = (
                             prefixText={`${subTodoId + 1})`}
                             value={subTodo.content}
                             onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
+                            editable={editable}
                         />
                     </div>
                 ))
@@ -69,7 +73,7 @@ export const TodoItem = (
                 visibleSubTodo && (
                     <button
                         onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
-                        css={addButtonCSS(subTodos.length, subTodoMaxLength)}
+                        css={addButtonCSS(subTodos.length, 3)}
                     >+
                     </button>
                 )
