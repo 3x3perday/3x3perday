@@ -4,7 +4,7 @@ import React, { DOMAttributes, InputHTMLAttributes } from 'react';
 import { css } from "@emotion/react";
 import { TodoTextArea } from '@/components/Input/TodoTextArea';
 
-interface Props {
+export interface TodoTextInputProps {
     value: string;
     onChange: InputHTMLAttributes<HTMLTextAreaElement>['onChange'];
     onClickToggle?: DOMAttributes<HTMLButtonElement>['onChange'];
@@ -28,7 +28,7 @@ export const TodoTextInput = (
         onChange,
         prefixText = "1.",
         visibleToggleBtn = false,
-    }: Props) => {
+    }: TodoTextInputProps) => {
     return (
         <div css={todoContainerCSS}>
             <div css={prefixWrapperCSS}>
