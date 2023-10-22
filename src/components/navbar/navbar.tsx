@@ -2,9 +2,11 @@ import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { css } from "@emotion/react";
 import { dateToStr } from "@/utils/date";
+import { TodoModel } from "@/types/todo";
 
 interface Props {
   date: Date;
+  todos: TodoModel[];
 }
 
 export default function Navbar(props: Props) {
