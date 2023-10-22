@@ -26,6 +26,7 @@ const Modal = (props: Props) => {
 };
 
 const modalCSS = (size: modalType) => css`
+  z-index: 1000;
   width: ${MODAL_SIZE[size]}px;
   height: auto;
   min-height: 200px;
