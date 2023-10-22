@@ -10,7 +10,7 @@ export interface Todo3x3Model {
     subTodos: string[];
 }
 
-interface TodoProps extends Todo3x3Model {
+export interface TodoProps extends Todo3x3Model {
     visibleToggleBtn?: TodoTextInputProps['visibleToggleBtn'];
     onChangeMainTodo: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => void;
     onChangeSubTodo: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => void;
