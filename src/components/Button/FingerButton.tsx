@@ -3,7 +3,7 @@ import { Icon, ICON_MAP } from '@/components/Icon/Icon';
 import { css } from '@emotion/react';
 
 interface FingerButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    fingerCount: 1 | 2 | 3;
+    fingerCount?: 1 | 2 | 3;
     isActive: boolean;
 }
 
@@ -52,7 +52,7 @@ const InActiveFingerMap: FingerIconType = {
     }
 }
 
-const FingerButton = ({ fingerCount, isActive, ...props }: FingerButtonProps) => {
+const FingerButton = ({ fingerCount = 1, isActive, ...props }: FingerButtonProps) => {
     const options = isActive ? ActiveFingerMap[fingerCount] : InActiveFingerMap[fingerCount];
     return (
         <button css={buttonStyleCSS} {...props}>
