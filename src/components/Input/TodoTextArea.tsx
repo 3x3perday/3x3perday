@@ -1,9 +1,11 @@
 'use client'
-import React, { Attributes, ChangeEvent, forwardRef, InputHTMLAttributes } from 'react';
+import React, { Attributes, ChangeEvent, forwardRef, InputHTMLAttributes, useEffect, useRef, useState } from 'react';
 import { css as style } from '@emotion/react';
-import { resizeInputHeight } from '@/utils/dom';
+import { Simulate } from 'react-dom/test-utils';
+
 interface Props extends InputHTMLAttributes<HTMLTextAreaElement>, Attributes {
     width?: string;
+    height?: string;
     isResizeHeight?: boolean;
 }
 
@@ -15,40 +17,49 @@ const invisibleScroll = `
     }
 `;
 const textStyle = `
+    font-family: Pretendard;
+    font-size: 2.8125rem;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 3.3125rem; /* 117.778% */
     text-transform: uppercase;
-    font-size: 6.25rem;
-    display: flex;
-    flex-direction: row;
-    background-color: transparent;
     resize: none;
     outline: none;
-    border: 0;
 `;
 export const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
     {
         width = '100%',
+        height = '169px',
         isResizeHeight = true,
         css = style`
             ${isResizeHeight && invisibleScroll}
             ${textStyle}
             width: ${width};
+            height: ${height};
         `,
         onChange,
         ...props
     }, ref) => {
+    const textAreaRef = useRef<HTMLTextAreaElement | unknown>(ref);
+    const [maxHeight, setMaxHeight] = useState(0);
+
     const onChangeTodo = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        if (isResizeHeight) {
-            resizeInputHeight(e);
+        if (e.target.scrollHeight === Number(maxHeight)) {
+            onChange && onChange(e);
         }
-        onChange && onChange(e);
     }
+
+    useEffect(() => {
+        setMaxHeight(textAreaRef.current.clientHeight)
+    }, []);
+
     return (
         <textarea
-            ref={ref}
+            {...props}
+            ref={textAreaRef}
             rows={1}
             onChange={onChangeTodo}
             css={css}
-            {...props}
         />
     )
 })
