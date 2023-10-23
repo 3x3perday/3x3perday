@@ -12,8 +12,8 @@ export interface TodoProps extends Todo3x3Model {
     onClickToggle: (mainTodoId: number, visibleSubTodoState: boolean) => void;
     onClickAddSubTodo: (id: number) => void;
 
-    onClickCheckMainTodo: () => void;
-    onClickCheckSubTodo: () => void;
+    onClickCheckMainTodo?: () => void;
+    onClickCheckSubTodo?: () => void;
 
     subTodoMaxLength?: number;
     visibleSubTodo?: boolean;
