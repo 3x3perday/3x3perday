@@ -196,7 +196,7 @@ export default function Home() {
                             onClick={onClickTodo(todo.id)}
                           >
                             <MainTodo
-                              prefixTodoNumber={todo.id}
+                              prefixTodoNumber={todo.id + 1}
                               value={todo.mainTodo.content}
                               editable={false}
                             />
