@@ -13,7 +13,7 @@
 // } from "@hello-pangea/dnd";
 // import Image from "next/image";
 // import React from "react";
-//
+
 // interface Props {
 //   todos: TodoView[];
 //   setTodos: React.Dispatch<React.SetStateAction<TodoView[]>>;
@@ -26,14 +26,14 @@
 //   const onDragEnd = ({ source, destination }: DropResult) => {
 //     if (!destination) return;
 //     const _items = JSON.parse(JSON.stringify(todos)) as typeof todos;
-//
+
 //     const [targetItem] = _items.splice(source.index, 1);
-//
+
 //     _items.splice(destination.index, 0, targetItem);
-//
+
 //     setTodos(_items);
 //   };
-//
+
 //   const onClickToggle = (mainTodoId: number, state: boolean) => {
 //     setTodos((prevState) =>
 //       prevState.map((itemm) => {
@@ -44,11 +44,11 @@
 //       })
 //     );
 //   };
-//
+
 //   const onClickTodo = (todoId: number) => () => {
 //     console.log(todoId);
 //   };
-//
+
 //   return (
 //     <div css={inner}>
 //       {/* {todos.map((todo, index) => (
@@ -78,7 +78,7 @@
 //           )}
 //         </div>
 //       ))} */}
-//
+
 //       <div>
 //         <DragDropContext onDragEnd={onDragEnd}>
 //           <Droppable droppableId="droppable">
@@ -105,7 +105,7 @@
 //                             alt="drag"
 //                           />
 //                         </div>
-//
+
 //                         {todo.mainTodo.content !== "" ? (
 //                           <TodoItem
 //                             id={todo.id}
@@ -141,7 +141,7 @@
 //     </div>
 //   );
 // };
-//
+
 // export default Todolist;
 // const inner = css`
 //   display: flex;
