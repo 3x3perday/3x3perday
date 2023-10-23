@@ -80,7 +80,15 @@ export default function Home() {
                 }]));
             }
             alert('저장되었습니다.')
-            router.replace('/todo')
+            router.push('/todo')
+        } else {
+            const saveData:TodoPage = {
+                date: today,
+                todos: todos
+            }
+            localStorage.setItem("todos", JSON.stringify([saveData]));
+            alert('저장되었습니다.')
+            router.push('/todo')
         }
     }
 
@@ -93,8 +101,7 @@ export default function Home() {
                 const getTodosData = todoData.todos as TodoView[];
                 setTodos(getTodosData)
             } else {
-                alert('해당 정보를 찾을 수 없습니다.')
-                router.back();
+                setTodos(convertTodoView(initializeTodoData.todos))
             }
         }
     }, []);

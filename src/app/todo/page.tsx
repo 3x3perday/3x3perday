@@ -1,11 +1,12 @@
 "use client";
 
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useRef, useState } from "react";
 import {
-	mockTodoData,
-	mocktodos,
-	Todo3x3Model,
-	TodoPageModel,
+  initializeTodoData,
+  mockTodoData,
+  mocktodos,
+  Todo3x3Model, TodoPage,
+  TodoPageModel,
 } from "@/types/todo";
 import {Date} from "@/utils/date";
 import {todo} from "@/utils/todo";
@@ -23,7 +24,8 @@ import {
 import Image from "next/image";
 import {useDnD} from "@/utils/dnd";
 import styled from "@emotion/styled";
-import {useRouter} from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
+import dayjs from 'dayjs';
 
 
 interface TodoView extends Todo3x3Model {
@@ -38,14 +40,12 @@ const convertTodoView = (todos: Todo3x3Model[]): TodoView[] => {
 };
 
 export default function Home() {
-	const router = useRouter();
-	const [entireTodos, setEntireTodos] = useState<TodoPageModel[]>(mockTodoData); // 전체 데이터
-	const [todoPage, setTodoPage] = useState<TodoPageModel>(mocktodos); // 오늘의 데이터
+  const router = useRouter();
+  // const [entireTodos, setEntireTodos] = useState<TodoPageModel[]>(mockTodoData); // 전체 데이터
+  // const [todoPage, setTodoPage] = useState<TodoPageModel>(mocktodos); // 오늘의 데이터
 
-	const [date, setDate] = useState(Date.getToday()); // 날짜
-	const [todos, setTodos] = useState<TodoView[]>(
-		convertTodoView(mocktodos.todos)
-	);
+  const [date, setDate] = useState(Date.getToday()); // 날짜
+  const [todos, setTodos] = useState<TodoView[]>([]);
 
 	const onClickTodo = (todoId: number) => () => {
 		router.push("/todo/edit");
@@ -62,48 +62,89 @@ export default function Home() {
 		);
 	};
 
-	const onClickCheckMainTodo = (todoId: number) => () => {
-		setTodos((prevState) =>
-			prevState.map((item) => {
-				if (item.id === todoId) {
-					item.mainTodo.done = !item.mainTodo.done;
-				}
-				return item;
-			})
-		);
-	};
-	const onClickCheckSubTodo = (mainTodoId: number, subTodoId: number) => {
-		const receiveTodos: TodoView[] = [...todos];
-		receiveTodos[mainTodoId].subTodos = receiveTodos[mainTodoId].subTodos.map(
-			(todo, i) => {
-				if (i === subTodoId) {
-					return {
-						...todo,
-						done: !todo.done,
-					};
-				}
-				return todo;
-			}
-		);
-		setTodos(receiveTodos);
-	};
+  const onClickCheckMainTodo = (todoId: number) => () => {
+    setTodos((prevState) =>
+      prevState.map((item) => {
+        if (item.id === todoId) {
+          item.mainTodo.done = !item.mainTodo.done;
+        }
+        return item;
+      })
+    );
+  };
+  const onClickCheckSubTodo = (mainTodoId: number, subTodoId: number) => {
+    const receiveTodos: TodoView[] = [...todos];
+    receiveTodos[mainTodoId].subTodos = receiveTodos[mainTodoId].subTodos.map(
+      (todo, i) => {
+        if (i === subTodoId) {
+          return {
+            ...todo,
+            done: !todo.done,
+          };
+        }
+        return todo;
+      }
+    );
+    setTodos(receiveTodos);
+  };
+  const path = usePathname();
+  const today = useRef(dayjs().format('YYYY-MM-DD')).current;
+  const [currentDate, setCurrentDate] = useState(dayjs().format('YYYY-MM-DD'));
 
-	useEffect(() => {
-		// 찾는 날짜가 전체 데이터에 있는지 확인
-		const _todos = entireTodos.find((entireTodo) => entireTodo.date === date);
-		if (_todos) return setTodoPage(_todos);
+  useEffect(() => {
+    localStorage.setItem('todos', JSON.stringify(mockTodoData));
+  }, []);
 
-		// 찾는 날짜가 전체 데이터에 없으면 새로운 데이터를 만들어서 전체 데이터에 추가
-		const newEntireTodos = todo.getTodosWithNew(entireTodos, date);
-		setEntireTodos(newEntireTodos);
 
-		// 전체 데이터에서 찾은 날짜의 데이터를 todoPage 에 넣어준다.
-		const _newTodos = newEntireTodos.find(
-			(entireTodo) => entireTodo.date === date
-		);
+  useEffect(() => {
+      const getLocalData = localStorage.getItem('todos');
+      if(getLocalData) {
+        const getLocalTodoPageData:TodoPage[] = JSON.parse(getLocalData);
+        const todoData:TodoPage|undefined = getLocalTodoPageData.find(val => val.date === currentDate);
+        if(todoData) {
+          const getTodosData = todoData.todos as TodoView[];
+          setTodos(getTodosData)
+        } else {
+          setTodos(convertTodoView(initializeTodoData.todos))
+        }
+      } else {
+          localStorage.setItem("todos", JSON.stringify(mockTodoData));
+      }
+  }, [path]);
 
-		if (_newTodos) setTodoPage(_newTodos);
-	});
+  useEffect(() => {
+    if(today !== currentDate) {
+      setCurrentDate(date);
+      const findTodo = mockTodoData.find(val => val.date === date)?.todos
+      if(findTodo) {
+        setTodos(convertTodoView(findTodo))
+      }
+    }
+  }, [date]);
+
+  // useEffect(() => {
+  //     localStorage.setItem("todos", JSON.stringify(convertTodoView(mocktodos.todos)));
+  //     setTodos(convertTodoView(mocktodos.todos));
+  // }, []);
+
+
+  // useEffect(() => {
+  //   // const getLocalTodoData = localStorage.getItem("todos");
+  //   // 찾는 날짜가 전체 데이터에 있는지 확인
+  //   const _todos = entireTodos.find((entireTodo) => entireTodo.date === date)?.todos;
+  //   if (_todos) return setTodos(convertTodoView(_todos));
+  //
+  //   // 찾는 날짜가 전체 데이터에 없으면 새로운 데이터를 만들어서 전체 데이터에 추가
+  //   const newEntireTodos = todo.getTodosWithNew(entireTodos, date);
+  //   setEntireTodos(newEntireTodos);
+  //
+  //   // 전체 데이터에서 찾은 날짜의 데이터를 todoPage 에 넣어준다.
+  //   const _newTodos = newEntireTodos.find(
+  //     (entireTodo) => entireTodo.date === date
+  //   )?.todos;
+  //
+  //   if (_newTodos) setTodos(convertTodoView(_newTodos));
+  // }, [date, entireTodos, path]);
 
 	//================================================================================================
 	useDnD();
@@ -118,28 +159,28 @@ export default function Home() {
 		setTodos(_items);
 	};
 
-	useEffect(() => {
-		if (entireTodos.length === 0) {
-			const data = localStorage.getItem("todos");
+  // useEffect(() => {
+  //   if (entireTodos.length === 0) {
+  //     const data = localStorage.getItem("todos");
+  //
+  //     if (data) {
+  //       setEntireTodos(JSON.parse(data));
+  //     } else setEntireTodos(mockTodoData);
+  //
+  //     return;
+  //   }
+  //   localStorage.setItem("todos", JSON.stringify(entireTodos));
+  // }, [entireTodos, path]);
 
-			if (data) {
-				setEntireTodos(JSON.parse(data));
-			} else setEntireTodos(mockTodoData);
-
-			return;
-		}
-		localStorage.setItem("todos", JSON.stringify(entireTodos));
-	}, [entireTodos]);
-
-	useEffect(() => {
-		const newTodos = entireTodos.map((data) => {
-			if (data.date !== date) return data;
-
-			return {...data, todos};
-		});
-		setEntireTodos(newTodos);
-		console.log("todos", newTodos);
-	}, [todos]);
+  // useEffect(() => {
+  //   const newTodos = entireTodos.map((data) => {
+  //     if (data.date !== date) return data;
+  //
+  //     return { ...data, todos };
+  //   });
+  //   setEntireTodos(newTodos);
+  //   console.log("todos", newTodos);
+  // }, [todos]);
 
 
 	// =================================================================================================
