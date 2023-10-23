@@ -80,7 +80,15 @@ export default function Home() {
 				}]));
 			}
 			alert('저장되었습니다.');
-			router.replace('/todo');
+			router.push('/todo')
+		} else {
+			const saveData: TodoPage = {
+				date: today,
+				todos: todos
+			}
+			localStorage.setItem("todos", JSON.stringify([saveData]));
+			alert('저장되었습니다.')
+			router.push('/todo')
 		}
 	};
 
@@ -93,8 +101,7 @@ export default function Home() {
 				const getTodosData = todoData.todos as TodoView[];
 				setTodos(getTodosData);
 			} else {
-				alert('해당 정보를 찾을 수 없습니다.');
-				router.back();
+				setTodos(convertTodoView(initializeTodoData.todos))
 			}
 		}
 	}, []);
@@ -147,42 +154,42 @@ export default function Home() {
 	);
 }
 const inner = css`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 10px 20px;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	padding: 10px 20px;
 `;
 const naviContainer = css`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding-bottom: 27px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	padding-bottom: 27px;
 `;
 const naviDate = css`
-  border-bottom-color: #aaaaaa;
-  border-bottom: solid 2px;
-  font-size: 22px;
-  font-weight: 800;
-  color: #fff;
-  width: 170px;
-  height: 33px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+	border-bottom-color: #aaaaaa;
+	border-bottom: solid 2px;
+	font-size: 22px;
+	font-weight: 800;
+	color: #fff;
+	width: 170px;
+	height: 33px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
 `;
 const naviLeft = css`
-  cursor: pointer;
-  position: absolute;
-  left: 38px;
+	cursor: pointer;
+	position: absolute;
+	left: 38px;
 `;
 const naviRight = css`
-  cursor: pointer;
-  width: 62px;
-  text-align: center;
-  position: absolute;
-  right: 35px;
-  font-size: 16px;
-  color: var(--33cream, #FEFAEB);
-  opacity: 0.5;
+	cursor: pointer;
+	width: 62px;
+	text-align: center;
+	position: absolute;
+	right: 35px;
+	font-size: 16px;
+	color: var(--33cream, #FEFAEB);
+	opacity: 0.5;
 `;
