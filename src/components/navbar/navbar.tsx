@@ -4,7 +4,7 @@ import Image from "next/image";
 import { css } from "@emotion/react";
 import dayjs from "dayjs";
 import { Date } from "@/utils/date";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 interface Props {
   date: string;
@@ -13,7 +13,7 @@ interface Props {
 // Navbar 는 날짜 관련 컴포넌트
 export default function Navbar({ date, setDate }: Props) {
   const [isToday, setIsToday] = useState(true);
-  const router = useRouter()
+  const router = useRouter();
   useEffect(() => {
     const today = Date.getToday();
     if (date === today) {
@@ -33,9 +33,13 @@ export default function Navbar({ date, setDate }: Props) {
   };
 
   const goAchieve = () => {
-    router.push('/achieve')
+    router.push("/achieve");
   };
 
+  const goEdit = () => {
+    router.push("/todo/edit");
+  };
+  const path = usePathname();
   return (
     <div css={navBarCSS}>
       <div css={navTopCSS}>
@@ -84,14 +88,19 @@ export default function Navbar({ date, setDate }: Props) {
           />
         )}
       </div>
+      {path === "/todo" && (
+        <div css={btnCSS}>
+          <button onClick={goEdit} className="edit_btn">
+            수 정
+          </button>
+        </div>
+      )}
     </div>
   );
 }
 
 const navBarCSS = css`
   display: flex;
-  height: 160px;
-  background-color: #292929;
   flex-direction: column;
   justify-content: space-between;
 `;
@@ -149,5 +158,22 @@ const dateCSS = css`
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+`;
+
+const btnCSS = css`
+  display: flex;
+  justify-content: flex-end;
+  .edit_btn {
+    width: 60px;
+    height: 25px;
+    border: none;
+    background-color: #ffffff27;
+    color: #d6d6d6;
+    font-size: 14px;
+    cursor: pointer;
+    &:hover {
+      background-color: #ffffff40;
+    }
   }
 `;
