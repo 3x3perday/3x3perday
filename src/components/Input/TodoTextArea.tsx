@@ -41,7 +41,7 @@ export const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
         onChange,
         ...props
     }, ref) => {
-    const textAreaRef = useRef<HTMLTextAreaElement | unknown>(ref);
+    const textAreaRef = useRef<HTMLTextAreaElement | any >(ref);
     const [maxHeight, setMaxHeight] = useState(0);
 
     const onChangeTodo = (e: ChangeEvent<HTMLTextAreaElement>) => {
@@ -51,7 +51,9 @@ export const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
     }
 
     useEffect(() => {
-        setMaxHeight(textAreaRef.current.clientHeight)
+        if(textAreaRef.current) {
+            setMaxHeight(textAreaRef.current.clientHeight)
+        }
     }, []);
 
     return (

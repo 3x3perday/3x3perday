@@ -7,10 +7,16 @@ import { MainTodo } from '@/components/Todo/MainTodo';
 import { TODO_COLOR } from '@/constants/Theme';
 import { SubTodo } from '@/components/Todo/SubTodo';
 import { TodoItem } from '@/components/Item/TodoItem';
-import { convertTodoView } from '@/app/todo/page';
 
 interface TodoView extends Todo3x3Model {
     visibleSubTodo: boolean;
+}
+
+const convertTodoView = (todos: Todo3x3Model[]): TodoView[] => {
+    return todos.map(todo => ({
+        ...todo,
+        visibleSubTodo: false
+    }))
 }
 
 export default function Home() {
@@ -90,7 +96,6 @@ export default function Home() {
                     prefixTodoNumber={1}
                     activeFingerBtn={true}
                     visibleToggleBtn={false}
-                    visibleSubTodo={false}
                     editable={true}
                     checked={mainTodo.done}
                     onClickCheck={() => setMainTodo(prevState => ({
@@ -111,6 +116,7 @@ export default function Home() {
                 `}
             >
                 <SubTodo
+                    mainTodoId={1}
                     value={subTodo.content}
                     prefixTodoNumber={1}
                     editable={true}
@@ -123,7 +129,7 @@ export default function Home() {
                         ...prevState,
                         content: e.target.value,
                     }))}
-                ></SubTodo>
+                />
             </div>
             <div
                 css={css`
@@ -131,10 +137,6 @@ export default function Home() {
                   width: 344px;
                 `}
             >
-                {/*visibleToggleBtn={visibleToggleBtn}*/}
-                {/*activeToggleBtn={visibleSubTodo}*/}
-                {/*activeFingerBtn={activeFingerBtn}*/}
-                {/*onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}*/}
                 <TodoItem
                     id={todos[0].id}
                     mainTodo={todos[0].mainTodo}

@@ -12,7 +12,7 @@ export interface MainTodoProps {
     value?: string;
     onChange?: InputHTMLAttributes<HTMLTextAreaElement>['onChange'];
     onClickToggle?: DOMAttributes<HTMLButtonElement>['onChange'];
-    prefixTodoNumber?: 1 | 2 | 3;
+    prefixTodoNumber?: number;
     visibleToggleBtn?: boolean;
     activeToggleBtn?: boolean;
     activeFingerBtn?: boolean;

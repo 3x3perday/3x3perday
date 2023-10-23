@@ -15,7 +15,7 @@ interface TodoView extends Todo3x3Model {
     visibleSubTodo: boolean;
 }
 
-export const convertTodoView = (todos: Todo3x3Model[]): TodoView[] => {
+const convertTodoView = (todos: Todo3x3Model[]): TodoView[] => {
     return todos.map(todo => ({
         ...todo,
         visibleSubTodo: false
@@ -114,7 +114,7 @@ export default function Home() {
                                     onClick={onClickTodo(todo.id)}
                                 >
                                     <MainTodo
-                                        prefixText={`${todo.id}`}
+                                        prefixTodoNumber={todo.id}
                                         value={todo.mainTodo.content}
                                         editable={false}
                                     />

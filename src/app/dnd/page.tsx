@@ -12,7 +12,7 @@ import { todo } from "@/utils/todo";
 import Navbar from "@/components/navbar/navbar";
 import { css } from "@emotion/react";
 import { TODO_COLOR } from "@/constants/Theme";
-import Todolist from "./Todolist";
+// import Todolist from "./Todolist";
 
 interface TodoView extends Todo3x3Model {
   visibleSubTodo: boolean;
@@ -73,7 +73,7 @@ export default function Home() {
       `}
     >
       <Navbar date={date} setDate={setDate} />
-      <Todolist todos={todos} setTodos={setTodos} />
+      {/*<Todolist todos={todos} setTodos={setTodos} />*/}
     </main>
   );
 }

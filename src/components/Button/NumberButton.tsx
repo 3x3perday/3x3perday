@@ -3,7 +3,7 @@ import { Icon, ICON_MAP } from '@/components/Icon/Icon';
 import { Button } from '@/components/Button/Button';
 
 interface NumberButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    count?: 1 | 2 | 3;
+    count?: number;
     isActive: boolean;
 }
 

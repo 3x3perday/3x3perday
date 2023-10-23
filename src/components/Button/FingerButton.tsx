@@ -3,7 +3,7 @@ import { Icon, ICON_MAP } from '@/components/Icon/Icon';
 import { Button } from '@/components/Button/Button';
 
 interface FingerButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    fingerCount?: 1 | 2 | 3;
+    fingerCount?: number
     isActive: boolean;
 }
 

@@ -7,10 +7,10 @@ import NumberButton from '@/components/Button/NumberButton';
 import { TODO_COLOR } from '@/constants/Theme';
 
 export interface SubTodoProps {
-    mainTodoId: 1 | 2 | 3;
+    mainTodoId: number
     value?: string;
     onChange?: InputHTMLAttributes<HTMLTextAreaElement>['onChange'];
-    prefixTodoNumber?: 1 | 2 | 3;
+    prefixTodoNumber?: number
     editable?: boolean;
     checked?: boolean;
     onClickCheck?: () => void;
@@ -61,7 +61,7 @@ const prefixFontStyle = css`
   font-weight: 900;
   color: white;
 `;
-const todoContainerCSS = (todoNum: SubTodoProps['prefixTodoNumber']) => css`
+const todoContainerCSS = (todoNum: number) => css`
   background: ${TODO_COLOR[todoNum - 1]}; 
   position: relative;
   display: flex;
