@@ -6,6 +6,7 @@ import { TodoTextArea } from '@/components/Input/TodoTextArea';
 import { Icon } from '@/components/Icon/Icon';
 import FingerButton from '@/components/Button/FingerButton';
 import { Button } from '@/components/Button/Button';
+import { TODO_COLOR } from '@/constants/Theme';
 
 export interface MainTodoProps {
     value?: string;
@@ -43,7 +44,7 @@ export const MainTodo = (
         onClickCheck
     }: MainTodoProps) => {
     return (
-        <div css={todoContainerCSS}>
+        <div css={todoContainerCSS(prefixTodoNumber)}>
             <div>
                 <div css={mainTodoIconWrapper}>
                     {
@@ -84,7 +85,8 @@ export const MainTodo = (
         </div>
     );
 }
-const todoContainerCSS = css`
+const todoContainerCSS = (todoNum: number) => css`
+  background: ${TODO_COLOR[todoNum - 1]};
   position: relative;
   display: flex;
   gap: 16px;

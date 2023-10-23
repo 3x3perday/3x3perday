@@ -4,8 +4,10 @@ import React, { InputHTMLAttributes } from 'react';
 import { css } from "@emotion/react";
 import { TodoTextArea } from '@/components/Input/TodoTextArea';
 import NumberButton from '@/components/Button/NumberButton';
+import { TODO_COLOR } from '@/constants/Theme';
 
 export interface SubTodoProps {
+    mainTodoId: 1 | 2 | 3;
     value?: string;
     onChange?: InputHTMLAttributes<HTMLTextAreaElement>['onChange'];
     prefixTodoNumber?: 1 | 2 | 3;
@@ -23,6 +25,7 @@ export interface SubTodoProps {
 
 export const SubTodo = (
     {
+        mainTodoId,
         value,
         onChange,
         prefixTodoNumber = 1,
@@ -31,7 +34,7 @@ export const SubTodo = (
         onClickCheck
     }: SubTodoProps) => {
     return (
-        <div css={todoContainerCSS}>
+        <div css={todoContainerCSS(mainTodoId)}>
             <div>
                 <NumberButton
                     onClick={onClickCheck}
@@ -58,7 +61,8 @@ const prefixFontStyle = css`
   font-weight: 900;
   color: white;
 `;
-const todoContainerCSS = css`
+const todoContainerCSS = (todoNum: SubTodoProps['prefixTodoNumber']) => css`
+  background: ${TODO_COLOR[todoNum - 1]}; 
   position: relative;
   display: flex;
   gap: 16px;
