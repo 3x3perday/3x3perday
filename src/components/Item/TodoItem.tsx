@@ -12,6 +12,8 @@ export interface TodoProps extends Todo3x3Model {
     subTodoMaxLength?: number;
     onClickAddSubTodo?: (id: number) => void;
     onClickToggle?: (mainTodoId: number, visibleSubTodoState: boolean) => void;
+    onClickCheckMainTodo?: () => void;
+    onClickCheckSubTodo?: () => void;
     visibleSubTodo?: boolean;
     editable?: boolean;
 }
@@ -40,25 +42,34 @@ export const TodoItem = (
         onChangeSubTodo,
         onClickAddSubTodo,
         onClickToggle,
+        onClickCheckMainTodo,
+        onClickCheckSubTodo,
 
         visibleSubTodo = false,
         editable = false,
     }: TodoProps) => {
 
 
-    const checkActiveFinger = mainTodo.content.length > 0;
-    const checkToggle = checkActiveFinger && subTodos.length > 0;
+    const activeFingerBtn = mainTodo.content.length > 0;
+    const visibleToggleBtn = activeFingerBtn && subTodos.length > 0;
+    const checkTodoEvent = (callback: (() => void) | undefined) => () => {
+        if(!editable && callback) {
+            callback();
+        }
+    }
     return (
         <div css={css`position: relative`}>
             <MainTodo
                 prefixText={`${id}.`}
                 value={mainTodo.content}
                 onChange={e => onChangeMainTodo && onChangeMainTodo(e, id)}
-                visibleToggleBtn={checkToggle}
+                visibleToggleBtn={visibleToggleBtn}
                 activeToggleBtn={visibleSubTodo}
-                activeFingerBtn={checkActiveFinger}
+                activeFingerBtn={activeFingerBtn}
                 onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}
                 editable={editable}
+                checked={mainTodo.done}
+                onClickCheck={checkTodoEvent(onClickCheckMainTodo)}
             />
             {
                 visibleSubTodo && subTodos.map((subTodo, subTodoId) => (
@@ -72,7 +83,8 @@ export const TodoItem = (
                             value={subTodo.content}
                             onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
                             editable={editable}
-                            width={'273px'}
+                            checked={subTodo.done}
+                            onClickCheck={checkTodoEvent(onClickCheckSubTodo)}
                         />
                     </div>
                 ))
