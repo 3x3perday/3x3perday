@@ -11,9 +11,6 @@ import { Date } from "@/utils/date";
 import { todo } from "@/utils/todo";
 import Navbar from "@/components/navbar/navbar";
 import { css } from "@emotion/react";
-import { TodoItem } from "@/components/Item/TodoItem";
-import { TodoTextInput } from "@/components/Input";
-import { Icon } from "@/components/Icon/Icon";
 import { TODO_COLOR } from "@/constants/Theme";
 import Todolist from "./Todolist";
 

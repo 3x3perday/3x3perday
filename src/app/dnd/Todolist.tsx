@@ -1,5 +1,5 @@
 import { Icon } from "@/components/Icon/Icon";
-import { TodoTextInput } from "@/components/Input";
+import { MainTodo } from "@/components/Input";
 import { TodoItem } from "@/components/Item/TodoItem";
 import { TODO_COLOR } from "@/constants/Theme";
 import { Todo3x3Model } from "@/types/todo";
@@ -122,8 +122,7 @@ const Todolist = ({ todos, setTodos }: Props) => {
                             height={"169px"}
                             onClick={onClickTodo(todo.id)}
                           >
-                            <TodoTextInput
-                              prefixText={`${todo.id}`}
+                            <MainTodo
                               value={todo.mainTodo.content}
                               editable={false}
                             />
