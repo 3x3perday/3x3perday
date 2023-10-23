@@ -126,7 +126,6 @@ export default function Home() {
 						css={css`
               margin-bottom: 32px;
               width: 344px;
-              border: 2px solid var(--33cream, #FEFAEB);
 						`}
 					>
 						<TodoItem

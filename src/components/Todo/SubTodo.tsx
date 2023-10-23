@@ -1,19 +1,19 @@
 'use client';
 
-import React, { InputHTMLAttributes } from 'react';
-import { css } from "@emotion/react";
-import { TodoTextArea } from '@/components/Input/TodoTextArea';
+import React, {InputHTMLAttributes} from 'react';
+import {css} from "@emotion/react";
+import {TodoTextArea} from '@/components/Input/TodoTextArea';
 import NumberButton from '@/components/Button/NumberButton';
-import { TODO_COLOR } from '@/constants/Theme';
+import {TODO_COLOR} from '@/constants/Theme';
 
 export interface SubTodoProps {
-    mainTodoId: number
-    value?: string;
-    onChange?: InputHTMLAttributes<HTMLTextAreaElement>['onChange'];
-    prefixTodoNumber?: number
-    editable?: boolean;
-    checked?: boolean;
-    onClickCheck?: () => void;
+	mainTodoId: number;
+	value?: string;
+	onChange?: InputHTMLAttributes<HTMLTextAreaElement>['onChange'];
+	prefixTodoNumber?: number;
+	editable?: boolean;
+	checked?: boolean;
+	onClickCheck?: () => void;
 }
 
 /**
@@ -24,36 +24,39 @@ export interface SubTodoProps {
  */
 
 export const SubTodo = (
-    {
-        mainTodoId,
-        value,
-        onChange,
-        prefixTodoNumber = 1,
-        editable = true,
-        checked = false,
-        onClickCheck
-    }: SubTodoProps) => {
-    return (
-        <div css={todoContainerCSS(mainTodoId + 1)}>
-            <div>
-                <NumberButton
-                    onClick={onClickCheck}
-                    count={prefixTodoNumber}
-                    isActive={checked ?? false }
-                />
-            </div>
-            <div>
-                <TodoTextArea
-                    readOnly={!editable}
-                    height={'80px'}
-                    value={value}
-                    onChange={onChange}
-                    css={todoTextAreaCSS}
-                />
-            </div>
-        </div>
-    );
-}
+	{
+		mainTodoId,
+		value,
+		onChange,
+		prefixTodoNumber = 1,
+		editable = true,
+		checked = false,
+		onClickCheck
+	}: SubTodoProps) => {
+	return (
+		<div css={todoContainerCSS(mainTodoId + 1)}>
+			<div>
+				<NumberButton
+					css={css`
+            padding: 4px 0 16px 14px;
+					`}
+					onClick={onClickCheck}
+					count={prefixTodoNumber}
+					isActive={checked ?? false}
+				/>
+			</div>
+			<div>
+				<TodoTextArea
+					readOnly={!editable}
+					height={'80px'}
+					value={value}
+					onChange={onChange}
+					css={todoTextAreaCSS}
+				/>
+			</div>
+		</div>
+	);
+};
 const prefixFontStyle = css`
   width: 90px;
   font-family: Pretendard, sans-serif;
@@ -62,10 +65,11 @@ const prefixFontStyle = css`
   color: white;
 `;
 const todoContainerCSS = (todoNum: number) => css`
-  background: ${TODO_COLOR[todoNum - 1]}; 
+  background: ${TODO_COLOR[todoNum - 1]};
   position: relative;
   display: flex;
   gap: 16px;
+
 `;
 const todoTextAreaCSS = css`
   color: #FFF;

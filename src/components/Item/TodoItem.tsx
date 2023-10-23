@@ -1,26 +1,26 @@
 'use client';
 
-import { MainTodo, MainTodoProps } from '@/components/Input';
-import { css } from '@emotion/react';
+import {MainTodo, MainTodoProps} from '@/components/Input';
+import {css} from '@emotion/react';
 import React from 'react';
-import { Todo3x3Model } from '@/types/todo';
-import { SubTodo } from '@/components/Todo/SubTodo';
-import { Button } from '@/components/Button/Button';
-import { Icon } from '@/components/Icon/Icon';
-import { TODO_COLOR } from '@/constants/Theme';
+import {Todo3x3Model} from '@/types/todo';
+import {SubTodo} from '@/components/Todo/SubTodo';
+import {Button} from '@/components/Button/Button';
+import {Icon} from '@/components/Icon/Icon';
+import {TODO_COLOR} from '@/constants/Theme';
 
 export interface TodoProps extends Todo3x3Model {
-    onChangeMainTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => void;
-    onChangeSubTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => void;
-    onClickToggle?: (mainTodoId: number, visibleSubTodoState: boolean) => void;
-    onClickAddSubTodo?: (id: number) => void;
+	onChangeMainTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => void;
+	onChangeSubTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => void;
+	onClickToggle?: (mainTodoId: number, visibleSubTodoState: boolean) => void;
+	onClickAddSubTodo?: (id: number) => void;
 
-    onClickCheckMainTodo?: () => void;
-    onClickCheckSubTodo?: (mainTodoId: number, subTodoId: number) => void;
+	onClickCheckMainTodo?: () => void;
+	onClickCheckSubTodo?: (mainTodoId: number, subTodoId: number) => void;
 
-    subTodoMaxLength?: number;
-    visibleSubTodo?: boolean;
-    editable?: boolean;
+	subTodoMaxLength?: number;
+	visibleSubTodo?: boolean;
+	editable?: boolean;
 }
 
 /**
@@ -37,77 +37,78 @@ export interface TodoProps extends Todo3x3Model {
  */
 
 export const TodoItem = (
-    {
-        id,
-        mainTodo,
-        subTodos,
-        subTodoMaxLength = 3,
+	{
+		id,
+		mainTodo,
+		subTodos,
+		subTodoMaxLength = 3,
 
-        onChangeMainTodo,
-        onChangeSubTodo,
-        onClickAddSubTodo,
-        onClickToggle,
-        onClickCheckMainTodo,
-        onClickCheckSubTodo,
+		onChangeMainTodo,
+		onChangeSubTodo,
+		onClickAddSubTodo,
+		onClickToggle,
+		onClickCheckMainTodo,
+		onClickCheckSubTodo,
 
-        visibleSubTodo = false,
-        editable = false,
-    }: TodoProps) => {
+		visibleSubTodo = false,
+		editable = false,
+	}: TodoProps) => {
 
 
-    const activeFingerBtn = mainTodo.content.length > 0;
-    const visibleToggleBtn = activeFingerBtn && subTodos.length > 0;
+	const activeFingerBtn = mainTodo.content.length > 0;
+	const visibleToggleBtn = activeFingerBtn && subTodos.length > 0;
 
-    return (
-        <div css={css`position: relative`}>
-            <MainTodo
-                prefixTodoNumber={id + 1}
-                value={mainTodo.content}
-                onChange={e => onChangeMainTodo && onChangeMainTodo(e, id)}
-                visibleToggleBtn={visibleToggleBtn}
-                activeToggleBtn={visibleSubTodo}
-                activeFingerBtn={activeFingerBtn}
-                onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}
-                editable={editable}
-                checked={mainTodo.done}
-                onClickCheck={() => onClickCheckMainTodo && onClickCheckMainTodo()}
-            />
-            {
-                visibleSubTodo && subTodos.map((subTodo, subTodoId) => (
-                    <div
-                        key={subTodoId}
-                        css={css`margin-left: 100px;`}
-                    >
-                        <SubTodo
-                            mainTodoId={id}
-                            prefixTodoNumber={subTodoId + 1}
-                            value={subTodo.content}
-                            onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
-                            editable={editable}
-                            checked={subTodo.done}
-                            onClickCheck={() => onClickCheckSubTodo && onClickCheckSubTodo(id, subTodoId)}
-                        />
-                    </div>
-                ))
-            }
-            {
-                editable && visibleSubTodo && (
-                    <Icon
-                        name={'small-plus'}
-                        width={"34px"}
-                        height={"34px"}
-                        onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
-                        css={addButtonCSS(subTodos.length, subTodoMaxLength, id)}
-                    >
-                    </Icon>
-                )
-            }
-        </div>
-    )
-}
+	return (
+		<div css={css`position: relative`}>
+			<MainTodo
+				prefixTodoNumber={id + 1}
+				value={mainTodo.content}
+				onChange={e => onChangeMainTodo && onChangeMainTodo(e, id)}
+				visibleToggleBtn={visibleToggleBtn}
+				activeToggleBtn={visibleSubTodo}
+				activeFingerBtn={activeFingerBtn}
+				onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}
+				editable={editable}
+				checked={mainTodo.done}
+				onClickCheck={() => onClickCheckMainTodo && onClickCheckMainTodo()}
+			/>
+			{
+				visibleSubTodo && subTodos.map((subTodo, subTodoId) => (
+					<div
+						key={subTodoId}
+						css={css`margin-left: 100px;`}
+					>
+						<SubTodo
+							mainTodoId={id}
+							prefixTodoNumber={subTodoId + 1}
+							value={subTodo.content}
+							onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
+							editable={editable}
+							checked={subTodo.done}
+							onClickCheck={() => onClickCheckSubTodo && onClickCheckSubTodo(id, subTodoId)}
+						/>
+					</div>
+				))
+			}
+			{
+				editable && visibleSubTodo && (
+					<Icon
+						name={'small-plus'}
+						width={"34px"}
+						height={"34px"}
+						onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
+						css={addButtonCSS(subTodos.length, subTodoMaxLength, id)}
+					>
+					</Icon>
+				)
+			}
+		</div>
+	);
+};
 
 const addButtonCSS = (todoLength: number, maxLength: number, mainTodoid: number) => css`
   display: ${todoLength === maxLength ? 'none' : 'block'};
+  padding: 19px 18px 16px 18px;
   background-color: ${TODO_COLOR[mainTodoid]};
   width: 40px;
   height: 40px;
