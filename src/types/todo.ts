@@ -1,3 +1,5 @@
+import dayjs from 'dayjs';
+
 export interface TodoModel {
 	done: boolean;
 	content: string;
@@ -155,3 +157,24 @@ export const mockTodoData = [
 		],
 	},
 ] as TodoPageModel[];
+
+export const initializeTodoData = {
+	date: dayjs().format('YYYY-MM-DD'),
+	todos: [
+		{
+			id: 0,
+			mainTodo: new Todo(""),
+			subTodos: [new Todo("")],
+		},
+		{
+			id: 1,
+			mainTodo: new Todo(""),
+			subTodos: [new Todo("")],
+		},
+		{
+			id: 2,
+			mainTodo: new Todo(""),
+			subTodos: [new Todo("")],
+		},
+	],
+} as TodoPageModel;

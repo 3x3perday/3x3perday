@@ -1,15 +1,13 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import { initializeTodoData, mockTodoData, Todo, Todo3x3Model, TodoPage } from '@/types/todo';
+import { initializeTodoData, Todo, Todo3x3Model, TodoPage } from '@/types/todo';
 import { css } from '@emotion/react';
 import { TodoItem } from '@/components/Item/TodoItem';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
 import { Simulate } from 'react-dom/test-utils';
-import input = Simulate.input;
-import { log } from 'util';
 
 interface TodoView extends Todo3x3Model {
     visibleSubTodo: boolean;
