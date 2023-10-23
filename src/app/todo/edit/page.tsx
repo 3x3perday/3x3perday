@@ -1,12 +1,13 @@
 'use client';
 
-import React, { useState } from "react";
-import { initializeTodoData, Todo, Todo3x3Model } from '@/types/todo';
+import React, { useEffect, useState } from "react";
+import { initializeTodoData, Todo, Todo3x3Model, TodoPage } from '@/types/todo';
 import { css } from '@emotion/react';
 import { TodoItem } from '@/components/Item/TodoItem';
 import Image from 'next/image';
 import dayjs from 'dayjs';
 import { useRouter } from 'next/navigation';
+import { Simulate } from 'react-dom/test-utils';
 
 interface TodoView extends Todo3x3Model {
     visibleSubTodo: boolean;
@@ -25,15 +26,15 @@ export default function Home() {
     const [todos, setTodos] = useState<TodoView[]>(convertTodoView(initializeTodoData.todos));
 
     const onChangeMainTodo = (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => {
-        const receiveTodos:TodoView[] = [...todos];
+        const receiveTodos: TodoView[] = [...todos];
         receiveTodos[mainTodoId].mainTodo.content = e.target.value
         setTodos(receiveTodos);
     }
 
     const onChangeSubTodo = (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => {
-        const receiveTodos:TodoView[] = [...todos];
+        const receiveTodos: TodoView[] = [...todos];
         receiveTodos[mainTodoId].subTodos = receiveTodos[mainTodoId].subTodos.map((todo, i) => {
-            if(i === subTodoId) {
+            if (i === subTodoId) {
                 return {
                     ...todo,
                     content: e.target.value,
@@ -54,17 +55,54 @@ export default function Home() {
     }
 
     const onClickAdd = (todoId: number) => {
-        const receiveTodos:TodoView[] = [...todos];
+        const receiveTodos: TodoView[] = [...todos];
         receiveTodos[todoId].subTodos = receiveTodos[todoId].subTodos.concat([new Todo()]);
         setTodos(receiveTodos);
     }
 
     const save = () => {
-        console.log(todos)
+        const data = localStorage.getItem("todos");
+        if (data) {
+            const getLocalTodoPageData:TodoPage[] = JSON.parse(data);
+            const todoData:TodoPage|undefined = getLocalTodoPageData.find(val => val.date === '2023-10-23');
+            if(todoData) {
+                const saveData:TodoPage = {
+                    ...todoData,
+                    todos: todos
+                }
+                const getTodosData = getLocalTodoPageData.filter(val => val.date !== '2023-10-23');
+                localStorage.setItem("todos", JSON.stringify([...getTodosData, saveData]));
+            } else {
+                localStorage.setItem("todos", JSON.stringify([...getLocalTodoPageData, {
+                    date: dayjs().format('YYYY-MM-DD'),
+                    todos: todos
+                }]));
+            }
+            alert('저장되었습니다.')
+            router.replace('/todo')
+        }
     }
 
+    useEffect(() => {
+        const data = localStorage.getItem("todos")
+        if (data) {
+            const getLocalTodoPageData:TodoPage[] = JSON.parse(data);
+            const todoData:TodoPage|undefined = getLocalTodoPageData.find(val => val.date === '2023-10-23');
+            if(todoData) {
+                const getTodosData = todoData.todos as TodoView[];
+                setTodos(getTodosData)
+            } else {
+                alert('해당 정보를 찾을 수 없습니다.')
+                router.back();
+            }
+        }
+    }, []);
+
+
+
     return (
-        <main css={css`background-color: #292929; padding-top: 63px;`}>
+        <main css={css`background-color: #292929;
+          padding-top: 63px;`}>
             <div
                 css={naviContainer}
             >

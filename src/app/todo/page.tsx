@@ -11,7 +11,6 @@ import { Date } from "@/utils/date";
 import { todo } from "@/utils/todo";
 import Navbar from "@/components/navbar/navbar";
 import { css } from "@emotion/react";
-import { TODO_COLOR } from "@/constants/Theme";
 import { TodoItem } from "@/components/Item/TodoItem";
 import { MainTodo } from "@/components/Todo/MainTodo";
 import { Icon } from "@/components/Icon/Icon";
@@ -24,6 +23,8 @@ import {
 import Image from "next/image";
 import { useDnD } from "@/utils/dnd";
 import styled from "@emotion/styled";
+import { useRouter } from 'next/navigation';
+
 
 interface TodoView extends Todo3x3Model {
   visibleSubTodo: boolean;
@@ -37,6 +38,7 @@ const convertTodoView = (todos: Todo3x3Model[]): TodoView[] => {
 };
 
 export default function Home() {
+  const router = useRouter();
   const [entireTodos, setEntireTodos] = useState<TodoPageModel[]>(mockTodoData); // 전체 데이터
   const [todoPage, setTodoPage] = useState<TodoPageModel>(mocktodos); // 오늘의 데이터
 
@@ -46,7 +48,7 @@ export default function Home() {
   );
 
   const onClickTodo = (todoId: number) => () => {
-    console.log(todoId);
+    router.push("/todo/edit");
   };
 
   const onClickToggle = (mainTodoId: number, state: boolean) => {
