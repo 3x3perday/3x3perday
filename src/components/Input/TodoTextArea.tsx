@@ -64,3 +64,4 @@ export const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
         />
     )
 })
+TodoTextArea.displayName = "TodoTextArea"
