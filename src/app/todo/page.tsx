@@ -89,7 +89,6 @@ export default function Home() {
                     <div
                         key={todo.id}
                         css={css`
-                          background-color: ${TODO_COLOR[index]};
                           margin-bottom: 32px;
                           width: 344px;
                         `}

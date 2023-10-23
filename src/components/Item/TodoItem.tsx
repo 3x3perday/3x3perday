@@ -76,7 +76,7 @@ export const TodoItem = (
                         css={css`margin-left: 100px;`}
                     >
                         <SubTodo
-                            mainTodoId={id + 1}
+                            mainTodoId={id}
                             prefixTodoNumber={subTodoId + 1}
                             value={subTodo.content}
                             onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
