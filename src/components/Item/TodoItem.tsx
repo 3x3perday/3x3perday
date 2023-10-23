@@ -7,13 +7,15 @@ import { Todo3x3Model } from '@/types/todo';
 import { SubTodo } from '@/components/Todo/SubTodo';
 
 export interface TodoProps extends Todo3x3Model {
-    onChangeMainTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => void;
-    onChangeSubTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => void;
+    onChangeMainTodo: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => void;
+    onChangeSubTodo: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number, subTodoId: number) => void;
+    onClickToggle: (mainTodoId: number, visibleSubTodoState: boolean) => void;
+    onClickAddSubTodo: (id: number) => void;
+
+    onClickCheckMainTodo: () => void;
+    onClickCheckSubTodo: () => void;
+
     subTodoMaxLength?: number;
-    onClickAddSubTodo?: (id: number) => void;
-    onClickToggle?: (mainTodoId: number, visibleSubTodoState: boolean) => void;
-    onClickCheckMainTodo?: () => void;
-    onClickCheckSubTodo?: () => void;
     visibleSubTodo?: boolean;
     editable?: boolean;
 }
