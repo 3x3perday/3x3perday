@@ -58,7 +58,6 @@ export default function Home() {
             }
             return todo;
         })
-        console.log(receiveTodos[0].subTodos)
         setTodos(receiveTodos);
     }
 
@@ -128,10 +127,8 @@ export default function Home() {
             </div>
             <div
                 css={css`
-                  // background-color: ${TODO_COLOR[0]};
                   margin-bottom: 32px;
                   width: 344px;
-                  color: #FFF;
                 `}
             >
                 {/*visibleToggleBtn={visibleToggleBtn}*/}
@@ -148,6 +145,30 @@ export default function Home() {
                     onClickToggle={onClickToggle}
                     onClickAddSubTodo={onClickAdd}
                     editable={true}
+                />
+            </div>
+            <div
+                css={css`
+                  margin-bottom: 32px;
+                  width: 344px;
+                `}
+            >
+                <TodoItem
+                    id={todos[0].id}
+                    mainTodo={todos[0].mainTodo}
+                    subTodos={todos[0].subTodos}
+                    onChangeMainTodo={onChangeMainTodo}
+                    onChangeSubTodo={onChangeSubTodo}
+                    visibleSubTodo={todos[0].visibleSubTodo}
+                    onClickToggle={onClickToggle}
+                    onClickAddSubTodo={onClickAdd}
+                    onClickCheckMainTodo={() => {
+                        console.log('checkMain')
+                    }}
+                    onClickCheckSubTodo={() => {
+                        console.log('checkSub')
+                    }}
+                    editable={false}
                 />
             </div>
         </main>
