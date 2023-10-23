@@ -58,7 +58,7 @@ export const TodoItem = (
     return (
         <div css={css`position: relative`}>
             <MainTodo
-                prefixTodoNumber={id}
+                prefixTodoNumber={id + 1}
                 value={mainTodo.content}
                 onChange={e => onChangeMainTodo && onChangeMainTodo(e, id)}
                 visibleToggleBtn={visibleToggleBtn}

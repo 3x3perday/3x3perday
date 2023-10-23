@@ -34,7 +34,7 @@ export const SubTodo = (
         onClickCheck
     }: SubTodoProps) => {
     return (
-        <div css={todoContainerCSS(mainTodoId)}>
+        <div css={todoContainerCSS(mainTodoId + 1)}>
             <div>
                 <NumberButton
                     onClick={onClickCheck}
