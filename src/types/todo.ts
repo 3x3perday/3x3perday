@@ -55,7 +55,7 @@ export const mocktodos = {
     {
       id: 1,
       mainTodo: new Todo("todo1"),
-      subTodos: [new Todo('sub01')],
+      subTodos: [new Todo("sub01")],
     },
     {
       id: 2,
@@ -81,7 +81,10 @@ export const mockTodoData = [
       },
       {
         id: 2,
-        mainTodo: new Todo(),
+        mainTodo: {
+          done: true,
+          content: "HAPYPYPY",
+        },
         subTodos: [new Todo(), new Todo()],
       },
       {

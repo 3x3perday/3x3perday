@@ -2,39 +2,15 @@
 import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { css } from "@emotion/react";
-import dayjs from "dayjs";
-import { Date } from "@/utils/date";
-import { useRouter } from "next/navigation";
+import { useRouter } from 'next/navigation';
 
-interface Props {
-  date: string;
-  setDate: React.Dispatch<React.SetStateAction<string>>;
-}
+interface Props {}
 // Navbar 는 날짜 관련 컴포넌트
-export default function Navbar({ date, setDate }: Props) {
-  const [isToday, setIsToday] = useState(true);
-  const router = useRouter()
-  useEffect(() => {
-    const today = Date.getToday();
-    if (date === today) {
-      return setIsToday(true);
-    }
-    setIsToday(false);
-  }, [date]);
+export default function SubNavbar({}: Props) {
+  const router = useRouter();
+  useEffect(() => {}, []);
 
-  const goYesterday = () => {
-    const yesterday = Date.getYesterday(date);
-    setDate(yesterday);
-  };
-
-  const goToday = () => {
-    const today = Date.getToday();
-    setDate(today);
-  };
-
-  const goAchieve = () => {
-    router.push('/achieve')
-  };
+  const goBack = () => router.back();
 
   return (
     <div css={navBarCSS}>
@@ -54,7 +30,6 @@ export default function Navbar({ date, setDate }: Props) {
               src="/image/mimoji.png"
               width={50}
               height={50}
-              onClick={goAchieve}
               alt="setting"
               className="setting"
             />
@@ -62,27 +37,14 @@ export default function Navbar({ date, setDate }: Props) {
         </div>
       </div>
       <div css={dateCSS}>
-        {isToday && (
-          <Image
-            onClick={goYesterday}
-            src="/icon/arrow_left.png"
-            width={15}
-            height={20}
-            alt="arrow"
-            className="arrow_left"
-          />
-        )}
-        <div className="date">{date}</div>
-        {!isToday && (
-          <Image
-            onClick={goToday}
-            src="/icon/arrow_right.png"
-            width={15}
-            height={20}
-            alt="arrow"
-            className="arrow_right"
-          />
-        )}
+        <Image
+          onClick={goBack}
+          src="/icon/arrow_left.png"
+          width={15}
+          height={20}
+          alt="arrow"
+          className="arrow_left"
+        />
       </div>
     </div>
   );
