@@ -42,7 +42,7 @@ export const SubTodo = (
             <div>
                 <TodoTextArea
                     readOnly={!editable}
-                    height={'100px'}
+                    height={'80px'}
                     value={value}
                     onChange={onChange}
                     css={todoTextAreaCSS}
@@ -68,4 +68,5 @@ const todoTextAreaCSS = css`
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
+  line-height: 1.625rem;
 `;
