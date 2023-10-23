@@ -5,6 +5,9 @@ import { css } from '@emotion/react';
 import React from 'react';
 import { Todo3x3Model } from '@/types/todo';
 import { SubTodo } from '@/components/Todo/SubTodo';
+import { Button } from '@/components/Button/Button';
+import { Icon } from '@/components/Icon/Icon';
+import { TODO_COLOR } from '@/constants/Theme';
 
 export interface TodoProps extends Todo3x3Model {
     onChangeMainTodo?: (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => void;
@@ -58,7 +61,7 @@ export const TodoItem = (
     return (
         <div css={css`position: relative`}>
             <MainTodo
-                prefixTodoNumber={id}
+                prefixTodoNumber={id + 1}
                 value={mainTodo.content}
                 onChange={e => onChangeMainTodo && onChangeMainTodo(e, id)}
                 visibleToggleBtn={visibleToggleBtn}
@@ -89,20 +92,24 @@ export const TodoItem = (
             }
             {
                 editable && visibleSubTodo && (
-                    <button
+                    <Icon
+                        name={'small-plus'}
+                        width={"34px"}
+                        height={"34px"}
                         onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
-                        css={addButtonCSS(subTodos.length, subTodoMaxLength)}
-                    >+
-                    </button>
+                        css={addButtonCSS(subTodos.length, subTodoMaxLength, id)}
+                    >
+                    </Icon>
                 )
             }
         </div>
     )
 }
 
-const addButtonCSS = (todoLength: number, maxLength?: number) => css`
+const addButtonCSS = (todoLength: number, maxLength: number, mainTodoid: number) => css`
   display: ${todoLength === maxLength ? 'none' : 'block'};
-  width: 30px;
-  height: 30px;
+  background-color: ${TODO_COLOR[mainTodoid]};
+  width: 40px;
+  height: 40px;
   margin-left: 100px;
 `;
