@@ -1,15 +1,14 @@
 'use client';
 
 import React, { useEffect, useState } from "react";
-import { mockTodoData, mocktodos, Todo, Todo3x3Model, TodoPageModel } from '@/types/todo';
+import { initializeTodoData, mockTodoData, mocktodos, Todo, Todo3x3Model, TodoPageModel } from '@/types/todo';
 import { Date } from '@/utils/date';
 import { todo } from '@/utils/todo';
-import Navbar from '@/components/navbar/navbar';
 import { css } from '@emotion/react';
-import { TODO_COLOR } from '@/constants/Theme';
 import { TodoItem } from '@/components/Item/TodoItem';
-import { MainTodo } from '@/components/Todo/MainTodo';
-import { Icon } from '@/components/Icon/Icon';
+import Image from 'next/image';
+import dayjs from 'dayjs';
+import { useRouter } from 'next/navigation';
 
 interface TodoView extends Todo3x3Model {
     visibleSubTodo: boolean;
@@ -23,33 +22,13 @@ const convertTodoView = (todos: Todo3x3Model[]): TodoView[] => {
 }
 
 export default function Home() {
+    const router = useRouter()
+
     const [entireTodos, setEntireTodos] = useState<TodoPageModel[]>(mockTodoData); // 전체 데이터
     const [todoPage, setTodoPage] = useState<TodoPageModel>(mocktodos); // 오늘의 데이터
 
     const [date, setDate] = useState(Date.getToday()); // 날짜
-    const [todos, setTodos] = useState<TodoView[]>(convertTodoView(mocktodos.todos));
-
-    const onClickCheckMainTodo = (todoId:  number) => () => {
-        setTodos(prevState => prevState.map(item => {
-            if (item.id === todoId) {
-                item.mainTodo.done = !item.mainTodo.done;
-            }
-            return item;
-        }))
-    }
-    const onClickCheckSubTodo = (mainTodoId: number, subTodoId: number) => {
-        const receiveTodos:TodoView[] = [...todos];
-        receiveTodos[mainTodoId].subTodos = receiveTodos[mainTodoId].subTodos.map((todo, i) => {
-            if(i === subTodoId) {
-                return {
-                    ...todo,
-                    done: !todo.done,
-                }
-            }
-            return todo;
-        });
-        setTodos(receiveTodos);
-    }
+    const [todos, setTodos] = useState<TodoView[]>(convertTodoView(initializeTodoData.todos));
 
     const onChangeMainTodo = (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => {
         const receiveTodos:TodoView[] = [...todos];
@@ -86,6 +65,10 @@ export default function Home() {
         setTodos(receiveTodos);
     }
 
+    const save = () => {
+        console.log(todos)
+    }
+
     useEffect(() => {
         // 찾는 날짜가 전체 데이터에 있는지 확인
         const _todos = entireTodos.find((entireTodo) => entireTodo.date === date);
@@ -104,8 +87,23 @@ export default function Home() {
     }, [date, entireTodos]);
 
     return (
-        <main css={css`background-color: #292929;`}>
-            <Navbar date={date} setDate={setDate} />
+        <main css={css`background-color: #292929; padding-top: 63px;`}>
+            <div
+                css={naviContainer}
+            >
+                <Image
+                    src="/icon/arrow_left.png"
+                    width={15}
+                    height={20}
+                    alt="arrow"
+                    css={naviLeft}
+                    onClick={() => router.back()}
+                />
+                <div css={naviDate}>{dayjs().format('YYYY-MM-DD')}</div>
+                <p css={naviRight} onClick={save}>
+                    완료
+                </p>
+            </div>
             <div css={inner}>
                 {todos.map((todo, index) => (
                     <div
@@ -138,4 +136,33 @@ const inner = css`
   flex-direction: column;
   align-items: center;
   padding: 10px 20px;
+`;
+const naviContainer = css`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+`;
+const naviDate = css`
+  border-bottom-color: #aaaaaa;
+  border-bottom: solid 3px;
+  font-size: 22px;
+  font-weight: 800;
+  color: #fff;
+  width: 170px;
+  height: 33px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+const naviLeft = css`
+  cursor: pointer;
+  position: absolute;
+  left: 20px;
+`;
+const naviRight = css`
+  cursor: pointer;
+  position: absolute;
+  right: 20px;
+  color: #fff;
 `;
