@@ -103,7 +103,7 @@ export default function Home() {
     );
 
     if (_newTodos) setTodoPage(_newTodos);
-  }, [date, entireTodos]);
+  });
 
   //================================================================================================
   useDnD();
@@ -140,6 +140,7 @@ export default function Home() {
     setEntireTodos(newTodos);
     console.log("todos", newTodos);
   }, [todos]);
+
 
   // =================================================================================================
   return (

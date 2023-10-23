@@ -24,6 +24,7 @@ export default function Home() {
     const router = useRouter()
 
     const [todos, setTodos] = useState<TodoView[]>(convertTodoView(initializeTodoData.todos));
+    const today = dayjs().format('YYYY-MM-DD');
 
     const onChangeMainTodo = (e: React.ChangeEvent<HTMLTextAreaElement>, mainTodoId: number) => {
         const receiveTodos: TodoView[] = [...todos];
@@ -64,14 +65,14 @@ export default function Home() {
         const data = localStorage.getItem("todos");
         if (data) {
             const getLocalTodoPageData:TodoPage[] = JSON.parse(data);
-            const todoData:TodoPage|undefined = getLocalTodoPageData.find(val => val.date === '2023-10-23');
+            const todoData:TodoPage|undefined = getLocalTodoPageData.find(val => val.date === today);
             if(todoData) {
                 const saveData:TodoPage = {
-                    ...todoData,
+                    date: today,
                     todos: todos
                 }
-                const getTodosData = getLocalTodoPageData.filter(val => val.date !== '2023-10-23');
-                localStorage.setItem("todos", JSON.stringify([...getTodosData, saveData]));
+                const filterTodoData = getLocalTodoPageData.filter(val => val.date !== dayjs().format('YYYY-MM-DD'));
+                localStorage.setItem("todos", JSON.stringify([...filterTodoData, saveData]));
             } else {
                 localStorage.setItem("todos", JSON.stringify([...getLocalTodoPageData, {
                     date: dayjs().format('YYYY-MM-DD'),
@@ -87,7 +88,7 @@ export default function Home() {
         const data = localStorage.getItem("todos")
         if (data) {
             const getLocalTodoPageData:TodoPage[] = JSON.parse(data);
-            const todoData:TodoPage|undefined = getLocalTodoPageData.find(val => val.date === '2023-10-23');
+            const todoData:TodoPage|undefined = getLocalTodoPageData.find(val => val.date === today);
             if(todoData) {
                 const getTodosData = todoData.todos as TodoView[];
                 setTodos(getTodosData)
