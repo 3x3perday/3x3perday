@@ -7,12 +7,15 @@ import { todo } from '@/utils/todo';
 import Navbar from '@/components/navbar/navbar';
 import { css } from '@emotion/react';
 import { TODO_COLOR } from '@/constants/Theme';
+import { TodoItem } from '@/components/Item/TodoItem';
+import { MainTodo } from '@/components/Todo/MainTodo';
+import { Icon } from '@/components/Icon/Icon';
 
 interface TodoView extends Todo3x3Model {
     visibleSubTodo: boolean;
 }
 
-const convertTodoView = (todos: Todo3x3Model[]): TodoView[] => {
+export const convertTodoView = (todos: Todo3x3Model[]): TodoView[] => {
     return todos.map(todo => ({
         ...todo,
         visibleSubTodo: false
@@ -26,8 +29,6 @@ export default function Home() {
     const [date, setDate] = useState(Date.getToday()); // 날짜
     const [todos, setTodos] = useState<TodoView[]>(convertTodoView(mocktodos.todos));
 
-    const [mainTodo, setMainTodo] = useState("123213");
-
     const onClickTodo = (todoId: number) => () => {
         console.log(todoId)
     }
@@ -39,6 +40,28 @@ export default function Home() {
             }
             return itemm;
         }))
+    }
+
+    const onClickCheckMainTodo = (todoId:  number) => () => {
+        setTodos(prevState => prevState.map(item => {
+            if (item.id === todoId) {
+                item.mainTodo.done = !item.mainTodo.done;
+            }
+            return item;
+        }))
+    }
+    const onClickCheckSubTodo = (mainTodoId: number, subTodoId: number) => {
+        const receiveTodos:TodoView[] = [...todos];
+        receiveTodos[mainTodoId].subTodos = receiveTodos[mainTodoId].subTodos.map((todo, i) => {
+            if(i === subTodoId) {
+                return {
+                    ...todo,
+                    done: !todo.done,
+                }
+            }
+            return todo;
+        });
+        setTodos(receiveTodos);
     }
 
     useEffect(() => {
@@ -71,33 +94,33 @@ export default function Home() {
                           width: 344px;
                         `}
                     >
-                        {/*{*/}
-                        {/*    todo.mainTodo.content !== "" ? (*/}
-                        {/*        <TodoItem*/}
-                        {/*            id={todo.id}*/}
-                        {/*            mainTodo={todo.mainTodo}*/}
-                        {/*            subTodos={todo.subTodos}*/}
-                        {/*            visibleSubTodo={todo.visibleSubTodo}*/}
-                        {/*            activeFingerBtn={true}*/}
-                        {/*            visibleToggleBtn={todo.mainTodo.content !== "" && todo.subTodos.length > 0}*/}
-                        {/*            onClickToggle={onClickToggle}*/}
-                        {/*            editable={false}*/}
-                        {/*        />*/}
-                        {/*    ) : (*/}
-                        {/*        <Icon*/}
-                        {/*            name={'plus'}*/}
-                        {/*            width={"344px"}*/}
-                        {/*            height={"169px"}*/}
-                        {/*            onClick={onClickTodo(todo.id)}*/}
-                        {/*        >*/}
-                        {/*            <MainTodo*/}
-                        {/*                prefixText={`${todo.id}`}*/}
-                        {/*                value={todo.mainTodo.content}*/}
-                        {/*                editable={false}*/}
-                        {/*            />*/}
-                        {/*        </Icon>*/}
-                        {/*    )*/}
-                        {/*}*/}
+                        {
+                            todo.mainTodo.content !== "" ? (
+                                <TodoItem
+                                    id={todo.id}
+                                    mainTodo={todo.mainTodo}
+                                    subTodos={todo.subTodos}
+                                    visibleSubTodo={todo.visibleSubTodo}
+                                    onClickToggle={onClickToggle}
+                                    onClickCheckMainTodo={onClickCheckMainTodo(todo.id)}
+                                    onClickCheckSubTodo={onClickCheckSubTodo}
+                                    editable={false}
+                                />
+                            ) : (
+                                <Icon
+                                    name={'plus'}
+                                    width={"344px"}
+                                    height={"169px"}
+                                    onClick={onClickTodo(todo.id)}
+                                >
+                                    <MainTodo
+                                        prefixText={`${todo.id}`}
+                                        value={todo.mainTodo.content}
+                                        editable={false}
+                                    />
+                                </Icon>
+                            )
+                        }
                     </div>
 
                 ))}
