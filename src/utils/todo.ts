@@ -1,13 +1,41 @@
-import { TodoPage, TodoPageModel } from "@/types/todo";
+import { Date } from "./date";
 
-export const todo = {
-  getTodosWithNew: (todos: TodoPageModel[], date: string) => {
-    const todayTodo = todos.find((todo) => todo.date === date);
+export interface TodoItem {
+  // mainTodo 하나 + subTodos 여러개
+  sortedId: number;
+  mainTodo: {
+    content: string;
+    done: boolean;
+  };
+  subTodos: any[];
+}
 
-    if (todayTodo) return todos;
+export class TodoPost {
+  userId: string;
+  date: string;
+  todos: TodoItem[];
 
-    todos.push(new TodoPage(date));
+  constructor(userId: string, date: string) {
+    this.userId = userId;
+    this.date = date;
+    this.todos = DEFUALT_TODO;
+  }
+}
 
-    return todos;
+const DEFUALT_TODO = [
+  {
+    sortedId: 0,
+    mainTodo: { content: "", done: false },
+    subTodos: [],
   },
-};
+  {
+    sortedId: 1,
+    mainTodo: { content: "", done: false },
+    subTodos: [],
+  },
+  {
+    sortedId: 2,
+    mainTodo: { content: "", done: false },
+    subTodos: [],
+  },
+];

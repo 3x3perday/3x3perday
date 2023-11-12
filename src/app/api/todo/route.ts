@@ -1,62 +1,32 @@
 import { NextRequest, NextResponse } from "next/server";
 import connectDB from "@/utils/database/database";
-import Todo from "@/utils/database/models/todo";
+import TodoModel from "@/utils/database/models/todo";
+import { TodoPost } from "@/utils/todo";
+import { Date } from "@/utils/date";
+import { TodoService } from "@/utils/database/models/todo.service";
 
 export async function GET(req: NextRequest) {
-  const userId = req.nextUrl.searchParams.get("userId");
-  const date = req.nextUrl.searchParams.get("date");
-  try {
-    await connectDB();
-    const todos = await Todo.findOne({
-      userId: userId,
-      date: date,
-    });
-    return new NextResponse(JSON.stringify(todos), { status: 200 });
-  } catch (error) {
-    console.log(error);
-  }
+  const userId = req.nextUrl.searchParams.get("userId") || "";
+  const date = req.nextUrl.searchParams.get("date") || "";
+  const todos = await TodoService.getTodo(userId, date);
+
+  return TodoService.getTodo(userId, date);
 }
 
 // 오늘 날짜 데이터 만들기
-export async function POST(req: Request) {
-  try {
-    const user = await req.json(); // {userId : "1234"}
-    await connectDB();
-    const data = {
-      userId: user.userId,
-      date: new Date().toISOString().slice(0, 10),
-      todos: [
-        {
-          sortedId: 0,
-          mainTodo: { content: "", done: false },
-          subTodos: [],
-        },
-        {
-          sortedId: 1,
-          mainTodo: { content: "", done: false },
-          subTodos: [],
-        },
-        {
-          sortedId: 2,
-          mainTodo: { content: "", done: false },
-          subTodos: [],
-        },
-      ],
-    };
+export async function POST(req: NextRequest) {
+  const userId = req.nextUrl.searchParams.get("userId") || "";
 
-    const todo = await Todo.create(data);
+  const date = "2023-11-15";
+
+  const todo = await TodoService.checkTodo(userId, date);
+
+  if (todo) {
     return new NextResponse(
-      JSON.stringify({ message: "TODO가 생성되었습니다." }),
-      { status: 200 }
+      JSON.stringify({ message: "이미 생성된 TODO가 있습니다." }),
+      { status: 400 }
     );
-  } catch (error) {
-    console.log(error);
   }
-}
 
-// const movies = await db
-// .collection("movies")
-// .find({})
-// .sort({ metacritic: -1 })
-// .limit(10)
-// .toArray();
+  return TodoService.postTodo(userId, date);
+}
