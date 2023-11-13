@@ -6,8 +6,8 @@ import HeadMeta from "@/components/HeadMeta";
 const inter = Inter({subsets: ["latin"]});
 
 export const metadata: Metadata = {
-	title: "3X3 PER DAY",
-	description: "매일 3가지의 성취를 경험하세요",
+  title: "3X3 PER DAY",
+  description: "매일 3가지의 성취를 경험하세요",
 };
 
 export default function RootLayout({
@@ -15,10 +15,10 @@ export default function RootLayout({
 																	 }: {
 	children: React.ReactNode;
 }) {
-	return (
-		<html lang="en">
-		<HeadMeta/>
-		<body className={inter.className}>{children}</body>
-		</html>
-	);
+  return (
+    <html lang="en">
+      <HeadMeta/>
+      <body className={inter.className}>{children}</body>
+    </html>
+  );
 }

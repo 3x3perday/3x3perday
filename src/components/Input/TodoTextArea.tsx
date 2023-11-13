@@ -28,42 +28,42 @@ const textStyle = `
     background-color: transparent;
 `;
 export const TodoTextArea = forwardRef<HTMLTextAreaElement, Props>((
-    {
-        width = '100%',
-        height = '169px',
-        isResizeHeight = true,
-        css = style`
+  {
+    width = '100%',
+    height = '169px',
+    isResizeHeight = true,
+    css = style`
             ${isResizeHeight && invisibleScroll}
             ${textStyle}
             width: ${width};
             height: ${height};
         `,
-        onChange,
-        ...props
-    }, ref) => {
-    const textAreaRef = useRef<HTMLTextAreaElement | any >(ref);
-    const [maxHeight, setMaxHeight] = useState(0);
+    onChange,
+    ...props
+  }, ref) => {
+  const textAreaRef = useRef<HTMLTextAreaElement | any >(ref);
+  const [maxHeight, setMaxHeight] = useState(0);
 
-    const onChangeTodo = (e: ChangeEvent<HTMLTextAreaElement>) => {
-        if (e.target.scrollHeight === Number(maxHeight)) {
-            onChange && onChange(e);
-        }
+  const onChangeTodo = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    if (e.target.scrollHeight === Number(maxHeight)) {
+      onChange && onChange(e);
     }
+  }
 
-    useEffect(() => {
-        if(textAreaRef.current) {
-            setMaxHeight(textAreaRef.current.clientHeight)
-        }
-    }, []);
+  useEffect(() => {
+    if(textAreaRef.current) {
+      setMaxHeight(textAreaRef.current.clientHeight)
+    }
+  }, []);
 
-    return (
-        <textarea
-            {...props}
-            ref={textAreaRef}
-            rows={1}
-            onChange={onChangeTodo}
-            css={css}
-        />
-    )
+  return (
+    <textarea
+      {...props}
+      ref={textAreaRef}
+      rows={1}
+      onChange={onChangeTodo}
+      css={css}
+    />
+  )
 })
 TodoTextArea.displayName = "TodoTextArea"

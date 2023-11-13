@@ -32,9 +32,9 @@ export const Date = {
     const prevDate = this.getPrevDate(date, subtractDays);
     const nextDate = this.getNextDate(date, addDays);
     return {
-        currentDate: date,
-        minDate: prevDate,
-        maxDate: nextDate,
+      currentDate: date,
+      minDate: prevDate,
+      maxDate: nextDate,
     }
   }
 };

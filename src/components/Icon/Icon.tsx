@@ -61,24 +61,24 @@ const BACK = css`
 `
 
 export const ICON_MAP = {
-    'plus': plusBg,
-    'small-plus': smallPlus,
-    'hand-one-inactive': HAND_ONE_INACTIVE,
-    'hand-two-inactive': HAND_TWO_INACTIVE,
-    'hand-three-inactive': HAND_THREE_INACTIVE,
-    'hand-one-active': HAND_ONE_ACTIVE,
-    'hand-two-active': HAND_TWO_ACTIVE,
-    'hand-three-active': HAND_THREE_ACTIVE,
-    'thumbs-up': THUMBS_UP,
-    'arrow-up': ARROW_UP,
-    'arrow-down': ARROW_DOWN,
-    'sub-todo-one-inactive': SUB_TODO_ONE_INACTIVE,
-    'sub-todo-two-inactive': SUB_TODO_TWO_INACTIVE,
-    'sub-todo-three-inactive': SUB_TODO_THREE_INACTIVE,
-    'sub-todo-one-active': SUB_TODO_ONE_ACTIVE,
-    'sub-todo-two-active': SUB_TODO_TWO_ACTIVE,
-    'sub-todo-three-active': SUB_TODO_THREE_ACTIVE,
-    'back': BACK,
+  'plus': plusBg,
+  'small-plus': smallPlus,
+  'hand-one-inactive': HAND_ONE_INACTIVE,
+  'hand-two-inactive': HAND_TWO_INACTIVE,
+  'hand-three-inactive': HAND_THREE_INACTIVE,
+  'hand-one-active': HAND_ONE_ACTIVE,
+  'hand-two-active': HAND_TWO_ACTIVE,
+  'hand-three-active': HAND_THREE_ACTIVE,
+  'thumbs-up': THUMBS_UP,
+  'arrow-up': ARROW_UP,
+  'arrow-down': ARROW_DOWN,
+  'sub-todo-one-inactive': SUB_TODO_ONE_INACTIVE,
+  'sub-todo-two-inactive': SUB_TODO_TWO_INACTIVE,
+  'sub-todo-three-inactive': SUB_TODO_THREE_INACTIVE,
+  'sub-todo-one-active': SUB_TODO_ONE_ACTIVE,
+  'sub-todo-two-active': SUB_TODO_TWO_ACTIVE,
+  'sub-todo-three-active': SUB_TODO_THREE_ACTIVE,
+  'back': BACK,
 } as const;
 
 interface IconProps {
@@ -88,7 +88,7 @@ interface IconProps {
 }
 
 const IconStyleCSS = (props:IconProps) =>
-    css`
+  css`
       position: relative;
       cursor: pointer;
       width: ${props.width ?? '2.875rem'};

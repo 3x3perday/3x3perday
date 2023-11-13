@@ -31,59 +31,59 @@ export interface MainTodoProps {
  */
 
 export const MainTodo = (
-    {
-        value,
-        onClickToggle,
-        onChange,
-        prefixTodoNumber = 1,
-        visibleToggleBtn = false,
-        activeToggleBtn = false,
-        activeFingerBtn = false,
-        editable = true,
-        checked = false,
-        onClickCheck
-    }: MainTodoProps) => {
-    return (
-        <div css={todoContainerCSS(prefixTodoNumber)}>
-            <div>
-                <div css={mainTodoIconWrapper}>
-                    {
-                        !checked ? (
-                            <FingerButton
-                                onClick={onClickCheck}
-                                fingerCount={prefixTodoNumber}
-                                isActive={activeFingerBtn ?? false}
-                            />
-                        ) : (
-                            <Button
-                                onClick={onClickCheck}
-                                css={css`position: absolute; left: -52px;`}
-                            >
-                                <Icon
-                                    name={'thumbs-up'}
-                                    width={'152px'}
-                                    height={'144px'}
-                                />
-                            </Button>
-                        )
-                    }
-                </div>
-            </div>
-            <div>
-                <TodoTextArea
-                    readOnly={!editable}
-                    value={value}
-                    onChange={onChange}
-                    css={todoTextAreaCSS}
+  {
+    value,
+    onClickToggle,
+    onChange,
+    prefixTodoNumber = 1,
+    visibleToggleBtn = false,
+    activeToggleBtn = false,
+    activeFingerBtn = false,
+    editable = true,
+    checked = false,
+    onClickCheck
+  }: MainTodoProps) => {
+  return (
+    <div css={todoContainerCSS(prefixTodoNumber)}>
+      <div>
+        <div css={mainTodoIconWrapper}>
+          {
+            !checked ? (
+              <FingerButton
+                onClick={onClickCheck}
+                fingerCount={prefixTodoNumber}
+                isActive={activeFingerBtn ?? false}
+              />
+            ) : (
+              <Button
+                onClick={onClickCheck}
+                css={css`position: absolute; left: -52px;`}
+              >
+                <Icon
+                  name={'thumbs-up'}
+                  width={'152px'}
+                  height={'144px'}
                 />
-                {visibleToggleBtn && (
-                    <Button onClick={onClickToggle} css={toggleButtonCSS}>
-                        <Icon name={activeToggleBtn ? 'arrow-down' : 'arrow-up'} width={'19px'} height={'13px'} />
-                    </Button>
-                )}
-            </div>
+              </Button>
+            )
+          }
         </div>
-    );
+      </div>
+      <div>
+        <TodoTextArea
+          readOnly={!editable}
+          value={value}
+          onChange={onChange}
+          css={todoTextAreaCSS}
+        />
+        {visibleToggleBtn && (
+          <Button onClick={onClickToggle} css={toggleButtonCSS}>
+            <Icon name={activeToggleBtn ? 'arrow-down' : 'arrow-up'} width={'19px'} height={'13px'} />
+          </Button>
+        )}
+      </div>
+    </div>
+  );
 }
 const todoContainerCSS = (todoNum: number) => css`
   background: ${TODO_COLOR[todoNum - 1]};

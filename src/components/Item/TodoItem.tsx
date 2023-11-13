@@ -37,73 +37,73 @@ export interface TodoProps extends Todo3x3Model {
  */
 
 export const TodoItem = (
-	{
-		id,
-		mainTodo,
-		subTodos,
-		subTodoMaxLength = 3,
+  {
+    id,
+    mainTodo,
+    subTodos,
+    subTodoMaxLength = 3,
 
-		onChangeMainTodo,
-		onChangeSubTodo,
-		onClickAddSubTodo,
-		onClickToggle,
-		onClickCheckMainTodo,
-		onClickCheckSubTodo,
+    onChangeMainTodo,
+    onChangeSubTodo,
+    onClickAddSubTodo,
+    onClickToggle,
+    onClickCheckMainTodo,
+    onClickCheckSubTodo,
 
-		visibleSubTodo = false,
-		editable = false,
-	}: TodoProps) => {
+    visibleSubTodo = false,
+    editable = false,
+  }: TodoProps) => {
 
 
-	const activeFingerBtn = mainTodo.content.length > 0;
-	const visibleToggleBtn = activeFingerBtn && subTodos.length > 0;
+  const activeFingerBtn = mainTodo.content.length > 0;
+  const visibleToggleBtn = activeFingerBtn && subTodos.length > 0;
 
-	return (
-		<div css={css`position: relative`}>
-			<MainTodo
-				prefixTodoNumber={id + 1}
-				value={mainTodo.content}
-				onChange={e => onChangeMainTodo && onChangeMainTodo(e, id)}
-				visibleToggleBtn={visibleToggleBtn}
-				activeToggleBtn={visibleSubTodo}
-				activeFingerBtn={activeFingerBtn}
-				onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}
-				editable={editable}
-				checked={mainTodo.done}
-				onClickCheck={() => onClickCheckMainTodo && onClickCheckMainTodo()}
-			/>
-			{
-				visibleSubTodo && subTodos.map((subTodo, subTodoId) => (
-					<div
-						key={subTodoId}
-						css={css`margin-left: 100px;`}
-					>
-						<SubTodo
-							mainTodoId={id}
-							prefixTodoNumber={subTodoId + 1}
-							value={subTodo.content}
-							onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
-							editable={editable}
-							checked={subTodo.done}
-							onClickCheck={() => onClickCheckSubTodo && onClickCheckSubTodo(id, subTodoId)}
-						/>
-					</div>
-				))
-			}
-			{
-				editable && visibleSubTodo && (
-					<Icon
-						name={'small-plus'}
-						width={"34px"}
-						height={"34px"}
-						onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
-						css={addButtonCSS(subTodos.length, subTodoMaxLength, id)}
-					>
-					</Icon>
-				)
-			}
-		</div>
-	);
+  return (
+    <div css={css`position: relative`}>
+      <MainTodo
+        prefixTodoNumber={id + 1}
+        value={mainTodo.content}
+        onChange={e => onChangeMainTodo && onChangeMainTodo(e, id)}
+        visibleToggleBtn={visibleToggleBtn}
+        activeToggleBtn={visibleSubTodo}
+        activeFingerBtn={activeFingerBtn}
+        onClickToggle={() => onClickToggle && onClickToggle(id, !visibleSubTodo)}
+        editable={editable}
+        checked={mainTodo.done}
+        onClickCheck={() => onClickCheckMainTodo && onClickCheckMainTodo()}
+      />
+      {
+        visibleSubTodo && subTodos.map((subTodo, subTodoId) => (
+          <div
+            key={subTodoId}
+            css={css`margin-left: 100px;`}
+          >
+            <SubTodo
+              mainTodoId={id}
+              prefixTodoNumber={subTodoId + 1}
+              value={subTodo.content}
+              onChange={e => onChangeSubTodo && onChangeSubTodo(e, id, subTodoId)}
+              editable={editable}
+              checked={subTodo.done}
+              onClickCheck={() => onClickCheckSubTodo && onClickCheckSubTodo(id, subTodoId)}
+            />
+          </div>
+        ))
+      }
+      {
+        editable && visibleSubTodo && (
+          <Icon
+            name={'small-plus'}
+            width={"34px"}
+            height={"34px"}
+            onClick={() => onClickAddSubTodo && onClickAddSubTodo(id)}
+            css={addButtonCSS(subTodos.length, subTodoMaxLength, id)}
+          >
+          </Icon>
+        )
+      }
+    </div>
+  );
 };
 
 const addButtonCSS = (todoLength: number, maxLength: number, mainTodoid: number) => css`

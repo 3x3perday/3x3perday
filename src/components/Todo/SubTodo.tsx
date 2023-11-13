@@ -24,38 +24,38 @@ export interface SubTodoProps {
  */
 
 export const SubTodo = (
-	{
-		mainTodoId,
-		value,
-		onChange,
-		prefixTodoNumber = 1,
-		editable = true,
-		checked = false,
-		onClickCheck
-	}: SubTodoProps) => {
-	return (
-		<div css={todoContainerCSS(mainTodoId + 1)}>
-			<div>
-				<NumberButton
-					css={css`
+  {
+    mainTodoId,
+    value,
+    onChange,
+    prefixTodoNumber = 1,
+    editable = true,
+    checked = false,
+    onClickCheck
+  }: SubTodoProps) => {
+  return (
+    <div css={todoContainerCSS(mainTodoId + 1)}>
+      <div>
+        <NumberButton
+          css={css`
             padding: 4px 0 16px 14px;
 					`}
-					onClick={onClickCheck}
-					count={prefixTodoNumber}
-					isActive={checked ?? false}
-				/>
-			</div>
-			<div>
-				<TodoTextArea
-					readOnly={!editable}
-					height={'80px'}
-					value={value}
-					onChange={onChange}
-					css={todoTextAreaCSS}
-				/>
-			</div>
-		</div>
-	);
+          onClick={onClickCheck}
+          count={prefixTodoNumber}
+          isActive={checked ?? false}
+        />
+      </div>
+      <div>
+        <TodoTextArea
+          readOnly={!editable}
+          height={'80px'}
+          value={value}
+          onChange={onChange}
+          css={todoTextAreaCSS}
+        />
+      </div>
+    </div>
+  );
 };
 const prefixFontStyle = css`
   width: 90px;

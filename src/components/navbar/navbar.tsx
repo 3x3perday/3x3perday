@@ -13,93 +13,93 @@ interface Props {
 
 // Navbar 는 날짜 관련 컴포넌트
 export default function Navbar({date, setDate}: Props) {
-	const [isToday, setIsToday] = useState(true);
-	const router = useRouter();
-	useEffect(() => {
-		const today = Date.getToday();
-		if (date === today) {
-			return setIsToday(true);
-		}
-		setIsToday(false);
-	}, [date]);
+  const [isToday, setIsToday] = useState(true);
+  const router = useRouter();
+  useEffect(() => {
+    const today = Date.getToday();
+    if (date === today) {
+      return setIsToday(true);
+    }
+    setIsToday(false);
+  }, [date]);
 
-	const goYesterday = () => {
-		const yesterday = Date.getYesterday(date);
-		setDate(yesterday);
-	};
+  const goYesterday = () => {
+    const yesterday = Date.getYesterday(date);
+    setDate(yesterday);
+  };
 
-	const goToday = () => {
-		const today = Date.getToday();
-		setDate(today);
-	};
+  const goToday = () => {
+    const today = Date.getToday();
+    setDate(today);
+  };
 
-	const goAchieve = () => {
-		router.push("/achieve");
-	};
+  const goAchieve = () => {
+    router.push("/achieve");
+  };
 
-	const goEdit = () => {
-		router.push("/todo/edit");
-	};
-	const path = usePathname();
-	return (
-		<div css={navBarCSS}>
-			<div css={navTopCSS}>
-				<div className="left">
-					<Image
-						src="/image/logo.svg"
+  const goEdit = () => {
+    router.push("/todo/edit");
+  };
+  const path = usePathname();
+  return (
+    <div css={navBarCSS}>
+      <div css={navTopCSS}>
+        <div className="left">
+          <Image
+            src="/image/logo.svg"
 
-						width={90}
-						height={60}
-						alt="logo"
-						className="logo"
-					/>
-				</div>
-				<div className="right">
-					<div className="profile">
-						<Image
-							src="/image/mimoji.png"
-							width={50}
-							height={50}
-							onClick={goAchieve}
-							alt="setting"
-							className="setting"
-						/>
-					</div>
-				</div>
-			</div>
-			<div css={dateCSS}>
-				{isToday && (
-					<Image
-						onClick={goYesterday}
-						src="/icon/arrow_left.png"
-						width={15}
-						height={20}
-						alt="arrow"
-						className="arrow_left"
-					/>
-				)}
-				<div className="date">{date}</div>
-				{!isToday && (
-					<Image
-						onClick={goToday}
-						src="/icon/arrow_right.png"
-						width={15}
-						height={20}
-						alt="arrow"
-						className="arrow_right"
-					/>
-				)}
-				{path === "/todo" && (
-					<div css={btnCSS}>
-						<button onClick={goEdit} className="edit_btn">
+            width={90}
+            height={60}
+            alt="logo"
+            className="logo"
+          />
+        </div>
+        <div className="right">
+          <div className="profile">
+            <Image
+              src="/image/mimoji.png"
+              width={50}
+              height={50}
+              onClick={goAchieve}
+              alt="setting"
+              className="setting"
+            />
+          </div>
+        </div>
+      </div>
+      <div css={dateCSS}>
+        {isToday && (
+          <Image
+            onClick={goYesterday}
+            src="/icon/arrow_left.png"
+            width={15}
+            height={20}
+            alt="arrow"
+            className="arrow_left"
+          />
+        )}
+        <div className="date">{date}</div>
+        {!isToday && (
+          <Image
+            onClick={goToday}
+            src="/icon/arrow_right.png"
+            width={15}
+            height={20}
+            alt="arrow"
+            className="arrow_right"
+          />
+        )}
+        {path === "/todo" && (
+          <div css={btnCSS}>
+            <button onClick={goEdit} className="edit_btn">
 							수정
-						</button>
-					</div>
-				)}
-			</div>
+            </button>
+          </div>
+        )}
+      </div>
 
-		</div>
-	);
+    </div>
+  );
 }
 
 const navBarCSS = css`

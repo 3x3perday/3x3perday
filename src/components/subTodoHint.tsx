@@ -4,8 +4,8 @@ import {css} from "@emotion/react";
 type propsType = {};
 
 export default function SubTodoHint(props: propsType) {
-	return (
-		<div css={css`
+  return (
+    <div css={css`
       @keyframes fadeout {
         from {
           opacity: 1;
@@ -17,7 +17,7 @@ export default function SubTodoHint(props: propsType) {
       animation: fadeout 3s;
       animation-fill-mode: forwards;
 		`}>
-			<div css={css`
+      <div css={css`
         position: absolute;
         width: 192px;
         height: 35px;
@@ -50,8 +50,8 @@ export default function SubTodoHint(props: propsType) {
         }
 			`}>
 
-			</div>
-			<div css={css`
+      </div>
+      <div css={css`
         position: absolute;
         width: 188px;
         height: 31px;
@@ -85,8 +85,8 @@ export default function SubTodoHint(props: propsType) {
         }
 			`}>
 				과업을 완수하기 위한 3가지 작은 일들을 정리해보세요.
-			</div>
-		</div>
+      </div>
+    </div>
 
-	);
+  );
 }
