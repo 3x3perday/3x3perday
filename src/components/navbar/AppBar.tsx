@@ -7,8 +7,8 @@ export const AppBar = () => {
     <div
       style={{
         display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between'
+        alignItems: 'flex-end',
+        justifyContent: 'space-between',
       }}
     >
       <Link href='/'>
