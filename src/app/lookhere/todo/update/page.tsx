@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
-import { TodoSchema } from "@/types/todo";
 import Link from "next/link";
+import { TodoResponse } from "@/types/todo";
 
 const fetchData = async () => {
   const userId = "1234";
@@ -20,7 +20,7 @@ const fetchData = async () => {
 };
 
 const SPage = () => {
-  const [data, setData] = useState<TodoSchema>();
+  const [data, setData] = useState<TodoResponse>();
 
   useEffect(() => {
     (async () => {

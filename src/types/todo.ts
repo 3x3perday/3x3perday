@@ -13,7 +13,7 @@ export interface TodoItem {
   subTodos: TodoBase[];
 }
 
-export interface TodoBase {
-  content: string;
-  done: boolean;
+export class TodoBase {
+  content: string = "";
+  done: boolean = false;
 }

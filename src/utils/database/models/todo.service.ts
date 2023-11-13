@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import connectDB from "../database";
 import TodoModel from "./todo";
 import { TodoPost } from "@/utils/todo";
-import { TodoSchema } from "@/types/todo";
+import { TodoItem, TodoResponse } from "@/types/todo";
 
 export const TodoService = {
   getTodo: async (userId: string, date: string) => {
@@ -58,7 +58,7 @@ export const TodoService = {
     }
   },
 
-  updateTodo: async (todo: TodoSchema) => {
+  updateTodo: async (todo: TodoResponse) => {
     try {
       await connectDB();
       const todoD = await TodoModel.updateOne(
