@@ -5,6 +5,7 @@ import { Date } from '@/utils/date';
 import { EmptyTodo } from '@/components/Todo/EmptyTodo';
 import { TodoItem, TodoResponse } from '@/types/todo';
 import { AppBar } from '@/components/navbar/AppBar';
+import { DEFAULT_TODO } from '@/constants/Todo';
 
 const getTodoData = async (date: string): Promise<TodoResponse> => {
   const userId = "6550c5aafb5e55258e167592";
@@ -19,23 +20,7 @@ const getTodoData = async (date: string): Promise<TodoResponse> => {
   return {
     userId,
     date: '',
-    todos: [
-      {
-        sortedId: 0,
-        mainTodo: { content: "", done: false },
-        subTodos: [],
-      },
-      {
-        sortedId: 1,
-        mainTodo: { content: "", done: false },
-        subTodos: [],
-      },
-      {
-        sortedId: 2,
-        mainTodo: { content: "", done: false },
-        subTodos: [],
-      },
-    ]
+    todos: DEFAULT_TODO
   };
 }
 
