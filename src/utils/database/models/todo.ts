@@ -1,6 +1,6 @@
 import mongoose, { Schema } from "mongoose";
 
-const todoSchema = new Schema({
+const todoModel = new Schema({
   userId: { type: String, required: true },
   date: { type: String, required: true },
   todos: [
@@ -8,18 +8,18 @@ const todoSchema = new Schema({
       sortedId: { type: Number, required: true, default: 0 },
       mainTodo: {
         content: { type: String, default: "" },
-        done: { type: Boolean, required: true, default: false },
+        done: { type: Boolean, required: true },
       },
       subTodos: [
         {
           content: { type: String, default: "" },
-          done: { type: Boolean, default: false },
+          done: { type: Boolean },
         },
       ],
     },
   ],
 });
 
-const TodoModel = mongoose.models.todos || mongoose.model("todos", todoSchema);
+const TodoModel = mongoose.models.todos || mongoose.model("todos", todoModel);
 
 export default TodoModel;

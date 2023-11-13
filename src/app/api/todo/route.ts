@@ -30,3 +30,13 @@ export async function POST(req: NextRequest) {
 
   return TodoService.postTodo(userId, date);
 }
+
+export async function PUT(req: NextRequest) {
+  const userId = req.nextUrl.searchParams.get("userId") || "";
+  const date = req.nextUrl.searchParams.get("date") || "";
+
+  const data = await req.json();
+  const todo = data.data;
+
+  return TodoService.updateTodo(todo);
+}

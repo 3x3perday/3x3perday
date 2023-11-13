@@ -1,9 +1,10 @@
 import React from "react";
 import PostNew from "./PostNew";
+import Link from "next/link";
 
 const fetchData = async () => {
   const userId = "1234";
-  const date = "2023-11-12";
+  const date = "2023-11-15";
 
   const res = await fetch(
     `http://localhost:3000/api/todo/?userId=${userId}&date=${date}`,
@@ -15,14 +16,12 @@ const fetchData = async () => {
     }
   );
   const a = await res.json();
-  console.log(a, "HI");
+  console.log(a,"HIHIH")
   return a;
 };
 
 const SPage = async () => {
   const data = await fetchData();
-  console.log(data, "DDHDH");
-
   if (!data)
     return (
       <div>
@@ -46,6 +45,7 @@ const SPage = async () => {
           ))}
         </div>
       ))}
+      <Link href={`/lookhere/todo/update`}>수정하기</Link>
     </div>
   );
 };

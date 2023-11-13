@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import connectDB from "../database";
 import TodoModel from "./todo";
 import { TodoPost } from "@/utils/todo";
+import { TodoSchema } from "@/types/todo";
 
 export const TodoService = {
   getTodo: async (userId: string, date: string) => {
@@ -54,6 +55,22 @@ export const TodoService = {
     } catch (error) {
       console.log(error);
       return null;
+    }
+  },
+
+  updateTodo: async (todo: TodoSchema) => {
+    try {
+      await connectDB();
+      const todoD = await TodoModel.updateOne(
+        { userId: todo.userId, date: todo.date },
+        todo
+      );
+      return new NextResponse(
+        JSON.stringify({ message: "TODO가 수정되었습니다." }),
+        { status: 200 }
+      );
+    } catch (error) {
+      console.log(error);
     }
   },
 };
