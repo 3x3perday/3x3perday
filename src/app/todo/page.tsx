@@ -2,48 +2,36 @@ import dayjs from 'dayjs';
 import { DateNavBar } from '@/components/navbar/DateNavBar';
 import { http } from '@/utils/http';
 import { Date } from '@/utils/date';
-
-interface Todo {
-    content: string;
-    done: boolean;
-}
-
-interface TodoItem {
-    sortedId: number;
-    mainTodo: Todo;
-    subTodos: Todo[];
-}
-
-interface TodoResponse {
-    todos: TodoItem[];
-}
+import { EmptyTodo } from '@/components/Todo/EmptyTodo';
+import { TodoResponse } from '@/types/todo';
 
 const getTodoData = async (date: string): Promise<TodoResponse> => {
   const userId = "6550c5aafb5e55258e167592";
   const res = await http.get(`http://localhost:3000/api/todo/?userId=${userId}&date=${date}`);
   if (res.status === 200) {
     return {
+      userId: '',
+      date: '',
       todos: await res.json(),
     };
   }
   return {
+    userId,
+    date: '',
     todos: [
       {
         sortedId: 0,
-        mainTodo: { content: "main-1", done: false },
-        subTodos: [
-          { content: "sub-1", done: false },
-          { content: "sub-2", done: false }
-        ],
+        mainTodo: { content: "", done: false },
+        subTodos: [],
       },
       {
         sortedId: 1,
-        mainTodo: { content: "main-2", done: false },
+        mainTodo: { content: "", done: false },
         subTodos: [],
       },
       {
         sortedId: 2,
-        mainTodo: { content: "main-3", done: false },
+        mainTodo: { content: "", done: false },
         subTodos: [],
       },
     ]
@@ -71,18 +59,27 @@ export default async function TodoPage({ searchParams }: Props) {
   return (
     <main>
       <DateNavBar date={date} minDate={minDate} maxDate={maxDate} />
-      {
-        todos.map(todo => (
-          <div key={`todo--${todo.sortedId}`}>
-            <div>{todo.mainTodo.content}</div>
-            {
-              todo.subTodos.map((subTodo, idx) => (
-                <div key={`sub-todo--${idx}`}>{subTodo.content}</div>
-              ))
-            }
-          </div>
-        ))
-      }
+      <div
+        style={{
+          display: 'flex',
+          flexDirection: 'column',
+          alignItems: 'center'
+        }}
+      >
+        {
+          todos.map(todo => (
+            <div key={`todo--${todo.sortedId}`}>
+              <div>{todo.mainTodo.content}</div>
+              {
+                todo.subTodos.map((subTodo, idx) => (
+                  <div key={`sub-todo--${idx}`}>{subTodo.content}</div>
+                ))
+              }
+              <EmptyTodo sortedId={todo.sortedId} />
+            </div>
+          ))
+        }
+      </div>
     </main>
   )
 }
