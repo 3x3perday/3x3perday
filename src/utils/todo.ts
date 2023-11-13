@@ -1,14 +1,5 @@
-import { Date } from "./date";
-
-export interface TodoItem {
-  // mainTodo 하나 + subTodos 여러개
-  sortedId: number;
-  mainTodo: {
-    content: string;
-    done: boolean;
-  };
-  subTodos: any[];
-}
+import { DEFUALT_TODO } from "@/constants/Todo";
+import { TodoItem } from "@/types/todo";
 
 export class TodoPost {
   userId: string;
@@ -21,21 +12,3 @@ export class TodoPost {
     this.todos = DEFUALT_TODO;
   }
 }
-
-const DEFUALT_TODO = [
-  {
-    sortedId: 0,
-    mainTodo: { content: "", done: false },
-    subTodos: [],
-  },
-  {
-    sortedId: 1,
-    mainTodo: { content: "", done: false },
-    subTodos: [],
-  },
-  {
-    sortedId: 2,
-    mainTodo: { content: "", done: false },
-    subTodos: [],
-  },
-];
