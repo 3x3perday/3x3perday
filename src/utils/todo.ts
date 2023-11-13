@@ -1,4 +1,4 @@
-import { DEFUALT_TODO } from "@/constants/Todo";
+import { DEFAULT_TODO } from "@/constants/Todo";
 import { TodoItem } from "@/types/todo";
 
 export class TodoPost {
@@ -9,6 +9,6 @@ export class TodoPost {
   constructor(userId: string, date: string) {
     this.userId = userId;
     this.date = date;
-    this.todos = DEFUALT_TODO;
+    this.todos = DEFAULT_TODO;
   }
 }

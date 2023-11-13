@@ -1,4 +1,4 @@
-export const DEFUALT_TODO = [
+export const DEFAULT_TODO = [
   {
     sortedId: 0,
     mainTodo: { content: "", done: false },
