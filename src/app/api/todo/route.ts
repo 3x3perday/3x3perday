@@ -40,3 +40,16 @@ export async function PUT(req: NextRequest) {
 
   return TodoService.updateTodo(todo);
 }
+
+export async function PATCH(req: NextRequest) {
+  const userId = req.nextUrl.searchParams.get("userId") || "";
+  const date = req.nextUrl.searchParams.get("date") || "";
+
+  const data = await req.json();
+
+  const { todo, sortedId, newTodo } = data;
+
+  todo.todos[Number(sortedId)] = newTodo;
+
+  return TodoService.updateTodo(todo);
+}
