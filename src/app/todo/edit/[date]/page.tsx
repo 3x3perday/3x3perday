@@ -143,6 +143,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
   return (
     <main>
       <AppBar />
+      <hr />
       <h1>{sortedId} 번 TODO</h1>
       <button onClick={onSubmit}>SAVE</button>
       <button onClick={deleteAll}>DELETE</button>
