@@ -1,3 +1,4 @@
+const {join} = require("path");
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   compiler: {
@@ -8,6 +9,9 @@ const nextConfig = {
   // dnd 의 ref 를 사용하기 위해선 forwardRef 를 사용해야 하는데,
   // strict mode 에서는 forwardRef 가 제대로 작동하지 않는다.
   swcMinify: true,
+  sassOptions: {
+    includePaths: [join(__dirname, 'styles')]
+  }
 };
 
 module.exports = nextConfig;
