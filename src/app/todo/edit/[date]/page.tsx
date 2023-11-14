@@ -1,30 +1,34 @@
 "use client";
 import { TodoBase, TodoItem, TodoResponse } from "@/types/todo";
 import { http } from "@/utils/http";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface Params {
-  id: string;
+  date: string; // 2023-11-15
 }
 
-const fetchData = async () => {
-  const USER_ID = "1234";
-  const DATE = "2023-11-15";
-
-  const res = await http.get(`/api/todo/?userId=${USER_ID}&date=${DATE}`);
+const fetchData = async (userId: string, date: string) => {
+  const res = await http.get(`/api/todo/?userId=${userId}&date=${date}`);
   if (res.status === 200) {
     return (await res.json()) as TodoResponse;
   }
 };
 
 const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
-  const sortedId = Number(params.id);
+  const router = useSearchParams();
+
+  const userId = localStorage.getItem("userId") || "1234";
+
+  const sortedId = Number(router.get("sortedId")) || 0;
+  const date = params.date;
+
   const [originTodoResponse, setOriginTodoResponse] = useState<TodoResponse>();
 
   const [todo, setTodo] = useState<TodoItem>();
 
   const getInitData = async () => {
-    const _data = await fetchData();
+    const _data = await fetchData(userId, date);
     if (!_data) return;
     setOriginTodoResponse(_data);
     setTodo(_data.todos[sortedId]);
@@ -56,7 +60,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     });
   };
 
-  const handleAddSubTodo = (todoSortId: number) => {
+  const addSubTodo = () => {
     if (!todo) return;
 
     if (todo.subTodos.length >= 3) return;
@@ -70,29 +74,36 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     });
   };
 
+  const deleteSubTodo = (idx: number) => {
+    if (!todo) return;
+
+    let newSubTodos = [...todo.subTodos];
+    newSubTodos.splice(idx, 1);
+
+    setTodo({
+      ...todo,
+      subTodos: newSubTodos,
+    });
+  };
+
   const checkIsOverThree = () => {
     if (!todo) return false;
     return todo.subTodos.length >= 3;
   };
 
-  const onSubmit = () => {
-    const userId = "1234";
-    const date = "2023-11-15";
+  const onSubmit = async () => {
+    const data = {
+      todo: originTodoResponse,
+      sortedId: sortedId,
+      newTodo: todo,
+    };
 
-    (async () => {
-      const res = await fetch(`/api/todo/?userId=${userId}?date=${date}`, {
-        method: "PATCH",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          todo: originTodoResponse,
-          sortedId: sortedId,
-          newTodo: todo,
-        }),
-      });
-
-      const res2 = await res.json();
-      alert(res2.message);
-    })();
+    const res = await http.patch(
+      `/api/todo/?userId=${userId}?date=${date}`,
+      data
+    );
+    const res2 = await res.json();
+    alert(res2.message);
   };
 
   return (
@@ -113,11 +124,10 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
                   value={subTodo.content}
                   onChange={(e) => handleSubTodo(e, sortedId, idx)}
                 />
+                <button onClick={() => deleteSubTodo(idx)}>X</button>
               </div>
             ))}
-            {!checkIsOverThree() && (
-              <button onClick={() => handleAddSubTodo(sortedId)}>+</button>
-            )}
+            {!checkIsOverThree() && <button onClick={addSubTodo}>+</button>}
           </div>
         </div>
       )}
@@ -133,7 +143,7 @@ const styles = {
   margin: "20px",
 };
 const styles2 = {
-  backgroundColor: "tomato",
+  backgroundColor: "yellowgreen",
   marginTop: "10px",
   padding: "10px",
 };
