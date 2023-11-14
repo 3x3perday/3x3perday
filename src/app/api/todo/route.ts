@@ -32,9 +32,6 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  const userId = req.nextUrl.searchParams.get("userId") || "";
-  const date = req.nextUrl.searchParams.get("date") || "";
-
   const data = await req.json();
   const todo = data.data;
 
@@ -42,14 +39,11 @@ export async function PUT(req: NextRequest) {
 }
 
 export async function PATCH(req: NextRequest) {
-  const userId = req.nextUrl.searchParams.get("userId") || "";
-  const date = req.nextUrl.searchParams.get("date") || "";
-
+  // sortedId 번째 TodoItem 수정
   const data = await req.json();
+  const { originTodoResponse, sortedId, newTodo } = data;
 
-  const { todo, sortedId, newTodo } = data;
+  originTodoResponse.todos[Number(sortedId)] = newTodo;
 
-  todo.todos[Number(sortedId)] = newTodo;
-
-  return TodoService.updateTodo(todo);
+  return TodoService.updateTodo(originTodoResponse);
 }

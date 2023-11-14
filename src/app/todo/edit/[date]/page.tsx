@@ -17,11 +17,10 @@ const fetchData = async (userId: string, date: string) => {
 };
 
 const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
-  const router = useSearchParams();
+  const searchParam = useSearchParams();
+  const router = useRouter();
 
-  const userId = localStorage.getItem("userId") || "1234";
-
-  const sortedId = Number(router.get("sortedId")) || 0;
+  const sortedId = Number(searchParam.get("sortedId")) || 0;
   const date = params.date;
 
   const [originTodoResponse, setOriginTodoResponse] = useState<TodoResponse>();
@@ -29,6 +28,8 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
   const [todo, setTodo] = useState<TodoItem>();
 
   const getInitData = async () => {
+    const userId = localStorage.getItem("userId") || "1234";
+
     const _data = await fetchData(userId, date);
     if (!_data) return;
     setOriginTodoResponse(_data);
@@ -118,15 +119,12 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
 
   const onSubmit = async () => {
     const data = {
-      todo: originTodoResponse,
+      originTodoResponse: originTodoResponse,
       sortedId: sortedId,
       newTodo: todo,
     };
 
-    const res = await http.patch(
-      `/api/todo/?userId=${userId}?date=${date}`,
-      data
-    );
+    const res = await http.patch(`/api/todo/`, data);
     const res2 = await res.json();
     alert(res2.message);
   };
@@ -140,11 +138,16 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     });
   };
 
+  const goBack = () => {
+    router.push(`/todo`);
+  };
+
   return (
     <main>
       <AppBar />
       <hr />
       <h1>{sortedId} 번 TODO</h1>
+      <button onClick={goBack}>BACK</button>
       <button onClick={onSubmit}>SAVE</button>
       <button onClick={deleteAll}>DELETE</button>
       {todo && (
