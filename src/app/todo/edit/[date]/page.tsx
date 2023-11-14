@@ -38,57 +38,81 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     getInitData();
   }, []);
 
-  const handleMainTodo = (e: any) => {
-    if (!todo) return;
-    setTodo({
-      ...todo,
-      mainTodo: {
-        ...todo.mainTodo,
-        content: e.target.value,
-      },
-    });
+  const MainTodo = {
+    handleValue: (e: any) => {
+      if (!todo) return;
+      setTodo({
+        ...todo,
+        mainTodo: {
+          ...todo.mainTodo,
+          content: e.target.value,
+        },
+      });
+    },
+    handleDone: () => {
+      if (!todo) return;
+      setTodo({
+        ...todo,
+        mainTodo: {
+          ...todo.mainTodo,
+          done: !todo.mainTodo.done,
+        },
+      });
+    },
   };
 
-  const handleSubTodo = (e: any, idx: number, subIdx: number) => {
-    if (!todo) return;
+  const SubTodo = {
+    add: () => {
+      if (!todo) return;
 
-    let newSubTodos = [...todo.subTodos];
-    newSubTodos[subIdx].content = e.target.value;
-    setTodo({
-      ...todo,
-      subTodos: newSubTodos,
-    });
-  };
+      if (todo.subTodos.length >= 3) return;
 
-  const addSubTodo = () => {
-    if (!todo) return;
+      let newSubTodos = [...todo.subTodos];
+      newSubTodos.push(new TodoBase());
 
-    if (todo.subTodos.length >= 3) return;
+      setTodo({
+        ...todo,
+        subTodos: newSubTodos,
+      });
+    },
 
-    let newSubTodos = [...todo.subTodos];
-    newSubTodos.push(new TodoBase());
+    handleValue: (e: any, subIdx: number) => {
+      if (!todo) return;
 
-    setTodo({
-      ...todo,
-      subTodos: newSubTodos,
-    });
-  };
+      let newSubTodos = [...todo.subTodos];
+      newSubTodos[subIdx].content = e.target.value;
+      setTodo({
+        ...todo,
+        subTodos: newSubTodos,
+      });
+    },
+    delete: (subIdx: number) => {
+      if (!todo) return;
 
-  const deleteSubTodo = (idx: number) => {
-    if (!todo) return;
+      let newSubTodos = [...todo.subTodos];
+      newSubTodos.splice(subIdx, 1);
 
-    let newSubTodos = [...todo.subTodos];
-    newSubTodos.splice(idx, 1);
+      setTodo({
+        ...todo,
+        subTodos: newSubTodos,
+      });
+    },
 
-    setTodo({
-      ...todo,
-      subTodos: newSubTodos,
-    });
-  };
+    handleDone: (subIdx: number) => {
+      if (!todo) return;
 
-  const checkIsOverThree = () => {
-    if (!todo) return false;
-    return todo.subTodos.length >= 3;
+      let newSubTodos = [...todo.subTodos];
+      newSubTodos[subIdx].done = !newSubTodos[subIdx].done;
+      setTodo({
+        ...todo,
+        subTodos: newSubTodos,
+      });
+    },
+
+    checkIsOverThree: () => {
+      if (!todo) return false;
+      return todo.subTodos.length >= 3;
+    },
   };
 
   const onSubmit = async () => {
@@ -106,28 +130,52 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     alert(res2.message);
   };
 
+  const deleteAll = async () => {
+    if (!todo) return;
+    setTodo({
+      ...todo,
+      mainTodo: new TodoBase(),
+      subTodos: [],
+    });
+  };
+
   return (
     <main>
       <h1>{sortedId} 번 TODO</h1>
       <button onClick={onSubmit}>SAVE</button>
+      <button onClick={deleteAll}>DELETE</button>
       {todo && (
         <div style={styles}>
           <div>
-            MAIN :{" "}
-            <input value={todo.mainTodo.content} onChange={handleMainTodo} />
+            <input
+              type="checkbox"
+              checked={todo.mainTodo.done}
+              onClick={MainTodo.handleDone}
+            />
+            <input
+              value={todo.mainTodo.content}
+              onChange={MainTodo.handleValue}
+            />
           </div>
 
           <div style={styles2}>
-            {todo.subTodos.map((subTodo, idx) => (
-              <div key={idx}>
+            {todo.subTodos.map((subTodo, subIdx) => (
+              <div key={subIdx}>
+                <input
+                  type="checkbox"
+                  checked={subTodo.done}
+                  onClick={() => SubTodo.handleDone(subIdx)}
+                />
                 <input
                   value={subTodo.content}
-                  onChange={(e) => handleSubTodo(e, sortedId, idx)}
+                  onChange={(e) => SubTodo.handleValue(e, subIdx)}
                 />
-                <button onClick={() => deleteSubTodo(idx)}>X</button>
+                <button onClick={() => SubTodo.delete(subIdx)}>X</button>
               </div>
             ))}
-            {!checkIsOverThree() && <button onClick={addSubTodo}>+</button>}
+            {!SubTodo.checkIsOverThree() && (
+              <button onClick={SubTodo.add}>+</button>
+            )}
           </div>
         </div>
       )}
