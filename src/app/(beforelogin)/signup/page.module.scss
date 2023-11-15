@@ -1,0 +1,108 @@
+.container {
+  display: flex;
+  height: 100dvh;
+  flex-direction: column;
+  max-width: 420px;
+  width: 100vw;
+}
+
+.backImg {
+  padding-top: 20px;
+  position: relative;
+  left: -7px;
+  padding-bottom: 83px;
+}
+
+.section {
+  padding: 0 35px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.checkDiv {
+  padding-bottom: 42px;
+
+  .span1 {
+    color: var(--33cream, #FEFAEB);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    opacity: 0.8;
+  }
+
+  .span2 {
+    color: var(--33cream, #FEFAEB);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.4px;
+  }
+}
+
+.checkDiv2 {
+
+  .span1 {
+    color: var(--33cream, #FEFAEB);
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.32px;
+  }
+
+
+  .span2 {
+    color: var(--33pink, #E45D7E);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    letter-spacing: 0.26px;
+    padding: 0 11px 0 25px;
+  }
+
+  .span3 {
+    color: var(--33cream, #FEFAEB);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    letter-spacing: 0.26px;
+    opacity: 0.8;
+  }
+}
+
+.checkCom {
+  display: flex;
+  justify-content: space-between;
+}
+
+.checkbox {
+  position: relative;
+  right: 7px;
+  cursor: pointer;
+}
+
+.loginBtn {
+  width: 100%;
+  height: 67px;
+  border: 2px solid var(--33cream, #FEFAEB);
+  background: var(--33pink, #E45D7E);
+  margin-bottom: 18px;
+  cursor: pointer;
+  color: #F8F5EE;
+  text-align: center;
+  font-family: Kanit, sans-serif;
+  font-size: 19px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.loginDiv {
+  padding-bottom: 40px;
+}
