@@ -1,80 +1,41 @@
-'use client';
+'use client'
+import styles from "./todo.module.scss"
+import { ChangeEvent, useContext, useState } from 'react';
+import { TodoModeContext } from '@/context/TodoModeContext';
+import { TodoBase } from '@/types/todo';
+import { http } from '@/utils/http';
+import NumberIcon from '@/components/Icon/NumberIcon';
 
-import React, {InputHTMLAttributes} from 'react';
-import {css} from "@emotion/react";
-import {TodoTextArea} from '@/components/Input/TodoTextArea';
-import NumberButton from '@/components/Button/NumberButton';
-import {TODO_COLOR} from '@/constants/Theme';
-
-export interface SubTodoProps {
-	mainTodoId: number;
-	value?: string;
-	onChange?: InputHTMLAttributes<HTMLTextAreaElement>['onChange'];
-	prefixTodoNumber?: number;
-	editable?: boolean;
-	checked?: boolean;
-	onClickCheck?: () => void;
+interface Props extends TodoBase {
+  subTodoId: number;
 }
 
-/**
- * TodoTextInput Component 입니다.
- * @param value Todo 입력 값
- * @param onChange Todo 변경 이벤트
- * @param prefixTodoNumber
- */
+export const SubTodo = ({ content, done, subTodoId }: Props) => {
+  const [value, setValue] = useState(content);
+  const { mode } = useContext(TodoModeContext);
 
-export const SubTodo = (
-  {
-    mainTodoId,
-    value,
-    onChange,
-    prefixTodoNumber = 1,
-    editable = true,
-    checked = false,
-    onClickCheck
-  }: SubTodoProps) => {
+  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setValue(e.currentTarget.value)
+  };
+
+  const onChecked = async () => {
+    if(mode === 'update') return;
+    /**
+     * TODO
+     * 서브 투두 done 상태 반영
+     */
+    // http.patch('', {})
+  }
+
   return (
-    <div css={todoContainerCSS(mainTodoId + 1)}>
-      <div>
-        <NumberButton
-          css={css`
-            padding: 4px 0 16px 14px;
-					`}
-          onClick={onClickCheck}
-          count={prefixTodoNumber}
-          isActive={checked ?? false}
-        />
-      </div>
-      <div>
-        <TodoTextArea
-          readOnly={!editable}
-          height={'80px'}
-          value={value}
-          onChange={onChange}
-          css={todoTextAreaCSS}
-        />
-      </div>
+    <div className={styles.subTodoContainer}
+    >
+      <button disabled={mode === 'update'} onClick={onChecked}>
+        <NumberIcon count={subTodoId} isActive={done} />
+      </button>
+      {
+        mode === 'read' ? <p style={{width: '100%'}}>{content}</p> : <input value={value} onChange={onChange} />
+      }
     </div>
-  );
-};
-const prefixFontStyle = css`
-  width: 90px;
-  font-family: Pretendard, sans-serif;
-  font-size: 6.25rem;;
-  font-weight: 900;
-  color: white;
-`;
-const todoContainerCSS = (todoNum: number) => css`
-  background: ${TODO_COLOR[todoNum - 1]};
-  position: relative;
-  display: flex;
-  gap: 16px;
-
-`;
-const todoTextAreaCSS = css`
-  color: #FFF;
-  font-size: 15px;
-  font-style: normal;
-  font-weight: 600;
-  line-height: 1.625rem;
-`;
+  )
+}

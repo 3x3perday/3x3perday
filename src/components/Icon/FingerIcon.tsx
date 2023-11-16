@@ -1,19 +1,17 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React from 'react';
 import { Icon, ICON_MAP } from '@/components/Icon/Icon';
 
-interface FingerButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
-    fingerCount?: number
+interface Props {
+    count?: number
     isActive: boolean;
 }
 
-interface FingerIconProps {
-    name: keyof typeof ICON_MAP;
-    width: string;
-    height: string;
-}
-
 type FingerIconType = {
-    [key: number]: FingerIconProps;
+    [key: number]: {
+      name: keyof typeof ICON_MAP;
+      width: string;
+      height: string;
+    };
 }
 
 const ActiveFingerMap: FingerIconType = {
@@ -51,13 +49,11 @@ const InActiveFingerMap: FingerIconType = {
   }
 }
 
-const FingerButton = ({ fingerCount = 1, isActive, ...props }: FingerButtonProps) => {
-  const options = isActive ? ActiveFingerMap[fingerCount] : InActiveFingerMap[fingerCount];
+const FingerIcon = ({ count = 0, isActive }: Props) => {
+  const options = isActive ? ActiveFingerMap[count] : InActiveFingerMap[count];
   return (
-    <Icon
-      {...options}
-    />
+    <Icon {...options} />
   )
 }
 
-export default FingerButton;
+export default FingerIcon;
