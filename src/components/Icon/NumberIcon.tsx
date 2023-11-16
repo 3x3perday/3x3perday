@@ -1,64 +1,59 @@
-import React, { ButtonHTMLAttributes } from 'react';
+import React from 'react';
 import { Icon, ICON_MAP } from '@/components/Icon/Icon';
-import { Button } from '@/components/Button/Button';
 
-interface NumberButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
+interface NumberButtonProps {
     count?: number;
     isActive: boolean;
 }
 
-interface NumberIconProps {
-    name: keyof typeof ICON_MAP;
-    width: string;
-    height: string;
-}
-
 type NumberIconType = {
-    [key: number]: NumberIconProps;
+    [key: number]: {
+      name: keyof typeof ICON_MAP;
+      width: string;
+      height: string;
+    };
 }
 
 const ActiveNumberMap: NumberIconType = {
-  1: {
+  0: {
     name: 'sub-todo-one-active',
     width: '41px',
     height: '45px'
   },
-  2: {
+  1: {
     name: 'sub-todo-two-active',
     width: '41px',
     height: '45px'
   },
-  3: {
+  2: {
     name: 'sub-todo-three-active',
     width: '41px',
     height: '45px'
   }
 }
 const InActiveNumberMap: NumberIconType = {
-  1: {
+  0: {
     name: 'sub-todo-one-inactive',
     width: '41px',
     height: '45px'
   },
-  2: {
+  1: {
     name: 'sub-todo-two-inactive',
     width: '41px',
     height: '45px'
   },
-  3: {
+  2: {
     name: 'sub-todo-three-inactive',
     width: '41px',
     height: '45px'
   }
 }
 
-const NumberButton = ({ count = 1, isActive, ...props }: NumberButtonProps) => {
+const NumberIcon = ({ count = 0, isActive }: NumberButtonProps) => {
   const options = isActive ? ActiveNumberMap[count] : InActiveNumberMap[count];
   return (
-    <Button {...props}>
-      <Icon {...options} />
-    </Button>
+    <Icon {...options} />
   )
 }
 
-export default NumberButton;
+export default NumberIcon;
