@@ -1,4 +1,4 @@
-import { TodoMode } from '@/context/todoModeContext';
+import { TodoMode } from '@/context/TodoModeContext';
 import { useState } from 'react';
 
 export const useMode = (initialMode: TodoMode['mode']):TodoMode => {
