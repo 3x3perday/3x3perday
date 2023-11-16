@@ -2,7 +2,7 @@ import Link, { LinkProps } from 'next/link';
 import { TodoItem } from '@/types/todo';
 import { Icon } from '@/components/Icon/Icon';
 import './EmptyTodo.css';
-import FingerButton from '@/components/Button/FingerButton';
+import FingerIcon from '@/components/Icon/FingerIcon';
 
 interface EmptyTodoProps {
     sortedId: TodoItem['sortedId']
@@ -15,7 +15,7 @@ export const EmptyTodo = ({ sortedId, href }: EmptyTodoProps) => {
       href={href}
       className="todo-empty-container"
     >
-      <FingerButton fingerCount={sortedId} isActive={false} />
+      <FingerIcon count={sortedId} isActive={false} />
       <Icon name="plus" className='plus-icon' />
     </Link>
   )
