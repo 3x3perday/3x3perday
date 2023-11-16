@@ -1,4 +1,5 @@
 'use client'
+import styles from "./todo.module.scss"
 import FingerIcon from '@/components/Icon/FingerIcon';
 import { TodoBase, TodoItem } from '@/types/todo';
 import { ChangeEvent, ReactNode, useContext, useState } from 'react';
@@ -29,11 +30,7 @@ export const MainTodo = ({content, done, sortedId, children}:Props) => {
   return (
     <>
       <div
-        style={{
-          display: 'flex',
-          alignItems: 'center',
-          gap: '4px'
-        }}
+        className={styles.container}
       >
         <button disabled={mode === 'update'} onClick={onChecked}>
           <FingerIcon count={sortedId} isActive={done} />

@@ -1,4 +1,5 @@
 'use client'
+import styles from "./todo.module.scss"
 import { ChangeEvent, useContext, useState } from 'react';
 import { TodoModeContext } from '@/context/TodoModeContext';
 import { TodoBase } from '@/types/todo';
@@ -27,8 +28,7 @@ export const SubTodo = ({ content, done, subTodoId }: Props) => {
   }
 
   return (
-    <div
-      style={{display: 'flex', alignItems: 'center', gap: '4px'}}
+    <div className={styles.subTodoContainer}
     >
       <button disabled={mode === 'update'} onClick={onChecked}>
         <NumberIcon count={subTodoId} isActive={done} />
