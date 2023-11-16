@@ -4,8 +4,8 @@ import { http } from '@/utils/http';
 import { Date } from '@/utils/date';
 import { TodoItem, TodoResponse } from '@/types/todo';
 import { AppBar } from '@/components/navbar/AppBar';
-import { SubTodo } from '@/components/Todo/SubTodo';
 import { Todo } from '@/components/Todo';
+import { DEFAULT_TODO } from '@/constants/Todo';
 
 const getTodoData = async (date: string): Promise<TodoResponse> => {
   const userId = "6550c5aafb5e55258e167592";
@@ -22,41 +22,7 @@ const getTodoData = async (date: string): Promise<TodoResponse> => {
   return {
     userId,
     date: '',
-    // todos: DEFAULT_TODO
-    todos: [
-      {
-        sortedId: 0,
-        mainTodo: {
-          content: "hello",
-          done: false,
-        },
-        subTodos: [
-          {content: 'a', done: false},
-          {content: 'a', done: false},
-          {content: 'a', done: false},
-        ]
-      },
-      {
-        sortedId: 1,
-        mainTodo: {
-          content: "hello",
-          done: false,
-        },
-        subTodos: [
-          {content: 'a', done: false},
-          {content: 'a', done: false},
-          {content: 'a', done: false},
-        ]
-      },
-      {
-        sortedId: 2,
-        mainTodo: {
-          content: "",
-          done: false,
-        },
-        subTodos: []
-      },
-    ]
+    todos: DEFAULT_TODO,
   };
 }
 
