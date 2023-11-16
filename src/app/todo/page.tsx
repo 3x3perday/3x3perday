@@ -2,14 +2,16 @@ import dayjs from 'dayjs';
 import { DateNavBar } from '@/components/navbar/DateNavBar';
 import { http } from '@/utils/http';
 import { Date } from '@/utils/date';
-import { EmptyTodo } from '@/components/Todo/EmptyTodo';
 import { TodoItem, TodoResponse } from '@/types/todo';
 import { AppBar } from '@/components/navbar/AppBar';
-import { DEFAULT_TODO } from '@/constants/Todo';
+import { SubTodo } from '@/components/Todo/SubTodo';
+import { Todo } from '@/components/Todo';
 
 const getTodoData = async (date: string): Promise<TodoResponse> => {
   const userId = "6550c5aafb5e55258e167592";
-  const res = await http.get(`http://localhost:3000/api/todo/?userId=${userId}&date=${date}`);
+  const res = await http.get(`http://localhost:3000/api/todo/?userId=${userId}&date=${date}`, {
+    cache: 'no-cache'
+  });
   if (res.status === 200) {
     return {
       userId: '',
@@ -20,7 +22,41 @@ const getTodoData = async (date: string): Promise<TodoResponse> => {
   return {
     userId,
     date: '',
-    todos: DEFAULT_TODO
+    // todos: DEFAULT_TODO
+    todos: [
+      {
+        sortedId: 0,
+        mainTodo: {
+          content: "hello",
+          done: false,
+        },
+        subTodos: [
+          {content: 'a', done: false},
+          {content: 'a', done: false},
+          {content: 'a', done: false},
+        ]
+      },
+      {
+        sortedId: 1,
+        mainTodo: {
+          content: "hello",
+          done: false,
+        },
+        subTodos: [
+          {content: 'a', done: false},
+          {content: 'a', done: false},
+          {content: 'a', done: false},
+        ]
+      },
+      {
+        sortedId: 2,
+        mainTodo: {
+          content: "",
+          done: false,
+        },
+        subTodos: []
+      },
+    ]
   };
 }
 
@@ -42,42 +78,45 @@ export default async function TodoPage({ searchParams }: Props) {
     throw new Error(`${minDate} ~ ${maxDate} 사이의 정보만 조회할 수 있어요.`)
   }
 
-  const isEmptyTodo = ({mainTodo, subTodos}:TodoItem) => mainTodo.content === "" && subTodos.length === 0;
-
+  const isEmptyTodo = ({ mainTodo, subTodos }: TodoItem) => mainTodo.content === "" && subTodos.length === 0;
   return (
     <main>
       <AppBar />
       <DateNavBar date={date} minDate={minDate} maxDate={maxDate} />
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'column',
-        }}
-      >
+      <Todo.Provider mode={'read'}>
         {
           todos.map(todo => (
             <div key={`todo--${todo.sortedId}`}>
               {
                 isEmptyTodo(todo) ? (
-                  <EmptyTodo
-                    href="/todo/edit"
+                  <Todo.Empty
+                    href={`/todo/edit/${date}`}
                     sortedId={todo.sortedId}
                   />
                 ) : (
-                  <>
-                    <div>{todo.mainTodo.content}</div>
+                  <Todo.Main
+                    sortedId={todo.sortedId}
+                    content={todo.mainTodo.content}
+                    done={todo.mainTodo.done}
+                  >
                     {
                       todo.subTodos.map((subTodo, idx) => (
-                        <div key={`sub-todo--${idx}`}>{subTodo.content}</div>
+                        <div key={`sub-todo--${idx}`}>
+                          <SubTodo
+                            subTodoId={idx}
+                            content={subTodo.content}
+                            done={subTodo.done}
+                          />
+                        </div>
                       ))
                     }
-                  </>
+                  </Todo.Main>
                 )
               }
             </div>
           ))
         }
-      </div>
+      </Todo.Provider>
     </main>
   )
 }
