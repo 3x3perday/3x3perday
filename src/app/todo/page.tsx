@@ -102,7 +102,7 @@ export default async function TodoPage({ searchParams }: Props) {
                     {
                       todo.subTodos.map((subTodo, idx) => (
                         <div key={`sub-todo--${idx}`}>
-                          <SubTodo
+                          <Todo.Sub
                             subTodoId={idx}
                             content={subTodo.content}
                             done={subTodo.done}
