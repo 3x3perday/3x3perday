@@ -1,4 +1,7 @@
 "use client";
+import { Todo } from "@/components/Todo";
+import { MainTodoEdit } from "@/components/Todo/edit/MainTodo";
+import { SubTodoEdit } from "@/components/Todo/edit/SubTodo";
 import { AppBar } from "@/components/navbar/AppBar";
 import { TodoBase, TodoItem, TodoResponse } from "@/types/todo";
 import { http } from "@/utils/http";
@@ -148,33 +151,16 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
       <button onClick={onSubmit}>SAVE</button>
       <button onClick={deleteAll}>DELETE</button>
       {todo && (
-        <div style={styles}>
+        <div>
+          <MainTodoEdit mainTodo={todo.mainTodo} HadnleMainTodo={HadnleMainTodo} />
           <div>
-            <input
-              type="checkbox"
-              checked={todo.mainTodo.done}
-              onClick={HadnleMainTodo.handleDone}
-            />
-            <input
-              value={todo.mainTodo.content}
-              onChange={HadnleMainTodo.update}
-            />
-          </div>
-
-          <div style={styles2}>
             {todo.subTodos.map((subTodo, subIdx) => (
-              <div key={subIdx}>
-                <input
-                  type="checkbox"
-                  checked={subTodo.done}
-                  onClick={() => HandleSubTodo.handleDone(subIdx)}
-                />
-                <input
-                  value={subTodo.content}
-                  onChange={(e) => HandleSubTodo.update(e, subIdx)}
-                />
-                <button onClick={() => HandleSubTodo.delete(subIdx)}>X</button>
-              </div>
+              <SubTodoEdit
+                key={subIdx}
+                subIdx={subIdx}
+                subTodo={subTodo}
+                HandleSubTodo={HandleSubTodo}
+              />
             ))}
             {!HandleSubTodo.checkIsOverThree() && (
               <button onClick={HandleSubTodo.add}>+</button>
@@ -187,14 +173,3 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
 };
 
 export default TodoUpdatePageByIndex;
-
-const styles = {
-  minHeight: "100px",
-  backgroundColor: "skyblue",
-  margin: "20px",
-};
-const styles2 = {
-  backgroundColor: "yellowgreen",
-  marginTop: "10px",
-  padding: "10px",
-};

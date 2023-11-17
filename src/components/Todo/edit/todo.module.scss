@@ -1,0 +1,42 @@
+@mixin buttonBase {
+    button {
+        outline: none;
+        background-color: transparent;
+        border: none;
+    }
+}
+
+.container {
+    @include buttonBase;
+    background-color: #E45D7E;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 169px;
+    border: 1px solid #FEFAEB;
+    box-sizing: border-box;
+    textarea{
+        margin-top: 10px;
+        border: none;
+        color: #FEFAEB;
+        background-color: transparent;
+        resize:none;
+        min-height: 55px;
+        max-height: 130px;
+        width: 80%;
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.subTodoContainer {
+    @include buttonBase;
+    margin-left: 40px;
+
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    gap: 4px;
+}
