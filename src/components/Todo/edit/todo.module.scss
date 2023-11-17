@@ -39,3 +39,13 @@
     box-sizing: border-box;
     gap: 4px;
 }
+
+.add_btn{
+    width: 70px;
+    height: 70px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}

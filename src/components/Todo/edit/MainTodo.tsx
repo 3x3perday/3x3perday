@@ -6,13 +6,13 @@ import { TODO_COLOR } from "@/constants/Theme";
 
 interface Props {
   // todo: TodoItem;
-  sortNumber: number;
+  sortedId: number;
   mainTodo: TodoItem["mainTodo"];
   HadnleMainTodo: { update: (e: any) => void };
 }
 
 export const MainTodoEdit = ({
-  sortNumber,
+  sortedId,
   mainTodo,
   HadnleMainTodo,
 }: Props) => {
@@ -36,11 +36,11 @@ export const MainTodoEdit = ({
   return (
     <div
       style={{
-        backgroundColor: `${TODO_COLOR[sortNumber]}`,
+        backgroundColor: `${TODO_COLOR[sortedId]}`,
       }}
       className={styles.container}
     >
-      <FingerIcon count={sortNumber} isActive={true} />
+      <FingerIcon count={sortedId} isActive={true} />
       <textarea
         style={{
           overflow: "hidden",

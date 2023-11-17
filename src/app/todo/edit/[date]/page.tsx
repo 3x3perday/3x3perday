@@ -1,5 +1,6 @@
 "use client";
 import { Todo } from "@/components/Todo";
+import { AddButton } from "@/components/Todo/edit/AddButton";
 import { MainTodoEdit } from "@/components/Todo/edit/MainTodo";
 import { SubTodoEdit } from "@/components/Todo/edit/SubTodo";
 import { AppBar } from "@/components/navbar/AppBar";
@@ -153,7 +154,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
       {todo && (
         <div>
           <MainTodoEdit
-            sortNumber={sortedId}
+            sortedId={sortedId}
             mainTodo={todo.mainTodo}
             HadnleMainTodo={HadnleMainTodo}
           />
@@ -167,7 +168,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
               />
             ))}
             {!HandleSubTodo.checkIsOverThree() && (
-              <button onClick={HandleSubTodo.add}>+</button>
+              <AddButton sortedId={sortedId} onClick={HandleSubTodo.add} />
             )}
           </div>
         </div>
