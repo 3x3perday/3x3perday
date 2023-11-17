@@ -2,14 +2,20 @@ import { TodoItem } from "@/types/todo";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
 import styles from "./todo.module.scss";
 import FingerIcon from "@/components/Icon/FingerIcon";
+import { TODO_COLOR } from "@/constants/Theme";
 
 interface Props {
   // todo: TodoItem;
+  sortNumber: number;
   mainTodo: TodoItem["mainTodo"];
   HadnleMainTodo: { update: (e: any) => void };
 }
 
-export const MainTodoEdit = ({ mainTodo, HadnleMainTodo }: Props) => {
+export const MainTodoEdit = ({
+  sortNumber,
+  mainTodo,
+  HadnleMainTodo,
+}: Props) => {
   const textareaRef = useRef(null);
   const FONT_SIZE = 35;
 
@@ -28,8 +34,13 @@ export const MainTodoEdit = ({ mainTodo, HadnleMainTodo }: Props) => {
   };
 
   return (
-    <div className={styles.container}>
-      <FingerIcon count={0} isActive={true} />
+    <div
+      style={{
+        backgroundColor: `${TODO_COLOR[sortNumber]}`,
+      }}
+      className={styles.container}
+    >
+      <FingerIcon count={sortNumber} isActive={true} />
       <textarea
         style={{
           overflow: "hidden",

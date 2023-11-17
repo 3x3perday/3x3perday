@@ -152,7 +152,11 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
       <button onClick={deleteAll}>DELETE</button>
       {todo && (
         <div>
-          <MainTodoEdit mainTodo={todo.mainTodo} HadnleMainTodo={HadnleMainTodo} />
+          <MainTodoEdit
+            sortNumber={sortedId}
+            mainTodo={todo.mainTodo}
+            HadnleMainTodo={HadnleMainTodo}
+          />
           <div>
             {todo.subTodos.map((subTodo, subIdx) => (
               <SubTodoEdit
