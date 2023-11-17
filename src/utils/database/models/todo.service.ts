@@ -36,7 +36,10 @@ export const TodoService = {
         { status: 200 }
       );
     } catch (error) {
-      console.log(error);
+      return new NextResponse(
+        JSON.stringify({ message: "TODO 생성에 실패했습니다." }),
+        { status: 400 }
+      );
     }
   },
 
