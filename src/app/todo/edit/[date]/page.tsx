@@ -40,8 +40,8 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     getInitData();
   }, []);
 
-  const MainTodo = {
-    handleValue: (e: any) => {
+  const HadnleMainTodo = {
+    update: (e: any) => {
       if (!todo) return;
       setTodo({
         ...todo,
@@ -63,7 +63,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     },
   };
 
-  const SubTodo = {
+  const HandleSubTodo = {
     add: () => {
       if (!todo) return;
 
@@ -78,7 +78,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
       });
     },
 
-    handleValue: (e: any, subIdx: number) => {
+    update: (e: any, subIdx: number) => {
       if (!todo) return;
 
       let newSubTodos = [...todo.subTodos];
@@ -138,10 +138,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     });
   };
 
-  const goBack = () => {
-    router.push(`/todo`);
-  };
-
+  const goBack = () => router.push(`/todo`);
   return (
     <main>
       <AppBar />
@@ -156,11 +153,11 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
             <input
               type="checkbox"
               checked={todo.mainTodo.done}
-              onClick={MainTodo.handleDone}
+              onClick={HadnleMainTodo.handleDone}
             />
             <input
               value={todo.mainTodo.content}
-              onChange={MainTodo.handleValue}
+              onChange={HadnleMainTodo.update}
             />
           </div>
 
@@ -170,17 +167,17 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
                 <input
                   type="checkbox"
                   checked={subTodo.done}
-                  onClick={() => SubTodo.handleDone(subIdx)}
+                  onClick={() => HandleSubTodo.handleDone(subIdx)}
                 />
                 <input
                   value={subTodo.content}
-                  onChange={(e) => SubTodo.handleValue(e, subIdx)}
+                  onChange={(e) => HandleSubTodo.update(e, subIdx)}
                 />
-                <button onClick={() => SubTodo.delete(subIdx)}>X</button>
+                <button onClick={() => HandleSubTodo.delete(subIdx)}>X</button>
               </div>
             ))}
-            {!SubTodo.checkIsOverThree() && (
-              <button onClick={SubTodo.add}>+</button>
+            {!HandleSubTodo.checkIsOverThree() && (
+              <button onClick={HandleSubTodo.add}>+</button>
             )}
           </div>
         </div>
