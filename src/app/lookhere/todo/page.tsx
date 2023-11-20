@@ -4,10 +4,10 @@ import Link from "next/link";
 
 const fetchData = async () => {
   const userId = "1234";
-  const date = "2023-11-15";
+  const date = "2023-11-17";
 
   const res = await fetch(
-    `http://localhost:3000/api/todo/?userId=${userId}&date=${date}`,
+    `http://localhost:3000/api/todo?userId=${userId}&date=${date}`,
     {
       method: "GET",
       headers: {
@@ -16,7 +16,7 @@ const fetchData = async () => {
     }
   );
   const a = await res.json();
-  console.log(a,"HIHIH")
+  console.log(a, "HIHIH");
   return a;
 };
 

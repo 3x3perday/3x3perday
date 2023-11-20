@@ -9,7 +9,7 @@ const mainLogo = css`
 `
 
 const plusBg = css`
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='46' height='42' viewBox='0 0 46 42' fill='none'%3E%3Cpath d='M15.361 42V27.6667H0V14.3333H15.361V0H30.639V14.3333H46V27.6667H30.639V42H15.361Z' fill='%23292929'/%3E%3C/svg%3E");
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='35' height='35' viewBox='0 0 46 42' fill='none'%3E%3Cpath d='M15.361 42V27.6667H0V14.3333H15.361V0H30.639V14.3333H46V27.6667H30.639V42H15.361Z' fill='%23292929'/%3E%3C/svg%3E");
 `
 const smallPlus = css`
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='34' height='30' viewBox='0 0 34 30' fill='none'%3E%3Cpath d='M11.3538 30V19.7619H0V10.2381H11.3538V0H22.6462V10.2381H34V19.7619H22.6462V30H11.3538Z' fill='%23292929'/%3E%3C/svg%3E");

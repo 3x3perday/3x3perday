@@ -1,0 +1,81 @@
+@mixin buttonBase {
+    button {
+        outline: none;
+        background-color: transparent;
+        border: none;
+    }
+}
+
+.container {
+    @include buttonBase;
+    display: flex;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    height: 169px;
+    box-sizing: border-box;
+    textarea{
+        margin-top: 10px;
+        border: none;
+        color: #FEFAEB;
+        background-color: transparent;
+        resize:none;
+        height: 45px;
+        max-height: 125px;
+        width: 80%;
+        &:focus {
+            outline: none;
+        }
+    }
+}
+
+.subTodoContainer {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: end;
+    
+}
+
+
+.subTodoItem{
+    width : 300px;
+    height: 70px;
+    display: flex;
+    padding: 10px;
+    input{
+        background-color: transparent;            
+        height: 30px;
+        width: 200px;
+        margin-left: 10px;
+        border: none;
+        border-bottom: 1px solid #333;
+        &:focus {
+            outline: none;
+        }
+        color : #fff;
+    }
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+.deleteBtn{
+    background-color: transparent;
+    color: #fff;
+    position: relative;
+    right: 0;
+    top : 0;
+    border: none;
+    cursor: pointer;
+    height: 30px;
+}
+
+.addBtn{
+    width: 50px;
+    height: 50px;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+}

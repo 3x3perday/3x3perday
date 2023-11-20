@@ -1,4 +1,6 @@
 "use client";
+import { MainTodoEdit } from "@/components/Todo/edit/MainTodo";
+import SubTodoEdit from "@/components/Todo/edit/SubTodo";
 import { AppBar } from "@/components/navbar/AppBar";
 import { TodoBase, TodoItem, TodoResponse } from "@/types/todo";
 import { http } from "@/utils/http";
@@ -40,8 +42,8 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     getInitData();
   }, []);
 
-  const MainTodo = {
-    handleValue: (e: any) => {
+  const HadnleMainTodo = {
+    update: (e: any) => {
       if (!todo) return;
       setTodo({
         ...todo,
@@ -63,7 +65,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     },
   };
 
-  const SubTodo = {
+  const HandleSubTodo = {
     add: () => {
       if (!todo) return;
 
@@ -78,7 +80,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
       });
     },
 
-    handleValue: (e: any, subIdx: number) => {
+    update: (e: any, subIdx: number) => {
       if (!todo) return;
 
       let newSubTodos = [...todo.subTodos];
@@ -138,10 +140,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     });
   };
 
-  const goBack = () => {
-    router.push(`/todo`);
-  };
-
+  const goBack = () => router.push(`/todo`);
   return (
     <main>
       <AppBar />
@@ -151,38 +150,30 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
       <button onClick={onSubmit}>SAVE</button>
       <button onClick={deleteAll}>DELETE</button>
       {todo && (
-        <div style={styles}>
-          <div>
-            <input
-              type="checkbox"
-              checked={todo.mainTodo.done}
-              onClick={MainTodo.handleDone}
-            />
-            <input
-              value={todo.mainTodo.content}
-              onChange={MainTodo.handleValue}
-            />
-          </div>
+        <div>
+          <MainTodoEdit
+            sortedId={sortedId}
+            mainTodo={todo.mainTodo}
+            HadnleMainTodo={HadnleMainTodo}
+          />
 
-          <div style={styles2}>
+          <SubTodoEdit>
             {todo.subTodos.map((subTodo, subIdx) => (
-              <div key={subIdx}>
-                <input
-                  type="checkbox"
-                  checked={subTodo.done}
-                  onClick={() => SubTodo.handleDone(subIdx)}
-                />
-                <input
-                  value={subTodo.content}
-                  onChange={(e) => SubTodo.handleValue(e, subIdx)}
-                />
-                <button onClick={() => SubTodo.delete(subIdx)}>X</button>
-              </div>
+              <SubTodoEdit.Item
+                key={subIdx}
+                subIdx={subIdx}
+                subTodo={subTodo}
+                sortedId={sortedId}
+                HandleSubTodo={HandleSubTodo}
+              />
             ))}
-            {!SubTodo.checkIsOverThree() && (
-              <button onClick={SubTodo.add}>+</button>
+            {!HandleSubTodo.checkIsOverThree() && (
+              <SubTodoEdit.AddButton
+                sortedId={sortedId}
+                onClick={HandleSubTodo.add}
+              />
             )}
-          </div>
+          </SubTodoEdit>
         </div>
       )}
     </main>
@@ -190,14 +181,3 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
 };
 
 export default TodoUpdatePageByIndex;
-
-const styles = {
-  minHeight: "100px",
-  backgroundColor: "skyblue",
-  margin: "20px",
-};
-const styles2 = {
-  backgroundColor: "yellowgreen",
-  marginTop: "10px",
-  padding: "10px",
-};

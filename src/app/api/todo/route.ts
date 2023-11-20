@@ -1,8 +1,4 @@
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/utils/database/database";
-import TodoModel from "@/utils/database/models/todo";
-import { TodoPost } from "@/utils/todo";
-import { Date } from "@/utils/date";
 import { TodoService } from "@/utils/database/models/todo.service";
 
 export async function GET(req: NextRequest) {
@@ -16,9 +12,7 @@ export async function GET(req: NextRequest) {
 // 오늘 날짜 데이터 만들기
 export async function POST(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("userId") || "";
-
-  const date = "2023-11-15";
-
+  const date = req.nextUrl.searchParams.get("date") || "";
   const todo = await TodoService.checkTodo(userId, date);
 
   if (todo) {
