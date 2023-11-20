@@ -4,6 +4,7 @@ import { TodoBase } from "@/types/todo";
 import React, { ButtonHTMLAttributes, ReactElement } from "react";
 import styles from "./todo.module.scss";
 import { Icon } from "@/components/Icon/Icon";
+import NumberIcon from "@/components/Icon/NumberIcon";
 
 const SubTodoEdit = ({ children }: { children: React.ReactNode }) => {
   return <div className={styles.subTodoContainer}>{children}</div>;
@@ -12,6 +13,7 @@ const SubTodoEdit = ({ children }: { children: React.ReactNode }) => {
 interface Props {
   subTodo: TodoBase;
   subIdx: number;
+  sortedId: number;
   HandleSubTodo: {
     add: () => void;
     update: (e: any, subIdx: number) => void;
@@ -21,14 +23,25 @@ interface Props {
   };
 }
 
-SubTodoEdit.Item = ({ subTodo, subIdx, HandleSubTodo }: Props) => {
+SubTodoEdit.Item = ({ subTodo, subIdx, HandleSubTodo, sortedId }: Props) => {
   return (
-    <div className={styles.subTodoItem}>
+    <div
+      className={styles.subTodoItem}
+      style={{
+        backgroundColor: `${TODO_COLOR[sortedId]}`,
+      }}
+    >
+      <NumberIcon count={subIdx} isActive />
       <input
         value={subTodo.content}
         onChange={(e) => HandleSubTodo.update(e, subIdx)}
       />
-      <button className="deleteBtn" onClick={() => HandleSubTodo.delete(subIdx)}>X</button>
+      <button
+        className={styles.deleteBtn}
+        onClick={() => HandleSubTodo.delete(subIdx)}
+      >
+        X
+      </button>
     </div>
   );
 };
@@ -39,7 +52,12 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
 }
 SubTodoEdit.AddButton = (props: ButtonProps) => {
   return (
-    <div className={styles.subTodoItem}>
+    <div
+      className={styles.subTodoItem}
+      style={{
+        backgroundColor: `${TODO_COLOR[props.sortedId]}`,
+      }}
+    >
       <button
         style={{
           backgroundColor: `${TODO_COLOR[props.sortedId]}`,

@@ -163,6 +163,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
                 key={subIdx}
                 subIdx={subIdx}
                 subTodo={subTodo}
+                sortedId={sortedId}
                 HandleSubTodo={HandleSubTodo}
               />
             ))}
