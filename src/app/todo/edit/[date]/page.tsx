@@ -1,8 +1,6 @@
 "use client";
-import { Todo } from "@/components/Todo";
-import { AddButton } from "@/components/Todo/edit/AddButton";
 import { MainTodoEdit } from "@/components/Todo/edit/MainTodo";
-import { SubTodoEdit } from "@/components/Todo/edit/SubTodo";
+import SubTodoEdit from "@/components/Todo/edit/SubTodo";
 import { AppBar } from "@/components/navbar/AppBar";
 import { TodoBase, TodoItem, TodoResponse } from "@/types/todo";
 import { http } from "@/utils/http";
@@ -158,9 +156,10 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
             mainTodo={todo.mainTodo}
             HadnleMainTodo={HadnleMainTodo}
           />
-          <div>
+
+          <SubTodoEdit>
             {todo.subTodos.map((subTodo, subIdx) => (
-              <SubTodoEdit
+              <SubTodoEdit.Item
                 key={subIdx}
                 subIdx={subIdx}
                 subTodo={subTodo}
@@ -168,9 +167,12 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
               />
             ))}
             {!HandleSubTodo.checkIsOverThree() && (
-              <AddButton sortedId={sortedId} onClick={HandleSubTodo.add} />
+              <SubTodoEdit.AddButton
+                sortedId={sortedId}
+                onClick={HandleSubTodo.add}
+              />
             )}
-          </div>
+          </SubTodoEdit>
         </div>
       )}
     </main>
