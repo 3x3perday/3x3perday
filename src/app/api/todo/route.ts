@@ -4,7 +4,6 @@ import { TodoService } from "@/utils/database/models/todo.service";
 export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("userId") || "";
   const date = req.nextUrl.searchParams.get("date") || "";
-  const todos = await TodoService.getTodo(userId, date);
 
   return TodoService.getTodo(userId, date);
 }
