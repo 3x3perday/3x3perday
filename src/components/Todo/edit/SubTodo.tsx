@@ -55,18 +55,20 @@ SubTodoEdit.AddButton = (props: ButtonProps) => {
     <div
       className={styles.subTodoItem}
       style={{
-        backgroundColor: `${TODO_COLOR[props.sortedId]}`,
+        padding: "0",
+        width: "320px",
       }}
     >
-      <button
+      <div
         style={{
           backgroundColor: `${TODO_COLOR[props.sortedId]}`,
         }}
-        className={styles.addBtn}
-        onClick={props.onClick}
+        className={styles.addButtonItem}
       >
-        <Icon name="plus" className={styles.plusIcon} />
-      </button>
+        <button className={styles.addBtn} onClick={props.onClick}>
+          <Icon name="plus" className={styles.plusIcon} />
+        </button>
+      </div>
     </div>
   );
 };

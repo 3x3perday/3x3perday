@@ -1,5 +1,13 @@
 export const TODO_COLOR = [
-  '#DB5226',
-  '#58AB59',
-  '#D775BA',
+  '#E45D7E',
+  '#0D93BD',
+  '#409361',
 ] as const;
+
+
+export const TODO_EDIT_COLOR = [
+  '#E0899D',
+  '#58B0CC',
+  '#7FAF8D',
+] as const;
+
