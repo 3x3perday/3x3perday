@@ -1,3 +1,4 @@
+import styles from './DateNavBar.module.scss'
 import Link from 'next/link';
 import {Date} from "@/utils/date";
 
@@ -15,13 +16,7 @@ export const DateNavBar = ({ date, minDate, maxDate }: Props) => {
   };
 
   return (
-    <div style={{
-      position: 'relative',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '40px'
-    }}>
+    <div className={styles.container}>
       <Link
         hidden={minDate === date}
         href={`?date=${navDate.prev}`}
