@@ -64,6 +64,10 @@ const BACK = css`
   background-image: url("data:image/svg+xml,%3Csvg width='28' height='29' viewBox='0 0 28 29' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 2L3 14.5L15 27' stroke='%23FEFAEB' stroke-width='3'/%3E%3Cpath d='M5 15L28 15' stroke='%23FEFAEB' stroke-width='3'/%3E%3C/svg%3E%0A");
 `
 
+const DATE_ARROW = css`
+  background-image: url("data:image/svg+xml,%3Csvg width='10' height='18' viewBox='0 0 10 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M9 1L2 8.99958L9 17' stroke='%23797979' stroke-width='2' stroke-miterlimit='10'/%3E%3C/svg%3E%0A");
+`
+
 export const ICON_MAP = {
   'main-logo': mainLogo,
   'plus': plusBg,
@@ -84,6 +88,7 @@ export const ICON_MAP = {
   'sub-todo-two-active': SUB_TODO_TWO_ACTIVE,
   'sub-todo-three-active': SUB_TODO_THREE_ACTIVE,
   'back': BACK,
+  'date-arrow': DATE_ARROW,
 } as const;
 
 interface IconProps {
