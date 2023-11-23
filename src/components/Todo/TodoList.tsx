@@ -37,21 +37,26 @@ const TodoList = ({ data, mode, date }: Props) => {
           <div
             {...provided.droppableProps}
             ref={provided.innerRef}
-            style={{ background: snapshot.isDraggingOver ? 'blue' : 'red' }}
+            style={{ background: snapshot.isDraggingOver ? 'blue' : 'red', height: '100%' }}
           >
             <Todo.Provider mode={mode}>
               {
                 todos.map((todo, idx) => (
                   <Draggable
-                    index={todo.sortedId}
+                    index={idx}
                     key={`todo--${todo.sortedId}`}
                     draggableId={`${todo.sortedId}`}
                   >
                     {(provided, snapshot) => (
                       <div
-                        {...provided.draggableProps}
-                        {...provided.dragHandleProps}
                         ref={provided.innerRef}
+                        style={{
+                          display: 'flex',
+                          flexDirection: 'row',
+                          background: 'green',
+                          position: 'relative'
+                        }}
+                        {...provided.draggableProps}
                       >
                         {
                           isEmptyTodo(todo) ? (
@@ -79,6 +84,15 @@ const TodoList = ({ data, mode, date }: Props) => {
                             </Todo.Main>
                           )
                         }
+                        <div
+                          {...provided.dragHandleProps}
+                          style={{
+                            width: 20,
+                            height: 20,
+                          }}
+                        >
+                            X
+                        </div>
                       </div>
                     )}
                   </Draggable>
