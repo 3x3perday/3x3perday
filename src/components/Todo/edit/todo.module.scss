@@ -9,6 +9,7 @@
 .container {
     @include buttonBase;
     width: 90%;
+    padding: 10px;
     display: flex;
     align-items: center;
     position: relative;
