@@ -1,5 +1,5 @@
 'use client'
-import styles from "./todo.module.scss"
+import styles from "./Todo.module.scss"
 import FingerIcon from '@/components/Icon/FingerIcon';
 import { TodoBase, TodoItem } from '@/types/todo';
 import { ChangeEvent, ReactNode, useContext, useState } from 'react';

@@ -2,9 +2,8 @@ import dayjs from 'dayjs';
 import { DateNavBar } from '@/components/navbar/DateNavBar';
 import { http } from '@/utils/http';
 import { Date } from '@/utils/date';
-import { TodoItem, TodoResponse } from '@/types/todo';
+import { TodoResponse } from '@/types/todo';
 import { AppBar } from '@/components/navbar/AppBar';
-import { Todo } from '@/components/Todo';
 import { DEFAULT_TODO } from '@/constants/Todo';
 import TodoList from '@/components/Todo/TodoList';
 
@@ -46,13 +45,15 @@ export default async function TodoPage({ searchParams }: Props) {
     throw new Error(`${minDate} ~ ${maxDate} 사이의 정보만 조회할 수 있어요.`)
   }
 
-  const isEmptyTodo = ({ mainTodo, subTodos }: TodoItem) => mainTodo.content === "" && subTodos.length === 0;
-
   return (
     <main>
       <AppBar />
       <DateNavBar date={date} minDate={minDate} maxDate={maxDate} />
-      <TodoList mode={"read"} data={todos} date={date} />
+      <div style={{
+        padding: "0 35px"
+      }}>
+        <TodoList mode={"read"} data={todos} date={date} />
+      </div>
     </main>
   )
 }

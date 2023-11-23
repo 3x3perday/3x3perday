@@ -1,10 +1,12 @@
 'use client'
+import styles from './Todo.module.scss'
 import { TodoMode } from '@/context/TodoModeContext';
 import { TodoItem } from '@/types/todo';
 import { Todo } from '@/components/Todo';
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import { Responders } from '@hello-pangea/dnd/src/types';
 import { useState } from 'react';
+import classNames from 'classnames';
 
 interface Props {
     mode: TodoMode['mode'];
@@ -35,13 +37,27 @@ const TodoList = ({ data, mode, date }: Props) => {
       <Droppable droppableId="droppable">
         {(provided, snapshot) => (
           <div
-            {...provided.droppableProps}
             ref={provided.innerRef}
-            style={{ background: snapshot.isDraggingOver ? 'blue' : 'red', height: '100%' }}
+            style={{
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 28
+            }}
+            {...provided.droppableProps}
           >
             <Todo.Provider mode={mode}>
               {
-                todos.map((todo, idx) => (
+                todos.map((todo, idx) => isEmptyTodo(todo) ? (
+                  <div
+                    key={`todo--${todo.sortedId}`}
+                    className={styles[`bg-${idx}`]}
+                  >
+                    <Todo.Empty
+                      href={`/todo/edit/${date}`}
+                      sortedId={todo.sortedId}
+                    />
+                  </div>
+                ) : (
                   <Draggable
                     index={idx}
                     key={`todo--${todo.sortedId}`}
@@ -50,53 +66,38 @@ const TodoList = ({ data, mode, date }: Props) => {
                     {(provided, snapshot) => (
                       <div
                         ref={provided.innerRef}
-                        style={{
-                          display: 'flex',
-                          flexDirection: 'row',
-                          background: 'green',
-                          position: 'relative'
-                        }}
                         {...provided.draggableProps}
+                        className={styles[`bg-${idx}`]}
                       >
-                        {
-                          isEmptyTodo(todo) ? (
-                            <Todo.Empty
-                              href={`/todo/edit/${date}`}
-                              sortedId={todo.sortedId}
-                            />
-                          ) : (
-                            <Todo.Main
-                              sortedId={todo.sortedId}
-                              content={todo.mainTodo.content}
-                              done={todo.mainTodo.done}
-                            >
-                              {
-                                todo.subTodos.map((subTodo, idx) => (
-                                  <div key={`sub-todo--${idx}`}>
-                                    <Todo.Sub
-                                      subTodoId={idx}
-                                      content={subTodo.content}
-                                      done={subTodo.done}
-                                    />
-                                  </div>
-                                ))
-                              }
-                            </Todo.Main>
-                          )
-                        }
-                        <div
-                          {...provided.dragHandleProps}
-                          style={{
-                            width: 20,
-                            height: 20,
-                          }}
-                        >
-                            X
+                        <div className={styles.draggableContainer}>
+                          <Todo.Main
+                            sortedId={idx}
+                            content={todo.mainTodo.content}
+                            done={todo.mainTodo.done}
+                          >
+                            {
+                              todo.subTodos.map((subTodo, idx) => (
+                                <div key={`sub-todo--${idx}`}>
+                                  <Todo.Sub
+                                    subTodoId={idx}
+                                    content={subTodo.content}
+                                    done={subTodo.done}
+                                  />
+                                </div>
+                              ))
+                            }
+                          </Todo.Main>
+                          <div
+                            {...provided.dragHandleProps}
+                            className={classNames(styles.draggableHandler, styles[`bg-${idx}`])}
+                          >
+                          </div>
                         </div>
                       </div>
                     )}
                   </Draggable>
                 ))
+
               }
             </Todo.Provider>
           </div>

@@ -1,4 +1,4 @@
-import styles from "./todo.module.scss"
+import styles from "./Todo.module.scss"
 import Link, { LinkProps } from 'next/link';
 import { TodoItem } from '@/types/todo';
 import { Icon } from '@/components/Icon/Icon';
