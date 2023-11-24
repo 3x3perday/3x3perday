@@ -1,10 +1,20 @@
 import styles from "./input.module.scss";
 import Image from "next/image";
+import {useState} from "react";
 
 type Props = {
 	required?: boolean
+	state: string
+	setState: ((value: (((prevState: string) => string) | string)) => void)
 }
-export default function PwInputComponent({required}: Props) {
+export default function PwInputComponent({required, state, setState}: Props) {
+
+	const [hide, setHide] = useState(true);
+
+	const onChangeHide = () => {
+		setHide(prev => !prev);
+	};
+
 	return (
 		<div className={styles.pwInputDiv}>
 			<div>
@@ -14,8 +24,8 @@ export default function PwInputComponent({required}: Props) {
 				}
 			</div>
 			<div>
-				<input type="password" id="pw"/>
-				<Image className={styles.pwIcon} src="/icon/eye.svg" alt="hint" width={21} height={16}/>
+				<input type={hide ? "password" : "text"} id="pw" value={state} onChange={(e) => setState(e.target.value)}/>
+				<Image className={styles.pwIcon} onClick={onChangeHide} src="/icon/eye.svg" alt="hint" width={21} height={16}/>
 			</div>
 		</div>
 	);
