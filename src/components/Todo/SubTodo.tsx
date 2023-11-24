@@ -1,5 +1,5 @@
 'use client'
-import styles from "./todo.module.scss"
+import styles from "./Todo.module.scss"
 import { ChangeEvent, useContext, useState } from 'react';
 import { TodoModeContext } from '@/context/TodoModeContext';
 import { TodoBase } from '@/types/todo';

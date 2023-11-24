@@ -1,5 +1,7 @@
+import styles from './DateNavBar.module.scss'
 import Link from 'next/link';
-import {Date} from "@/utils/date";
+import { Date } from "@/utils/date";
+import { Icon } from '@/components/Icon/Icon';
 
 interface Props {
     date: string;
@@ -15,34 +17,24 @@ export const DateNavBar = ({ date, minDate, maxDate }: Props) => {
   };
 
   return (
-    <div style={{
-      position: 'relative',
-      display: 'flex',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '40px'
-    }}>
-      <Link
-        hidden={minDate === date}
-        href={`?date=${navDate.prev}`}
-        style={{
-          position: 'absolute',
-          left: '20px'
-        }}
-      >
-        {"<"}
-      </Link>
-      <p>{navDate.current}</p>
-      <Link
-        hidden={maxDate === date}
-        href={`?date=${navDate.next}`}
-        style={{
-          position: 'absolute',
-          right: '20px'
-        }}
-      >
-        {">"}
-      </Link>
+    <div className={styles.container}>
+      <div className={styles.wrapper}>
+        <Link
+          hidden={minDate === date}
+          href={`?date=${navDate.prev}`}
+          className={styles.leftArrow}
+        >
+          <Icon name="date-arrow" width='20px' height='20px' />
+        </Link>
+        <p>{navDate.current}</p>
+        <Link
+          hidden={maxDate === date}
+          href={`?date=${navDate.next}`}
+          className={styles.rightArrow}
+        >
+          <Icon name="date-arrow" width='20px' height='20px' />
+        </Link>
+      </div>
     </div>
   )
 }
