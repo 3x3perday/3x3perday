@@ -6,17 +6,8 @@
   }
 }
 
-.container {
-  @include buttonBase;
-
-  display: flex;
-  align-items: center;
-  position: relative;
-  width: 100%;
-  height: 169px;
-  border: 2px solid #FEFAEB;
-  box-sizing: border-box;
-
+@mixin todoText {
+  button { cursor: pointer }
   p {
     font-family: Pretendard, sans-serif;
     font-size: 45px;
@@ -35,6 +26,19 @@
     font-weight: 800;
     color: #F8F5EE;
   }
+}
+
+.container {
+  @include buttonBase;
+  @include todoText;
+
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  height: 169px;
+  border: 2px solid #FEFAEB;
+  box-sizing: border-box;
 
   .plusIcon {
     position: absolute;
@@ -73,6 +77,15 @@
 
 .subTodoContainer {
   @include buttonBase;
+  @include todoText;
+
+  p,
+  textarea {
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 600;
+  }
+
   margin-left: 40px;
 
   display: flex;

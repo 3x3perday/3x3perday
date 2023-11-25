@@ -22,6 +22,7 @@ export const MainTodo = ({ content, done, sortedId, children }: Props) => {
 
   const onChecked = async () => {
     if (mode === 'edit') return;
+    alert(`${sortedId}: 의 업데이트 필요`)
     /**
          * TODO
          * 메인 투두 done 상태 반영
