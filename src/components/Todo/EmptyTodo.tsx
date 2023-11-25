@@ -11,13 +11,13 @@ interface Props {
 
 export const EmptyTodo = ({ sortedId, href }: Props) => {
   return (
-    <div className={styles.container}>
-      <Link
-        href={href}
-      >
+    <Link
+      href={href}
+    >
+      <div className={styles.container}>
         <FingerIcon count={sortedId} isActive={false} />
         <Icon name="plus" className={styles.plusIcon} />
-      </Link>
-    </div>
+      </div>
+    </Link>
   )
 }
