@@ -16,7 +16,11 @@ interface Props {
 
 const TodoList = ({ data, mode, date }: Props) => {
   const [todos, setTodos] = useState<Props['data']>(data);
+  const [toggleState, setToggleState] = useState([false, false, false]);
+  const onChangeToggle = (mainTodoIndex: number) => setToggleState(prevState => prevState.map((v, i) => i === mainTodoIndex ? !v : v));
+
   const isEmptyTodo = ({ mainTodo, subTodos }: TodoItem) => mainTodo.content === "" && subTodos.length === 0;
+
   const reorder = (list: Props['data'], startIndex: number, endIndex: number) => {
     const result = Array.from(list);
     const [removed] = result.splice(startIndex, 1);
@@ -43,54 +47,65 @@ const TodoList = ({ data, mode, date }: Props) => {
           >
             <Todo.Provider mode={mode}>
               {
-                todos.map((todo, idx) => isEmptyTodo(todo) ? (
-                  <div
+                todos.map((todo, mainTodoIndex) => isEmptyTodo(todo) ? (
+                  <Todo.Wrapper
+                    sortedId={todo.sortedId}
                     key={`todo--${todo.sortedId}`}
-                    className={styles[`bg-${idx}`]}
                   >
                     <Todo.Empty
                       href={`/todo/edit/${date}`}
                       sortedId={todo.sortedId}
                     />
-                  </div>
+                  </Todo.Wrapper>
                 ) : (
                   <Draggable
-                    index={idx}
+                    index={mainTodoIndex}
                     key={`todo--${todo.sortedId}`}
                     draggableId={`${todo.sortedId}`}
                   >
-                    {(provided, snapshot) => (
-                      <div
-                        ref={provided.innerRef}
-                        {...provided.draggableProps}
-                        className={styles[`bg-${idx}`]}
-                      >
-                        <div className={styles.draggableContainer}>
-                          <Todo.Main
-                            sortedId={idx}
-                            content={todo.mainTodo.content}
-                            done={todo.mainTodo.done}
+                    {(provided, snapshot) => {
+                      return (
+                        <div
+                          ref={provided.innerRef}
+                          {...provided.draggableProps}
+                        >
+                          <Todo.Wrapper
+                            sortedId={mainTodoIndex}
+                            className={styles.draggableContainer}
                           >
-                            {
-                              todo.subTodos.map((subTodo, idx) => (
-                                <div key={`sub-todo--${idx}`}>
-                                  <Todo.Sub
-                                    subTodoId={idx}
-                                    content={subTodo.content}
-                                    done={subTodo.done}
-                                  />
-                                </div>
-                              ))
-                            }
-                          </Todo.Main>
-                          <div
-                            {...provided.dragHandleProps}
-                            className={classNames(styles.draggableHandler, styles[`bg-${idx}`])}
-                          >
-                          </div>
+                            <Todo.Main
+                              sortedId={mainTodoIndex}
+                              content={todo.mainTodo.content}
+                              done={todo.mainTodo.done}
+                            />
+                            <Todo.Toggle
+                              isActive={toggleState[mainTodoIndex]}
+                              onClick={() => onChangeToggle(mainTodoIndex)}
+                            />
+                          </Todo.Wrapper>
+                          {
+                            toggleState[mainTodoIndex] && todo.subTodos.map((subTodo, idx) => (
+                              <Todo.Wrapper sortedId={mainTodoIndex} style={{ marginLeft: '95px' }}
+                                key={`sub-todo--${idx}`}
+                                className={styles[`bg-${mainTodoIndex}`]}
+                              >
+                                <Todo.Sub
+                                  subTodoId={idx}
+                                  content={subTodo.content}
+                                  done={subTodo.done}
+                                />
+                              </Todo.Wrapper>
+                            ))
+                          }
+                          <Todo.Wrapper sortedId={mainTodoIndex}>
+                            <div
+                              {...provided.dragHandleProps}
+                              className={classNames(styles.draggableHandler, styles[`bg-${mainTodoIndex}`])}
+                            />
+                          </Todo.Wrapper>
                         </div>
-                      </div>
-                    )}
+                      );
+                    }}
                   </Draggable>
                 ))
 
