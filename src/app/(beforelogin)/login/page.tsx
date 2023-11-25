@@ -38,22 +38,25 @@ export default function Page() {
 			.then(res => {
 				// 성공
 				if (res.status === 200) {
-					// TODO 내일 물어보고 할 것
-					// const userId = res.json().userId;
-					// window.localStorage.setItem("id",);
-					// router.push("")
+					const response = res.json()
+						.then(res => {
+							const userId = res.userId;
+							window.localStorage.setItem("userId", userId);
+							router.push("/");
+						});
 				} else if (res.status === 404) {
 					alert("이메일 또는 비밀번호가 일치하지 않습니다.");
 				}
 			});
 	};
 
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.logo}>
 				<Image src="/image/logo.svg" alt="logo" width={280} height={174}/>
 			</div>
-			<form className={styles.form}>
+			<div className={styles.form}>
 				<div>
 					<InputComponent title={"아이디"} state={id} setState={setId}/>
 					<PwInputComponent state={password} setState={setPassword}/>
@@ -75,7 +78,7 @@ export default function Page() {
 						회원가입
 					</Link>
 				</div>
-			</form>
+			</div>
 		</div>
 	);
 }
