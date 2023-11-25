@@ -19,6 +19,21 @@
 
   p {
     font-family: Pretendard, sans-serif;
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 800;
+    color: #F8F5EE;
+  }
+
+  textarea {
+    outline: none;
+    height: 100%;
+    background-color: transparent;
+    font-family: Pretendard, sans-serif;
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 800;
+    color: #F8F5EE;
   }
 
   .plusIcon {
@@ -26,6 +41,27 @@
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+  }
+}
+
+.toggleBtn {
+  cursor: pointer;
+  position: absolute;
+  bottom: 0;
+  left: 90px;
+
+  &InActive {
+    transform: rotate(0deg);
+    transition-duration: 150ms;
+    transition-property: transform;
+    transition-timing-function: ease-in-out;
+  }
+
+  &Active {
+    transform: rotate(180deg);
+    transition-duration: 150ms;
+    transition-property: transform;
+    transition-timing-function: ease-in-out;
   }
 }
 
