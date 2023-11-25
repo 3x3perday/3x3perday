@@ -4,14 +4,12 @@ import FingerIcon from '@/components/Icon/FingerIcon';
 import { TodoBase, TodoItem } from '@/types/todo';
 import { ChangeEvent, ReactNode, useContext, useState } from 'react';
 import { TodoModeContext } from '@/context/TodoModeContext';
-import { Icon } from '@/components/Icon/Icon';
 
 interface Props extends TodoBase {
     sortedId: TodoItem['sortedId'];
-    children?: ReactNode;
 }
 
-export const MainTodo = ({ content, done, sortedId, children }: Props) => {
+export const MainTodo = ({ content, done, sortedId }: Props) => {
   const [value, setValue] = useState(content);
   const { mode } = useContext(TodoModeContext);
   const [visibleChildren, setVisibleChildren] = useState(false);
@@ -41,13 +39,7 @@ export const MainTodo = ({ content, done, sortedId, children }: Props) => {
         {
           mode === 'read' ? <p style={{ width: '100%' }}>{content}</p> : <textarea value={value} onChange={onChange} />
         }
-        <div className={styles.toggleBtn} onClick={() => setVisibleChildren(prevState => !prevState)}>
-          <div className={visibleChildren ? styles.toggleBtnActive : styles.toggleBtnInActive}>
-            <Icon name={"arrow-up"} width="19px" height="13px" />
-          </div>
-        </div>
       </div>
-      {visibleChildren && children}
     </>
   )
 }
