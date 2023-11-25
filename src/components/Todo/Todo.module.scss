@@ -29,6 +29,12 @@
   }
 }
 
+.todoListContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
 .subTodoContainer {
   @include buttonBase;
   margin-left: 40px;

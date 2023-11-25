@@ -38,11 +38,7 @@ const TodoList = ({ data, mode, date }: Props) => {
         {(provided, snapshot) => (
           <div
             ref={provided.innerRef}
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 28
-            }}
+            className={styles.todoListContainer}
             {...provided.droppableProps}
           >
             <Todo.Provider mode={mode}>
