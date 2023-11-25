@@ -2,6 +2,7 @@
 import { MainTodoEdit } from "@/components/Todo/edit/MainTodo";
 import SubTodoEdit from "@/components/Todo/edit/SubTodo";
 import { AppBar } from "@/components/navbar/AppBar";
+import { TODO_EDIT_COLOR } from "@/constants/Theme";
 import { TodoBase, TodoItem, TodoResponse } from "@/types/todo";
 import { http } from "@/utils/http";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -142,7 +143,11 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
 
   const goBack = () => router.push(`/todo`);
   return (
-    <main>
+    <main
+      style={{
+        backgroundColor: `${TODO_EDIT_COLOR[sortedId]}`,
+      }}
+    >
       <AppBar />
       <hr />
       <h1>{sortedId} 번 TODO</h1>

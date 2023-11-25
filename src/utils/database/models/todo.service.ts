@@ -2,7 +2,7 @@ import { NextResponse } from "next/server";
 import connectDB from "../database";
 import TodoModel from "./todo";
 import { TodoPost } from "@/utils/todo";
-import { TodoItem, TodoResponse } from "@/types/todo";
+import { TodoBase, TodoItem, TodoResponse } from "@/types/todo";
 
 export const TodoService = {
   getTodo: async (userId: string, date: string) => {
@@ -71,6 +71,55 @@ export const TodoService = {
       return new NextResponse(
         JSON.stringify({ message: "TODO가 수정되었습니다." }),
         { status: 200 }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  },
+
+  getTodoItems: async (userId: string) => {
+    try {
+      await connectDB();
+      const todoItems: TodoResponse[] = await TodoModel.find({
+        userId: userId,
+      });
+
+      if (!todoItems) {
+        return new NextResponse(
+          JSON.stringify({ message: "TODO가 없습니다." }),
+          { status: 400 }
+        );
+      }
+      let totaldays = todoItems.length;
+
+      let totalMainTodo = 0;
+      let doneMainTodo = 0;
+
+      let totalSubTodo = 0;
+      let doneSubTodo = 0;
+
+      todoItems.forEach((todoItem) => {
+        todoItem.todos.forEach((todo: TodoItem) => {
+          totalMainTodo++;
+          if (todo.mainTodo.done) doneMainTodo++;
+
+          todo.subTodos.forEach((subTodo: TodoBase) => {
+            totalSubTodo++;
+            if (subTodo.done) doneSubTodo++;
+          });
+        });
+      });
+      return new NextResponse(
+        JSON.stringify({
+          totaldays,
+          totalMainTodo,
+          doneMainTodo,
+          totalSubTodo,
+          doneSubTodo,
+        }),
+        {
+          status: 200,
+        }
       );
     } catch (error) {
       console.log(error);
