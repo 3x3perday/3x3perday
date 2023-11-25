@@ -115,10 +115,11 @@
   @include todoBorder;
 
   position: absolute;
+  right: -23px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  right: -23px;
   width: 21px;
   height: 21px;
   &:after {
