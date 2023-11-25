@@ -5,6 +5,7 @@ import Image from "next/image";
 import InputComponent from "@/components/sign/inputComponent";
 import PwInputComponent from "@/components/sign/pwInputComponent";
 import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 
 export default function Page() {
 
@@ -13,6 +14,7 @@ export default function Page() {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [success, setSuccess] = useState(false);
+	const router = useRouter();
 
 	useEffect(() => {
 		// 이메일형식체크, 비밀번호는 영어, 숫자, 특수문자
@@ -32,11 +34,18 @@ export default function Page() {
 			headers: {
 				'Content-Type': 'application/json'
 			},
-			//TODO 내일 물어볼것 데이터 타입에 대하여
-			body: JSON.stringify({})
+			body: JSON.stringify({
+				email,
+				password
+			})
+		}).then(res => {
+			if (res.status === 200) {
+				router.push('/login');
+			} else alert("다시 시도해주세요!");
 		});
 
 	};
+
 
 	return (
 		<div className={styles.container}>
