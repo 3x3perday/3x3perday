@@ -9,6 +9,7 @@ export const AppBar = () => {
         display: 'flex',
         alignItems: 'flex-end',
         justifyContent: 'space-between',
+        padding: '0 20px',
       }}
     >
       <Link href='/'>
