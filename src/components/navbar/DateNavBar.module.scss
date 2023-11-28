@@ -34,3 +34,27 @@
   transform: translateY(-50%) rotate(-180deg);
   right: -40px;
 }
+
+.wrapper_edit {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.leftArrow_edit {
+  
+}
+
+.save_button {
+  background : none;
+  font-weight: 600;
+  font-size: 16px;
+  letter-spacing: 1.2px;
+  color: rgba(241, 241, 241, 0.675);
+  border: none;
+  cursor: pointer;
+  &:hover {
+    color: #F8F5EE;
+  }
+}

@@ -1,0 +1,20 @@
+.container {
+  position: relative;
+}
+.reset_btn{
+  position: absolute;
+  z-index: 1;
+  top:20px;
+  right:30px;
+  background: none;
+  border: none;
+  color: #F8F5EE;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1.2px;
+  cursor: pointer;
+  &:hover {
+    color: #adadad;
+  }
+  
+}
