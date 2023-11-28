@@ -5,7 +5,6 @@ export const MODAL_SIZE = {
 } as const;
 
 export interface ModalProps {
-  isOpen: boolean;
   setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 

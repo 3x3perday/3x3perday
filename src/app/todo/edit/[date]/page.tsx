@@ -2,6 +2,8 @@
 import styles from "./TodoEdit.module.scss";
 import { MainTodoEdit } from "@/components/Todo/edit/MainTodo";
 import SubTodoEdit from "@/components/Todo/edit/SubTodo";
+import Modal from "@/components/modal/modal";
+import TodoDeleteModal from "@/components/modal/todo/delete";
 import { AppBar } from "@/components/navbar/AppBar";
 import { DateNavBarEdit } from "@/components/navbar/DateNavBar_edit";
 import { TODO_EDIT_COLOR } from "@/constants/Theme";
@@ -23,7 +25,6 @@ const fetchData = async (userId: string, date: string) => {
 
 const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
   const searchParam = useSearchParams();
-  const router = useRouter();
 
   const sortedId = Number(searchParam.get("sortedId")) || 0;
   const date = params.date;
@@ -31,6 +32,8 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
   const [originTodoResponse, setOriginTodoResponse] = useState<TodoResponse>();
 
   const [todo, setTodo] = useState<TodoItem>();
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const getInitData = async () => {
     const userId = localStorage.getItem("userId") || "1234";
@@ -153,7 +156,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
       <DateNavBarEdit date={date} save={save} />
       {todo && (
         <div className={styles.container}>
-          <button onClick={reset} className={styles.reset_btn}>
+          <button onClick={() => setIsOpen(true)} className={styles.reset_btn}>
             X
           </button>
           <MainTodoEdit
@@ -180,6 +183,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
           </SubTodoEdit>
         </div>
       )}
+      {isOpen && <TodoDeleteModal setIsOpen={setIsOpen} submit={reset} />}
     </main>
   );
 };
