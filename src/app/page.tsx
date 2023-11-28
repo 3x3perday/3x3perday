@@ -6,39 +6,39 @@ import Image from 'next/image';
 import {css} from '@emotion/react';
 
 export default function Home() {
-	const router = useRouter();
-	useEffect(() => {
-		const userId = window.localStorage.getItem('userId');
-		if (userId !== null) {
-			setTimeout(() => {
-				router.push("/todo");
-			}, 3000);
-		} else if (userId === null) {
-			setTimeout(() => {
-				router.push("/login");
-			}, 3000);
-		}
-	}, []);
-	return (
-		<main css={mainCSS}>
-			<div className="left_top">
-				<Image
-					src={"/image/3perday.png"}
-					width={180}
-					height={180}
-					alt="3perday"
-				/>
-			</div>
-			<div className="right_bot">
-				<Image
-					src={"/image/3todo.png"}
-					width={100}
-					height={100}
-					alt="3perday"
-				/>
-			</div>
-		</main>
-	);
+  const router = useRouter();
+  useEffect(() => {
+    const userId = window.localStorage.getItem('userId');
+    if (userId !== null) {
+      setTimeout(() => {
+        router.push("/todo");
+      }, 3000);
+    } else if (userId === null) {
+      setTimeout(() => {
+        router.push("/login");
+      }, 3000);
+    }
+  }, []);
+  return (
+    <main css={mainCSS}>
+      <div className="left_top">
+        <Image
+          src={"/image/3perday.png"}
+          width={180}
+          height={180}
+          alt="3perday"
+        />
+      </div>
+      <div className="right_bot">
+        <Image
+          src={"/image/3todo.png"}
+          width={100}
+          height={100}
+          alt="3perday"
+        />
+      </div>
+    </main>
+  );
 }
 const mainCSS = css`
   height: 100vh;

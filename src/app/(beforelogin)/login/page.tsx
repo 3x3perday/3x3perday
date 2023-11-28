@@ -10,75 +10,75 @@ import {useRouter} from "next/navigation";
 
 export default function Page() {
 
-	const [id, setId] = useState("");
-	const [password, setPassword] = useState("");
-	const [success, setSuccess] = useState(false);
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
+  const [success, setSuccess] = useState(false);
 
-	const router = useRouter();
+  const router = useRouter();
 
-	useEffect(() => {
-		// 이메일형식체크, 비밀번호는 영어, 숫자, 특수문자
-		if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(id) && /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[\W_]).{8,}$/.test(password)) setSuccess(true);
-		else setSuccess(false);
-	}, [id, password]);
+  useEffect(() => {
+    // 이메일형식체크, 비밀번호는 영어, 숫자, 특수문자
+    if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(id) && /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[\W_]).{8,}$/.test(password)) setSuccess(true);
+    else setSuccess(false);
+  }, [id, password]);
 
-	const onSubmit = async () => {
-		// 각종 오류 체크
+  const onSubmit = async () => {
+    // 각종 오류 체크
 
-		await fetch("/api/user/login", {
-			method: "POST",
-			body: JSON.stringify({
-				email: id,
-				password: password
-			}),
-			headers: {
-				"Content-Type": "application/json"
-			}
-		})
-			.then(res => {
-				// 성공
-				if (res.status === 200) {
-					const response = res.json()
-						.then(res => {
-							const userId = res.userId;
-							window.localStorage.setItem("userId", userId);
-							router.push("/");
-						});
-				} else if (res.status === 404) {
-					alert("이메일 또는 비밀번호가 일치하지 않습니다.");
-				}
-			});
-	};
+    await fetch("/api/user/login", {
+      method: "POST",
+      body: JSON.stringify({
+        email: id,
+        password: password
+      }),
+      headers: {
+        "Content-Type": "application/json"
+      }
+    })
+      .then(res => {
+        // 성공
+        if (res.status === 200) {
+          const response = res.json()
+            .then(res => {
+              const userId = res.userId;
+              window.localStorage.setItem("userId", userId);
+              router.push("/");
+            });
+        } else if (res.status === 404) {
+          alert("이메일 또는 비밀번호가 일치하지 않습니다.");
+        }
+      });
+  };
 
 
-	return (
-		<div className={styles.container}>
-			<div className={styles.logo}>
-				<Image src="/image/logo.svg" alt="logo" width={280} height={174}/>
-			</div>
-			<div className={styles.form}>
-				<div>
-					<InputComponent title={"아이디"} state={id} setState={setId}/>
-					<PwInputComponent state={password} setState={setPassword}/>
-					<div className={styles.formDownDiv}>
-						<div className={styles.checkboxDiv}>
-							<input type="checkbox" id="autoLogin"/>
-							<label htmlFor="checkbox">자동 로그인</label>
-						</div>
-						<div className={styles.userInfoDiv}>
+  return (
+    <div className={styles.container}>
+      <div className={styles.logo}>
+        <Image src="/image/logo.svg" alt="logo" width={280} height={174}/>
+      </div>
+      <div className={styles.form}>
+        <div>
+          <InputComponent title={"아이디"} state={id} setState={setId}/>
+          <PwInputComponent state={password} setState={setPassword}/>
+          <div className={styles.formDownDiv}>
+            <div className={styles.checkboxDiv}>
+              <input type="checkbox" id="autoLogin"/>
+              <label htmlFor="checkbox">자동 로그인</label>
+            </div>
+            <div className={styles.userInfoDiv}>
 							회원정보 찾기
-						</div>
-					</div>
-				</div>
-				<div className={styles.loginDiv}>
-					<button className={styles.loginBtn} disabled={!success} onClick={onSubmit}>
+            </div>
+          </div>
+        </div>
+        <div className={styles.loginDiv}>
+          <button className={styles.loginBtn} disabled={!success} onClick={onSubmit}>
 						Login
-					</button>
-					<Link href="/signup">
+          </button>
+          <Link href="/signup">
 						회원가입
-					</Link>
-				</div>
-			</div>
-		</div>
-	);
+          </Link>
+        </div>
+      </div>
+    </div>
+  );
 }

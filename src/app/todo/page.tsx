@@ -6,6 +6,7 @@ import { TodoResponse } from '@/types/todo';
 import { AppBar } from '@/components/navbar/AppBar';
 import { DEFAULT_TODO } from '@/constants/Todo';
 import TodoList from '@/components/Todo/TodoList';
+import GiveMeFive from '@/components/modal/GiveMeFive';
 
 const createInitialTodo = async (userId: string, date: string) => {
   const res = await http.post(`http://localhost:3000/api/todo?userId=${userId}&date=${date}`, null, { cache: 'no-cache' });
@@ -18,7 +19,28 @@ const getTodoData = async (userId: string, date: string): Promise<TodoResponse> 
   const res = await http.get(`http://localhost:3000/api/todo/?userId=${userId}&date=${date}`, { cache: 'no-cache' });
   if (res.status === 200) {
     const { todos, date, userId } = await res.json() as TodoResponse;
-    return { userId, date, todos };
+    return {
+      userId, date, todos: [
+        {
+          sortedId: 0,
+          mainTodo: { content: "abcd", done: false },
+          subTodos: [
+            { content: "abcd", done: false },
+            { content: "abcd", done: false },
+          ],
+        },
+        {
+          sortedId: 1,
+          mainTodo: { content: "123", done: true },
+          subTodos: [],
+        },
+        {
+          sortedId: 2,
+          mainTodo: { content: "", done: false },
+          subTodos: [],
+        },
+      ]
+    };
   }
   return { userId, date, todos: DEFAULT_TODO };
 }
