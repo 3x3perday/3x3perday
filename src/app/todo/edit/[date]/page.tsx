@@ -5,7 +5,7 @@ import SubTodoEdit from "@/components/Todo/edit/SubTodo";
 import Modal from "@/components/modal/modal";
 import TodoDeleteModal from "@/components/modal/todo/delete";
 import { AppBar } from "@/components/navbar/AppBar";
-import { DateNavBarEdit } from "@/components/navbar/DateNavBar_edit";
+import { NavBar } from "@/components/navbar/DateNavBar_edit";
 import { TODO_EDIT_COLOR } from "@/constants/Theme";
 import { TodoBase, TodoItem, TodoResponse } from "@/types/todo";
 import { http } from "@/utils/http";
@@ -153,7 +153,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
       }}
     >
       <AppBar />
-      <DateNavBarEdit date={date} save={save} />
+      <NavBar content={date} save={save} />
       {todo && (
         <div className={styles.container}>
           <button onClick={() => setIsOpen(true)} className={styles.reset_btn}>
