@@ -1,7 +1,11 @@
 "use client";
+import styles from "./TodoEdit.module.scss";
 import { MainTodoEdit } from "@/components/Todo/edit/MainTodo";
 import SubTodoEdit from "@/components/Todo/edit/SubTodo";
+import Modal from "@/components/modal/modal";
+import TodoDeleteModal from "@/components/modal/todo/delete";
 import { AppBar } from "@/components/navbar/AppBar";
+import { DateNavBarEdit } from "@/components/navbar/DateNavBar_edit";
 import { TODO_EDIT_COLOR } from "@/constants/Theme";
 import { TodoBase, TodoItem, TodoResponse } from "@/types/todo";
 import { http } from "@/utils/http";
@@ -21,7 +25,6 @@ const fetchData = async (userId: string, date: string) => {
 
 const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
   const searchParam = useSearchParams();
-  const router = useRouter();
 
   const sortedId = Number(searchParam.get("sortedId")) || 0;
   const date = params.date;
@@ -29,6 +32,8 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
   const [originTodoResponse, setOriginTodoResponse] = useState<TodoResponse>();
 
   const [todo, setTodo] = useState<TodoItem>();
+
+  const [isOpen, setIsOpen] = useState(false);
 
   const getInitData = async () => {
     const userId = localStorage.getItem("userId") || "1234";
@@ -120,7 +125,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     },
   };
 
-  const onSubmit = async () => {
+  const save = async () => {
     const data = {
       originTodoResponse: originTodoResponse,
       sortedId: sortedId,
@@ -132,7 +137,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     alert(res2.message);
   };
 
-  const deleteAll = async () => {
+  const reset = async () => {
     if (!todo) return;
     setTodo({
       ...todo,
@@ -141,7 +146,6 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     });
   };
 
-  const goBack = () => router.push(`/todo`);
   return (
     <main
       style={{
@@ -149,19 +153,17 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
       }}
     >
       <AppBar />
-      <hr />
-      <h1>{sortedId} 번 TODO</h1>
-      <button onClick={goBack}>BACK</button>
-      <button onClick={onSubmit}>SAVE</button>
-      <button onClick={deleteAll}>DELETE</button>
+      <DateNavBarEdit date={date} save={save} />
       {todo && (
-        <div>
+        <div className={styles.container}>
+          <button onClick={() => setIsOpen(true)} className={styles.reset_btn}>
+            X
+          </button>
           <MainTodoEdit
             sortedId={sortedId}
             mainTodo={todo.mainTodo}
             HadnleMainTodo={HadnleMainTodo}
           />
-
           <SubTodoEdit>
             {todo.subTodos.map((subTodo, subIdx) => (
               <SubTodoEdit.Item
@@ -181,6 +183,7 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
           </SubTodoEdit>
         </div>
       )}
+      {isOpen && <TodoDeleteModal setIsOpen={setIsOpen} submit={reset} />}
     </main>
   );
 };
