@@ -4,8 +4,11 @@ import Image from "next/image";
 type Props = {
 	title: string;
 	required?: boolean
+	state: string
+	setState: ((value: (((prevState: string) => string) | string)) => void)
 }
-export default function InputComponent({title, required}: Props) {
+export default function InputComponent({title, required, state, setState}: Props) {
+
 	return (
 		<div className={styles.inputDiv}>
 			<div>
@@ -14,7 +17,7 @@ export default function InputComponent({title, required}: Props) {
           <Image className={styles.requiredImg} src="/icon/required.svg" alt="필수" width={9} height={9}/>
 				}
 			</div>
-			<input type="text" id="id"/>
+			<input type="text" id="id" value={state} onChange={(e) => setState(e.target.value)}/>
 		</div>
 	);
 }

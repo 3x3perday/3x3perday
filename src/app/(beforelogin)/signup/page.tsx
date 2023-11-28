@@ -1,19 +1,63 @@
+'use client';
+
 import styles from './page.module.scss';
 import Image from "next/image";
 import InputComponent from "@/components/sign/inputComponent";
 import PwInputComponent from "@/components/sign/pwInputComponent";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 
 export default function Page() {
+
+
+	const [check, setCheck] = useState(false);
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [success, setSuccess] = useState(false);
+	const router = useRouter();
+
+	useEffect(() => {
+		// 이메일형식체크, 비밀번호는 영어, 숫자, 특수문자
+		if (/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email) && /^(?=.*[0-9])(?=.*[a-zA-Z])(?=.*[\W_]).{8,}$/.test(password) && check) setSuccess(true);
+		else setSuccess(false);
+	}, [check, email, password]);
+
+	const onClickCheck = () => {
+		setCheck(prev => !prev);
+	};
+
+	const onSubmit = async () => {
+		// 각종 오류 체크
+
+		await fetch("/api/user/signup", {
+			method: "POST",
+			headers: {
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+				email,
+				password
+			})
+		}).then(res => {
+			if (res.status === 200) {
+				router.push('/login');
+			} else alert("다시 시도해주세요!");
+		});
+
+	};
+
+
 	return (
 		<div className={styles.container}>
 			<section className={styles.section}>
 				<div>
 					<Image className={styles.backImg} src="/icon/back.png" alt="back" width={31} height={31}/>
-					<div style={{paddingBottom: "10px"}}>
-						<InputComponent title="이메일 주소" required={true}/>
+					<div>
+						<InputComponent state={email} setState={setEmail} title="이메일 주소" required={true}/>
 					</div>
-					<div style={{paddingBottom: "103px"}}>
-						<PwInputComponent required={true}/>
+
+					<div>
+						<PwInputComponent state={password} setState={setPassword} required={true}/>
 					</div>
 					<div>
 						<div className={styles.checkDiv}>
@@ -43,15 +87,17 @@ export default function Page() {
 									</div>
 								</div>
 								<div className={styles.checkbox}>
-									<Image src="/icon/signCheck.svg" alt="check" width={41} height={45}/>
-									{/*<Image src="/icon/signChecked.svg" alt="checked" width={41} height={45}/>*/}
+									{check ?
+										<Image onClick={onClickCheck} src="/icon/signChecked.svg" alt="checked" width={41} height={45}/> :
+										<Image onClick={onClickCheck} src="/icon/signCheck.svg" alt="check" width={41} height={45}/>
+									}
 								</div>
 							</div>
 						</div>
 					</div>
 				</div>
 				<div className={styles.loginDiv}>
-					<button className={styles.loginBtn}>
+					<button onClick={onSubmit} className={styles.loginBtn} disabled={!success}>
 						Sign in
 					</button>
 				</div>
