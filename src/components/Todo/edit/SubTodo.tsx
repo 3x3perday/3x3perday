@@ -2,7 +2,7 @@
 import { TODO_COLOR } from "@/constants/Theme";
 import { TodoBase } from "@/types/todo";
 import React, { ButtonHTMLAttributes, ReactElement } from "react";
-import styles from "./Todo.module.scss";
+import styles from "./Todo2.module.scss";
 import { Icon } from "@/components/Icon/Icon";
 import NumberIcon from "@/components/Icon/NumberIcon";
 

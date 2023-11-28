@@ -1,6 +1,6 @@
 import { TodoItem } from "@/types/todo";
 import React, { ChangeEvent, useEffect, useRef, useState } from "react";
-import styles from "./Todo.module.scss";
+import styles from "./Todo2.module.scss";
 import FingerIcon from "@/components/Icon/FingerIcon";
 import { TODO_COLOR } from "@/constants/Theme";
 
