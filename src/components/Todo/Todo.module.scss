@@ -1,3 +1,6 @@
+@mixin todoBorder {
+  border: 2px solid #FEFAEB;
+}
 @mixin buttonBase {
   button {
     outline: none;
@@ -6,20 +9,40 @@
   }
 }
 
+@mixin todoText {
+  button { cursor: pointer }
+  p {
+    font-family: Pretendard, sans-serif;
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 800;
+    color: #F8F5EE;
+  }
+
+  textarea {
+    outline: none;
+    height: 100%;
+    background-color: transparent;
+    font-family: Pretendard, sans-serif;
+    font-size: 45px;
+    font-style: normal;
+    font-weight: 800;
+    color: #F8F5EE;
+  }
+}
+
 .container {
   @include buttonBase;
+  @include todoText;
+  @include todoBorder;
 
   display: flex;
   align-items: center;
   position: relative;
   width: 100%;
   height: 169px;
-  border: 2px solid #FEFAEB;
+  padding: 0 11px;
   box-sizing: border-box;
-
-  p {
-    font-family: Pretendard, sans-serif;
-  }
 
   .plusIcon {
     position: absolute;
@@ -29,9 +52,43 @@
   }
 }
 
+.toggleBtn {
+  cursor: pointer;
+  position: absolute;
+  bottom: 15px;
+  left: 110px;
+
+  &InActive {
+    transform: rotate(0deg);
+    transition-duration: 150ms;
+    transition-property: transform;
+    transition-timing-function: ease-in-out;
+  }
+
+  &Active {
+    transform: rotate(180deg);
+    transition-duration: 150ms;
+    transition-property: transform;
+    transition-timing-function: ease-in-out;
+  }
+}
+
+.todoListContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
 .subTodoContainer {
   @include buttonBase;
-  margin-left: 40px;
+  @include todoText;
+
+  p,
+  textarea {
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 600;
+  }
 
   display: flex;
   align-items: center;
@@ -55,14 +112,16 @@
 }
 
 .draggableHandler {
+  @include todoBorder;
+
   position: absolute;
+  right: -23px;
+
   display: flex;
   align-items: center;
   justify-content: center;
-  right: -23px;
   width: 21px;
   height: 21px;
-  border: 2px solid #FEFAEB;
   &:after {
     content: "";
     width: 14px;

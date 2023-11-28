@@ -14,12 +14,13 @@ export const SubTodo = ({ content, done, subTodoId }: Props) => {
   const [value, setValue] = useState(content);
   const { mode } = useContext(TodoModeContext);
 
-  const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const onChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setValue(e.currentTarget.value)
   };
 
   const onChecked = async () => {
-    if(mode === 'update') return;
+    if(mode === 'edit') return;
+    alert(`${subTodoId}: 의 업데이트 필요`)
     /**
      * TODO
      * 서브 투두 done 상태 반영
@@ -30,11 +31,11 @@ export const SubTodo = ({ content, done, subTodoId }: Props) => {
   return (
     <div className={styles.subTodoContainer}
     >
-      <button disabled={mode === 'update'} onClick={onChecked}>
+      <button disabled={mode === 'edit'} onClick={onChecked}>
         <NumberIcon count={subTodoId} isActive={done} />
       </button>
       {
-        mode === 'read' ? <p style={{width: '100%'}}>{content}</p> : <input value={value} onChange={onChange} />
+        mode === 'read' ? <p style={{width: '100%'}}>{content}</p> : <textarea value={value} onChange={onChange} />
       }
     </div>
   )

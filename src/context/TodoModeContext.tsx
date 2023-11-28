@@ -3,7 +3,7 @@ import { createContext, ReactNode } from 'react';
 import { useMode } from '@/hooks/useMode';
 
 export interface TodoMode {
-  mode: 'read' | 'update';
+  mode: 'read' | 'edit';
   setMode: (updateMode: TodoMode['mode']) => void;
 }
 

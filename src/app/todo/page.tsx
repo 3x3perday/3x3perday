@@ -8,19 +8,17 @@ import { DEFAULT_TODO } from '@/constants/Todo';
 import TodoList from '@/components/Todo/TodoList';
 
 const createInitialTodo = async (userId: string, date: string) => {
-  const res = await http.post(`http://localhost:3000/api/todo?userId=${userId}&date=${date}`, null)
+  const res = await http.post(`http://localhost:3000/api/todo?userId=${userId}&date=${date}`, null, { cache: 'no-cache' });
   return res.status === 200;
 }
 
 const getTodoData = async (userId: string, date: string): Promise<TodoResponse> => {
-  const res = await http.get(`http://localhost:3000/api/todo/?userId=${userId}&date=${date}`, { cache: 'no-cache' });
+  await createInitialTodo(userId, date);
 
+  const res = await http.get(`http://localhost:3000/api/todo/?userId=${userId}&date=${date}`, { cache: 'no-cache' });
   if (res.status === 200) {
     const { todos, date, userId } = await res.json() as TodoResponse;
     return { userId, date, todos };
-  }
-  if (res.status === 400) {
-    await createInitialTodo(userId, date);
   }
   return { userId, date, todos: DEFAULT_TODO };
 }
