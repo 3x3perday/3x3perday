@@ -54,7 +54,7 @@ const TodoList = ({ data, mode, date }: Props) => {
                     key={`todo--${todo.sortedId}`}
                   >
                     <Todo.Empty
-                      href={`/todo/edit/${date}`}
+                      href={`/todo/edit/${date}?sortedId=${todo.sortedId}`}
                       sortedId={todo.sortedId}
                     />
                   </Todo.Wrapper>
