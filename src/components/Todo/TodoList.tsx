@@ -1,41 +1,64 @@
 'use client'
 import styles from './Todo.module.scss'
 import { TodoMode } from '@/context/TodoModeContext';
-import { TodoItem } from '@/types/todo';
+import { TodoItem, TodoResponse } from '@/types/todo';
 import { Todo } from '@/components/Todo';
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import { Responders } from '@hello-pangea/dnd/src/types';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { http } from '@/utils/http';
+import { DEFAULT_TODO } from '@/constants/Todo';
+import { dnd } from '@/utils/dnd';
 
 const DraggableHandler = Todo.Wrapper;
 
+const createInitialTodo = async (userId: string, date: string) => {
+  const res = await http.post(`/api/todo?userId=${userId}&date=${date}`, null);
+  return res.status
+}
+
+const getTodoData = async (userId: string, date: string): Promise<TodoResponse> => {
+  await createInitialTodo(userId, date);
+
+  const res = await http.get(`/api/todo/?userId=${userId}&date=${date}`);
+  if (res.status === 200) {
+    const { todos, date, userId } = await res.json() as TodoResponse;
+    return { userId, date, todos };
+  }
+  return { userId, date, todos: DEFAULT_TODO };
+}
+
 interface Props {
     mode: TodoMode['mode'];
-    data: TodoItem[];
     date: string;
 }
 
-const TodoList = ({ data, mode, date }: Props) => {
-  const [todos, setTodos] = useState<Props['data']>(data);
+const TodoList = ({ mode, date }: Props) => {
+  const userId = localStorage.getItem("userId") || "1234";
+  const [todos, setTodos] = useState<TodoItem[]>(DEFAULT_TODO);
   const [toggleState, setToggleState] = useState([false, false, false]);
+
   const onChangeToggle = (mainTodoIndex: number) => setToggleState(prevState => prevState.map((v, i) => i === mainTodoIndex ? !v : v));
 
   const isEmptyTodo = ({ mainTodo, subTodos }: TodoItem) => mainTodo.content === "" && subTodos.length === 0;
-
-  const reorder = (list: Props['data'], startIndex: number, endIndex: number) => {
-    const result = Array.from(list);
-    const [removed] = result.splice(startIndex, 1);
-    result.splice(endIndex, 0, removed);
-    return result;
-  };
 
   const onDragEnd: Responders['onDragEnd'] = (result) => {
     if (!result.destination) {
       return;
     }
-    const items = reorder(todos, result.source.index, result.destination.index);
-    setTodos(items);
+    const sortedItems = dnd.reorder<TodoItem>(todos, result.source.index, result.destination.index);
+    setTodos(sortedItems);
   }
+
+  const getInitTodoData = async () => {
+    const { todos } = await getTodoData(userId, date);
+    setTodos(todos);
+  }
+
+  useEffect(() => {
+    getInitTodoData();
+  }, [date]);
+
 
   return (
     <DragDropContext onDragEnd={onDragEnd}>
