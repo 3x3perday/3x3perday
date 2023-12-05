@@ -55,6 +55,32 @@ const TodoList = ({ mode, date }: Props) => {
     setTodos(todos);
   }
 
+  const updateTodo = async () => {
+    const receiveData:TodoResponse = {
+      userId: userId.current,
+      date,
+      todos: [
+        {
+          sortedId: 0,
+          mainTodo: { content: "Hello", done: false },
+          subTodos: [],
+        },
+        {
+          sortedId: 1,
+          mainTodo: { content: "Test", done: false },
+          subTodos: [],
+        },
+        {
+          sortedId: 2,
+          mainTodo: { content: "", done: false },
+          subTodos: [],
+        },
+      ]
+    }
+
+    const result = await http.put('/api/todo', receiveData);
+  }
+
   useEffect(() => {
     userId.current = localStorage.getItem("userId") || "1234";
     getInitTodoData();
