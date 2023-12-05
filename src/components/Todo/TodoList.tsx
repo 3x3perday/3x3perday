@@ -5,7 +5,7 @@ import { TodoItem, TodoResponse } from '@/types/todo';
 import { Todo } from '@/components/Todo';
 import { DragDropContext, Draggable, Droppable } from '@hello-pangea/dnd';
 import { Responders } from '@hello-pangea/dnd/src/types';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { http } from '@/utils/http';
 import { DEFAULT_TODO } from '@/constants/Todo';
 import { dnd } from '@/utils/dnd';
@@ -34,7 +34,7 @@ interface Props {
 }
 
 const TodoList = ({ mode, date }: Props) => {
-  const userId = localStorage.getItem("userId") || "1234";
+  const userId = useRef('');
   const [todos, setTodos] = useState<TodoItem[]>(DEFAULT_TODO);
   const [toggleState, setToggleState] = useState([false, false, false]);
 
@@ -51,11 +51,12 @@ const TodoList = ({ mode, date }: Props) => {
   }
 
   const getInitTodoData = async () => {
-    const { todos } = await getTodoData(userId, date);
+    const { todos } = await getTodoData(userId.current, date);
     setTodos(todos);
   }
 
   useEffect(() => {
+    userId.current = localStorage.getItem("userId") || "1234";
     getInitTodoData();
   }, [date]);
 
