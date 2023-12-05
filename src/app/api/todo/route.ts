@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { TodoService } from "@/utils/database/models/todo.service";
+import { TodoResponse } from '@/types/todo';
 
 export async function GET(req: NextRequest) {
   const userId = req.nextUrl.searchParams.get("userId") || "";
@@ -25,10 +26,8 @@ export async function POST(req: NextRequest) {
 }
 
 export async function PUT(req: NextRequest) {
-  const data = await req.json();
-  const todo = data.data;
-
-  return TodoService.updateTodo(todo);
+  const data:TodoResponse = await req.json();
+  return TodoService.updateTodo(data);
 }
 
 export async function PATCH(req: NextRequest) {
