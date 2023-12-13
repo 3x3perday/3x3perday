@@ -25,7 +25,11 @@ export default async function TodoPage({ searchParams }: Props) {
   return (
     <main>
       <AppBar />
-      <DateNavBar date={date} minDate={minDate} maxDate={maxDate} />
+      <DateNavBar
+        selectedDate={date}
+        minDate={minDate}
+        maxDate={maxDate}
+      />
       <div className="inner">
         <TodoList mode={"read"} date={date} />
       </div>

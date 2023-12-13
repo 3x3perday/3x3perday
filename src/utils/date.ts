@@ -36,5 +36,8 @@ export const Date = {
       minDate: prevDate,
       maxDate: nextDate,
     }
+  },
+  diffDay(date1: string, date2: string) {
+    return dayjs(date1).diff(date2, 'day');
   }
 };
