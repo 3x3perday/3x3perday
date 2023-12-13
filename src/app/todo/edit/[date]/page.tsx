@@ -2,14 +2,13 @@
 import styles from "./TodoEdit.module.scss";
 import { MainTodoEdit } from "@/components/Todo/edit/MainTodo";
 import SubTodoEdit from "@/components/Todo/edit/SubTodo";
-import Modal from "@/components/modal/modal";
 import TodoDeleteModal from "@/components/modal/todo/delete";
 import { AppBar } from "@/components/navbar/AppBar";
 import { NavBar } from "@/components/navbar/DateNavBar_edit";
 import { TODO_EDIT_COLOR } from "@/constants/Theme";
 import { TodoBase, TodoItem, TodoResponse } from "@/types/todo";
 import { http } from "@/utils/http";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams, useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 interface Params {
@@ -25,6 +24,7 @@ const fetchData = async (userId: string, date: string) => {
 
 const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
   const searchParam = useSearchParams();
+  const router = useRouter();
 
   const sortedId = Number(searchParam.get("sortedId")) || 0;
   const date = params.date;
@@ -133,8 +133,9 @@ const TodoUpdatePageByIndex = ({ params }: { params: Params }) => {
     };
 
     const res = await http.patch(`/api/todo/`, data);
-    const res2 = await res.json();
-    alert(res2.message);
+    res.status === 200 && router.back();
+    // const res2 = await res.json();
+    // alert(res2.message);
   };
 
   const reset = async () => {
